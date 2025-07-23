@@ -1,0 +1,409 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+.maincontainer{
+    width: 100%;
+    min-height: 100vh;    
+}
+.header{
+    width: 100%;
+    height: 70px;
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+.ulogo{
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+.usa{
+    text-align: center;
+}
+.us{
+    font-size: 12px;
+    font-weight: bold;
+}
+.subheader{
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;  
+}
+.navbar{
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+}
+.navbar ul{
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+.navbar ul li{
+    margin: 5px 15px;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: black;
+    position: relative;
+    padding: 8px 0;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.navbar ul li a::after{
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: -5px;
+    width: 0%;
+    height: 2px;
+    background-color: yellow;
+    transition: width 0.3s ease-in-out;
+    visibility: hidden;
+}
+.navbar ul li a:hover::after{
+    width: 100%;
+    visibility: visible;
+}
+.navbar ul li a:hover{
+    color: yellow;
+}
+.navbar ul li a:active{
+    color: blueviolet;
+}
+
+.hugeimage{
+    width: 100%;
+    min-height: 350px;
+    background-image: url(../images/Pitch.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.middle{
+    width: 200px;
+    height: 200px;
+    margin: 20px 0;
+}
+.written{
+    color: white;
+}
+.yellow{
+    color: yellow;
+}
+.mivision{
+    width: 100%;
+    background-color: gainsboro;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.mission{
+    max-width: 400px;
+    min-height: 300px;
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 280px;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+}
+.mission:hover{
+    transform: translateY(-10px);
+}
+.ourmission{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: crimson;
+    transition: opacity 0.3s ease;
+    text-align: center;
+}
+.statement{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: larger;
+    line-height: 1.;
+}
+.mission:hover h1.ourmission{
+    opacity: 0;
+}
+.mission:hover p.statement{
+    opacity: 1;
+}
+.end{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0;
+    background-color: rgb(174, 174, 7);
+}
+.footer{
+    background-color: rgb(174, 174, 7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    font-size: 14px;
+    gap: 10px;
+    text-align: center;
+    min-height: 190px;
+    color: white;
+}
+.footer a{
+    color: crimson;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.footer a:hover{
+    color: #00aced;
+}
+.about{
+    width: 100%;
+    min-height: 100vh;
+    background-color: white;
+}
+.abtc{
+    width: 100%;
+    min-height: 70px;
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    flex-wrap: wrap;
+    border-radius: 20px;
+}
+.mssg{
+    text-align: center;
+    color: black;
+    font-weight: bolder;
+}
+.first{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    padding-top: -8px;
+    margin-bottom: 20px;
+    gap: 10px;
+    line-height: 1.4;
+}
+.ft{
+     width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+.description{
+    font-family: 'Times New Roman', Times, serif;
+}
+.description a{
+    text-decoration: none;
+}
+.mission1{
+    max-width: 400px;
+    min-height: 400px;
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 280px;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+}
+.statement1{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    display: block;
+    align-items: center;
+}
+.mission1:hover{
+    transform: translateY(-10px);
+}
+.mission1:hover h3.ourmission{
+    opacity: 0;
+}
+.mission1:hover table.statement1{
+    opacity: 1;
+}
+.mission2{
+    max-width: 400px;
+    min-height: 400px;
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 280px;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+}
+.mission2:hover{
+    transform: translateY(-10px);
+}
+.ourmission2{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: crimson;
+    transition: opacity 0.3s ease;
+    text-align: center;
+}
+
+.statement2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+.mission2:hover h1.ourmission2{
+    opacity: 0;
+}
+.mission2:hover p.statement2{
+    opacity: 1;
+}
+
+
+.pictures{
+    width: 100%;
+    min-height: 100vh;
+}
+.imagebox{
+    width: 100%;
+    min-height: 100vh;
+    background-color: white;
+    padding: 30px 30px;
+    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.sss{
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease ;
+}
+.sss:hover{
+    transform: scale(1.1);
+    opacity: 1;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+.na{
+    width: 100%;
+    min-height: 100vh;
+    background-color: gainsboro;
+}
+.news{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loud{
+    color: crimson;
+    font-weight: bolder;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+
+
+
+@media screen and (max-width:600px) {
+    .navbar ul {
+    flex-direction: column;
+    text-align: center;
+    padding: 0;
+  }
+
+   .mivision {
+    flex-direction: column;
+  }
+
+  .ulogo {
+    width: 80px;
+  }
+
+  .statement {
+    font-size: 14px;
+    text-align: center;
+  }
+
+
+
+
+}
+
+
