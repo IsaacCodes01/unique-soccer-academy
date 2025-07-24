@@ -84,9 +84,18 @@ body{
 }
 .navbar ul li a:hover{
     color: yellow;
+    background-color: black;
+    border-radius: 5px;
+    transition: 0.4s ease-in-out;
 }
 .navbar ul li a:active{
     color: blueviolet;
+}
+.navbar a.active{
+    background-color:black !important;
+    color: yellow !important;
+    border-radius: 5px;
+    padding: 8px 12px;
 }
 
 .hugeimage{
@@ -221,6 +230,7 @@ body{
     text-align: center;
     color: black;
     font-weight: bolder;
+    font-family: 'Times New Roman', Times, serif;
 }
 .first{
     width: 100%;
@@ -331,6 +341,52 @@ body{
 .mission2:hover p.statement2{
     opacity: 1;
 }
+.first1{
+    width: 80%;
+    min-height: 100vh;
+    margin: auto;
+    padding: 20px;
+    padding-top: -8px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    display: block;
+    background-color: gainsboro;
+}
+.first1 a{
+    display: block;
+    margin-bottom: 10px;
+    color: crimson;
+    font-weight: bold;
+    text-decoration: none;
+}
+.first1 a:hover{
+    color: blue;
+}
+.first1 a:active{
+    color: green;
+}
+.description1{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+}
+.description11{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+}
+.first11{
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    padding-top: -8px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    display: block;
+    background-color: gainsboro;
+}
+.first11 h4{
+    margin-bottom: 20px;
+}
+
 
 
 .pictures{
@@ -402,8 +458,69 @@ body{
   }
 
 
-
-
+}
+/* For touch devices (mobile/tablet) - click to reveal */
+@media (hover: none) and (pointer: coarse) {
+  .mission.active h1.ourmission {
+    opacity: 0;
+  }
+  
+  .mission.active p.statement {
+    opacity: 1;
+  }
+  
+  /* Optional: Add a subtle indication that boxes are clickable on mobile */
+  .mission::after {
+    content: "👆 Tap to reveal";
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 12px;
+    color: crimson;
+    opacity: 0.7;
+  }
+  
+  .mission.active::after {
+    display: none;
+  }
+}
+@media (hover: none) and (pointer: coarse) {
+  .mission.active h1.ourmission {
+    opacity: 0;
+  }
+  
+  .mission.active p.statement {
+    opacity: 1;
+  }
+  
+  /* Optional: Add a subtle indication that boxes are clickable on mobile */
+  .mission::after {
+    content: "👆 Tap to reveal";
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 12px;
+    color: crimson;
+    opacity: 0.7;
+  }
+  
+  .mission.active::after {
+    display: none;
+  }
 }
 
+/* Keep hover effects for desktop */
+@media (hover: hover) and (pointer: fine) {
+  .mission:hover h1.ourmission {
+    opacity: 0;
+  }
+  
+  .mission:hover p.statement {
+    opacity: 1;
+  }
+  
+  .mission:hover {
+    transform: translateY(-10px);
+  }
+}
 
