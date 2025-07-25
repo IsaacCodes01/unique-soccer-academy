@@ -434,6 +434,28 @@ body{
     font-weight: bolder;
     font-family: 'Times New Roman', Times, serif;
 }
+.down{
+    padding-top: 10px;
+}
+.sponsor{
+    width: 100%;
+    min-height: 50vh;
+    background-color:  white;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    
+}
+.spons{
+    width: 200px;
+    height: 200px;
+}
+.hh3{
+    font-size: 24px;
+    font-family: 'Times New Roman', Times, serif;
+    color: crimson;
+
+}
 
 
 
