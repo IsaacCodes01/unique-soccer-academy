@@ -5,7 +5,6 @@
     <title>News & Announcements</title>
     <link rel="stylesheet" href="../css/style.css" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="node.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
@@ -31,8 +30,22 @@
                     <ul>
                         <li><i class="fa-solid fa-house"></i><a href="index.html"> Home</a></li>
                         <li><i class="fas fa-info-circle"></i><a href="about.html"> About Us</a></li>
-                        <li><i class="fa-solid fa-newspaper"></i><a href="news.html" class="active"> News & Announcements</a></li>
-                        <li><i class="fas fa-images"></i><a href="gallery.html"> Gallery</a></li>
+                        <li class="dropdown">
+                            <i class="fa-solid fa-newspaper"></i>
+                            <a href="#" class="dropdown-toggle"> News & Announcements <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="news1.html"><i class="fas fa-newspaper"></i> News</a></li>
+                                <li><a href="announcements.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <i class="fas fa-images"></i>
+                            <a href="#" class="dropdown-toggle"> Gallery <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="photos.html"><i class="fa-solid fa-image"></i> Photos </a></li>
+                                <li><a href="videos.html"><i class="fa-solid fa-circle-play"></i> Videos</a></li>
+                            </ul>
+                        </li>
                         <li><i class="fa-solid fa-address-book"></i><a href="contact.html"> Contact Us</a></li>
                     </ul>
                 </nav>
@@ -92,6 +105,6 @@
             <!--End of Script to insert current year for copyright-->
 
 
-    
+    <script src="node.js"></script>
 </body>
 </html>

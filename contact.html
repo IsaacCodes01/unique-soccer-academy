@@ -5,7 +5,6 @@
     <title>Contact Us</title>
     <link rel="stylesheet" href="../css/style.css" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="node.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
@@ -31,8 +30,22 @@
                     <ul>
                         <li><i class="fa-solid fa-house"></i><a href="index.html"> Home</a></li>
                         <li><i class="fas fa-info-circle"></i><a href="about.html"> About Us</a></li>
-                        <li><i class="fa-solid fa-newspaper"></i><a href="news.html" > News & Announcements</a></li>
-                        <li><i class="fas fa-images"></i><a href="gallery.html"> Gallery</a></li>
+                        <li class="dropdown">
+                            <i class="fa-solid fa-newspaper"></i>
+                            <a href="#" class="dropdown-toggle"> News & Announcements <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="news1.html"><i class="fas fa-newspaper"></i> News</a></li>
+                                <li><a href="announcements.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <i class="fas fa-images"></i>
+                            <a href="#" class="dropdown-toggle"> Gallery <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="photos.html"><i class="fa-solid fa-image"></i> Photos </a></li>
+                                <li><a href="videos.html"><i class="fa-solid fa-circle-play"></i> Videos</a></li>
+                            </ul>
+                        </li>
                         <li> <i class="fa-solid fa-address-book"></i> <a href="contact.html" class="active">Contact Us</a></li>
                     </ul>
                 </nav>
@@ -57,7 +70,7 @@
                     <p class="description1"><strong>Instagram</strong></p>
                     <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Unique Soccer Academy</a>
                     <p class="description1"><strong>Mail</strong></p>
-                    <a href="mailto:oparetogiver@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i>Send us an email</a>
+                    <a href="mailto:uniquesocceracademy1@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i> uniquesocceracademy1@gmail.com </a>
                     <p class="description1"><strong>WhatsApp</strong></p>
                     <a href="https://wa.me/233544400543" target="_blank"><i class="fab fa-whatsapp"></i> 0544400543</a>
                     <p class="description1"><strong>Hotlines</strong></p>
@@ -77,7 +90,7 @@
                 <center><div class="first11">
                     <h4>We are <i class="fa-solid fa-location-dot"></i> located at Gomoa East, in a town called Apra.</h4>
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3066.2011673380894!2d-0.48659542641789927!3d5.557146133641078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdfb126fdf490c7%3A0xeea59798ef6a95d4!2sApra%20SDA%20Basic%20School%20(ASDA)!5e1!3m2!1sen!2sgh!4v1753319680401!5m2!1sen!2sgh" 
-                    width="600" 
+                    width="450" 
                     height="450" 
                     style="border:0;" 
                     allowfullscreen="" 
@@ -87,7 +100,7 @@
 
                     <h4 class="down"><i class="fa-solid fa-location-dot"></i>Locate our office at Ablekuma Agbagena</h4>
                     <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3065.8041356412978!2d-0.311291!3d5.632884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNcKwMzcnNTguNCJOIDDCsDE4JzQwLjciVw!5e1!3m2!1sen!2sgh!4v1753413268603!5m2!1sen!2sgh" 
-                    width="600" 
+                    width="450" 
                     height="450" 
                     style="border:0;" 
                     allowfullscreen="" 
@@ -135,6 +148,6 @@
             <!--End of Footer-->
 
 
-    
+    <script src="node.js"></script>
 </body>
 </html>

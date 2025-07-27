@@ -2,6 +2,11 @@
 function openImage(img){
     window.open(img.src, '_blank');
 }
+// Opens the video in another tab foe a better view
+function openvideo(videoElement) {
+    const videoSrc = videoElement.currentSrc || videoElement.src;
+    window.open(videoSrc, '_blank');
+}
 
 // Check if device supports touch
 function isTouchDevice() {
@@ -37,4 +42,16 @@ if (isTouchDevice()) {
     });
   });
 }
+
+document.querySelector('.dropdown-toggle').addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent navigation to #
+    this.parentElement.classList.toggle('dropdown-open');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dropdown')) {
+        document.querySelector('.dropdown').classList.remove('dropdown-open');
+    }
+});
 

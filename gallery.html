@@ -31,8 +31,22 @@
                     <ul>
                         <li><i class="fa-solid fa-house"></i><a href="index.html"> Home</a></li>
                         <li><i class="fas fa-info-circle"></i><a href="about.html"> About Us</a></li>
-                        <li><i class="fa-solid fa-newspaper"></i><a href="news.html"> News & Announcements</a></li>
-                        <li><i class="fas fa-images"></i><a href="gallery.html" class="active"> Gallery</a></li>
+                        <li class="dropdown">
+                            <i class="fa-solid fa-newspaper"></i>
+                            <a href="#" class="dropdown-toggle active"> News & Announcements <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="news1.html"><i class="fas fa-newspaper"></i> News</a></li>
+                                <li><a href="announcements.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <i class="fas fa-images"></i>
+                            <a href="#" class="dropdown-toggle active"> Gallery <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="photos.html"><i class="fa-solid fa-image"></i> Photos </a></li>
+                                <li><a href="videos.html"><i class="fa-solid fa-circle-play"></i> Videos</a></li>
+                            </ul>
+                        </li>
                         <li><i class="fa-solid fa-address-book"></i><a href="contact.html"> Contact Us</a></li>
                     </ul>
                 </nav>
@@ -40,7 +54,7 @@
             </div>
             <!--End of Sub Header-->
 
-             <!--Start of Gallerty Box-->
+             <!--Start of Gallery Box-->
                 <div class="pictures">
                     <!--Start of Title-->
                     <div class="abtc">
@@ -71,7 +85,7 @@
                     </div>
                     <!--Start of box containing images-->
                 </div>
-                <!--End of Pictures-->
+                <!--End of Gallery box-->
                  
 
                 <!--Start of Footer-->
@@ -110,11 +124,8 @@
              document.getElementById("year").textContent = new Date().getFullYear();
             </script>
             <!--End of Script to insert current year for copyright-->
-                  
-                     
-
-                
-
     
+
+    <script src="node.js"></script>
 </body>
 </html>

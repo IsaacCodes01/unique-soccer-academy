@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+    <title>Announcements</title>
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+</head>
+<body>
+    <!--Start of Main Container-->
+    <div class="maincontainer">
+
+        <!--Start of Header-->
+        <header class="header">
+            <img class="ulogo" src="../images/usa_logo.png" alt="Unique Soccer Academy logo">
+                <h3 class="usa"> <span class="us">UNIQUE SOCCER</span> <br> ACADEMY</h3>
+        </header>
+        <!--End of Header-->
+
+            <!--Start of Sub Header-->
+            <div class="subheader">
+                <!--Start of Navigation links-->
+                <nav class="navbar">
+                    <ul>
+                        <li><i class="fa-solid fa-house"></i><a href="index.html"> Home</a></li>
+                        <li><i class="fas fa-info-circle"></i><a href="about.html"> About Us</a></li>
+                        <li class="dropdown">
+                            <i class="fas fa-bullhorn"></i>
+                            <a href="#" class="dropdown-toggle active"> Announcements <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="news1.html"><i class="fas fa-newspaper"></i> News</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <i class="fas fa-images"></i>
+                            <a href="#" class="dropdown-toggle"> Gallery <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="photos.html"><i class="fa-solid fa-image"></i> Photos </a></li>
+                                <li><a href="videos.html"><i class="fa-solid fa-circle-play"></i> Videos</a></li>
+                            </ul>
+                        </li>
+                        <li><i class="fa-solid fa-address-book"></i><a href="contact.html"> Contact Us</a></li>
+                    </ul>
+                </nav>
+                <!--End of Navigation links-->      
+            </div>
+            <!--End of Sub Header-->
+
+
+            <!--Start of News box-->
+            <div class="na">
+
+                <!--Start of News header-->
+                <div class="abtc">
+                    <h2 class="mssg"><i class="fas fa-bullhorn"></i> Announcements</h2>
+                </div>
+
+                <!--Start of announcement body-->
+                <div class="news">
+                    <h1 class="loud">NO ANNOUNCEMENT YET... <br>
+                        STAY TUNED!
+                    </h1>
+                </div>
+                <!--End of announcement body-->
+            </div>
+            <!--End of News box-->
+
+            <!--Start of Footer-->
+            <div class="end">
+                <footer class="footer">
+                    <div class="fh"><img class="ulogo" src="../images/usa_logo.png" alt="Unique Soccer Academy logo">
+                <h3 class="usa"> <span class="us">UNIQUE SOCCER</span> <br> ACADEMY</h3></div>
+                <p>&copy; <span id="year"></span> Unique Soccer Academy. All rights reserved.</p>
+                </footer>
+                <footer class="footer">
+                    <p><i class="fa-solid fa-location-dot"></i> Location</p>
+                <a href="https://maps.app.goo.gl/uH5maqUhNKFrEUw36" target="_blank">Kasoa-Apra, Ghana</a>
+                </footer>
+                <footer class="footer">
+                    <p>Contact Us On Our Socials</p>
+                 <a href="https://facebook.com/profile.php?id=61565360907088" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                 <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                 <a href="https://wa.me/233544400543" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                </footer>
+                <footer class="footer">
+                    <p>Sponsors</p>
+                    <div class="fh"><img class="ulogo" src="../images/Opas.jpg" alt="Opass Construction logo">
+                    <a href="https://wa.me/233544400543" target="_blank">Opass Construction</a>
+                    </div>
+                </footer>
+                <footer class="footer">
+                    <p>Motto</p>
+                    <div class="fh"><img class="ulogo" src="../images/usa_logo.png" alt="Unique Soccer Academy logo">
+                <h3 class="written">WHERE <span class="yellow">CHAMPIONS</span> ARE MADE</h3></div>
+                </footer>
+            </div>
+            <!--End of Footer-->
+
+            <!--Script to insert current year for copyright-->
+            <script>
+             document.getElementById("year").textContent = new Date().getFullYear();
+            </script>
+            <!--End of Script to insert current year for copyright-->
+
+
+
+    <script src="node.js"></script>
+</body>
+</html>
