@@ -620,3 +620,60 @@ body{
   }
 }
 
+/* Mobile responsiveness for videos */
+@media screen and (max-width: 480px) {
+    .imagebox {
+        grid-template-columns: 1fr; /* Single column */
+        padding: 10px;
+        gap: 10px;
+        min-height: auto;
+    }
+    
+    .sss {
+        height: 200px;
+    }
+    
+    .abtc {
+        padding: 10px 15px;
+        min-height: 60px;
+    }
+    
+    .mssg {
+        font-size: 1.2rem;
+    }
+}
+
+/* For 600px screens specifically */
+@media screen and (min-width: 481px) and (max-width: 600px) {
+    .imagebox {
+        grid-template-columns: 1fr; /* Still single column */
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .sss {
+        height: 220px; /* Slightly taller than 480px */
+    }
+}
+
+/* For larger mobile/small tablets */
+@media screen and (min-width: 601px) and (max-width: 768px) {
+    .imagebox {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .sss {
+        height: 250px;
+    }
+}
+
+/* For tablets */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .imagebox {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    }
+}
+
+
