@@ -9,9 +9,13 @@ body{
 }
 .maincontainer{
     width: 100%;
-    min-height: 100vh;    
+    min-height: 100vh;
+    padding-top: 125px;
 }
 .header{
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 70px;
     background-color: yellow;
@@ -20,6 +24,7 @@ body{
     justify-content: center;
     padding: 0 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 1001;
 }
 .ulogo{
     width: 60px;
@@ -37,10 +42,14 @@ body{
     font-weight: bold;
 }
 .subheader{
+    position: fixed;
+    top: 70px;
+    left: 0;
     width: 100%;
     background-color: white;
     display: flex;
-    align-items: center;  
+    align-items: center; 
+    z-index: 1000; 
 }
 .navbar{
     width: 100%;
@@ -149,7 +158,6 @@ body{
     visibility: visible;
     transform: translateY(0);
 }
-
 .hugeimage{
     width: 100%;
     min-height: 350px;
@@ -163,6 +171,7 @@ body{
     align-items: center;
     justify-content: center;
     text-align: center;
+    margin-top: 13px;
 }
 .middle{
     width: 200px;
@@ -235,18 +244,20 @@ body{
 .mission:hover p.statement{
     opacity: 1;
 }
-.end{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 0;
+.footer{
     background-color: rgb(174, 174, 7);
 }
-.footer{
+.end{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+}
+.footers{
     background-color: rgb(174, 174, 7);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 30px 20px;
     font-size: 14px;
     gap: 10px;
@@ -254,12 +265,12 @@ body{
     min-height: 190px;
     color: white;
 }
-.footer a{
+.footers a{
     color: crimson;
     text-decoration: none;
     transition: color 0.3s;
 }
-.footer a:hover{
+.footers a:hover{
     color: #00aced;
 }
 .about{
@@ -277,6 +288,7 @@ body{
     padding: 15px 20px;
     flex-wrap: wrap;
     border-radius: 20px;
+    margin-top: 14px;
 }
 .mssg{
     text-align: center;
@@ -531,14 +543,16 @@ body{
 
 
 
+/* Footer */
+@media (max-width: 600px) {
+    .end {
+        grid-template-columns: 1fr; /* Stack vertically on mobile */
+        gap: 1px;
+    }
+}
 
 
 @media screen and (max-width:600px) {
-    .navbar ul {
-    flex-direction: column;
-    text-align: center;
-    padding: 0;
-  }
 
    .mivision {
     flex-direction: column;
@@ -580,30 +594,6 @@ body{
     display: none;
   }
 }
-@media (hover: none) and (pointer: coarse) {
-  .mission.active h1.ourmission {
-    opacity: 0;
-  }
-  
-  .mission.active p.statement {
-    opacity: 1;
-  }
-  
-  /* Optional: Add a subtle indication that boxes are clickable on mobile */
-  .mission::after {
-    content: "👆 Tap to reveal";
-    position: absolute;
-    bottom: 10px;
-    right: 15px;
-    font-size: 12px;
-    color: crimson;
-    opacity: 0.7;
-  }
-  
-  .mission.active::after {
-    display: none;
-  }
-}
 
 /* Keep hover effects for desktop */
 @media (hover: hover) and (pointer: fine) {
@@ -621,7 +611,7 @@ body{
 }
 
 /* Mobile responsiveness for videos */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 600px) {
     .imagebox {
         grid-template-columns: 1fr; /* Single column */
         padding: 10px;
