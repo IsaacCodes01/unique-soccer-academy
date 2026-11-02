@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
    
-    <title>Videos</title>
-    <link rel="stylesheet" href="../css/style.css" type="text/css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+    <title>Videos | Unique Soccer Academy</title>
+    <meta name="description" content="Videos from Unique Soccer Academy, a football club in Kasoa-Apra, Ghana.">
+    <meta name="theme-color" content="#0B0B0D">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
 </head>
 <body>
     <!--Start of Main Container-->
@@ -16,7 +19,7 @@
 
         <!--Start of Header-->
         <header class="header">
-            <img class="ulogo" src="../images/usa_logo.png" alt="Unique Soccer Academy logo">
+            <img class="ulogo" src="assets/images/usa_logo.png" alt="Unique Soccer Academy logo">
                 <h3 class="usa"> <span class="us">UNIQUE SOCCER</span> <br> ACADEMY</h3>
         </header>
         <!--End of Header-->
@@ -62,20 +65,17 @@
                     <!--Start of box cotaining videos-->
                     <div class="imagebox">
                         <video controls class="sss" onclick="openvideo(this)">
-                            <source src="../videos/Unique_vids_1.mp4" type="video/mp4" >
-                            <source src="../videos/Unique_vids_1.ogg" type="video/ogg" >
+                            <source src="assets/videos/Unique_vids_1.mp4" type="video/mp4" >
                             Your browser does not support this file.
                         </video>
 
                         <video controls class="sss" onclick="openvideo(this)">
-                            <source src="../videos/Unique_vids_2.mp4" type="video/mp4">
-                            <source src="../videos/Unique_vids_2.ogg" type="video/ogg">
+                            <source src="assets/videos/Unique_vids_2.mp4" type="video/mp4">
                             Your browser does not support this file.
                         </video>
 
                         <video controls class="sss" onclick="openvideo(this)">
-                            <source src="../videos/Unique_vids_3.mp4" type="video/mp4">
-                            <source src="../videos/Unique_vids_3.ogg" type="video/ogg">
+                            <source src="assets/videos/Unique_vids_3.mp4" type="video/mp4">
                             Your browser does not support this file.
                         </video>
                     
@@ -90,7 +90,7 @@
             <footer>
                 <div class="end">
                 <div class="footers">
-                    <div class="fh"><img class="ulogo" src="../images/usa_logo.png" alt="Unique Soccer Academy logo">
+                    <div class="fh"><img class="ulogo" src="assets/images/usa_logo.png" alt="Unique Soccer Academy logo">
                 <h3 class="usa"> <span class="us">UNIQUE SOCCER</span> <br> ACADEMY</h3></div>
                 <p>&copy; <span id="year"></span> Unique Soccer Academy. All rights reserved.</p>
                     </div>
@@ -106,25 +106,20 @@
                 </div>
                 <div class="footers">
                     <p>Sponsors</p>
-                    <div class="fh"><img class="ulogo" src="../images/Opas.jpg" alt="Opass Construction logo">
+                    <div class="fh"><img class="ulogo" src="assets/images/Opas.jpg" alt="Opass Construction logo">
                     <a href="https://wa.me/233544400543" target="_blank">Opass Construction</a>
                     </div>
                 </div>
                 <div class="footers">
                     <p>Motto</p>
-                    <div class="fh"><img class="ulogo" src="../images/usa_logo.png" alt="Unique Soccer Academy logo">
+                    <div class="fh"><img class="ulogo" src="assets/images/usa_logo.png" alt="Unique Soccer Academy logo">
                 <h3 class="written">WHERE <span class="yellow">CHAMPIONS</span> ARE MADE</h3></div>
                 </div>
             </div>
             </footer>
             <!--End of Footer-->
 
-            <!--Script to insert current year for copyright-->
-            <script>
-             document.getElementById("year").textContent = new Date().getFullYear();
-            </script>
-            <!--End of Script to insert current year for copyright-->
     
-    <script src="node.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
