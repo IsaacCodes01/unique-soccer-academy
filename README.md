@@ -1,37 +1,184 @@
-## Unique Soccer Academy Website
+<div align="center">
 
-This project serves as the official website for **Unique Soccer Academy**, a rising third-division football club located in **Kasoa-Apra, Ghana**. The site showcases our club's mission, training schedules, development programs, and our growing community of young, ambitious athletes.
+<img src="assets/images/usa_logo.png" alt="Unique Soccer Academy crest" width="120">
 
-### 🎯 Purpose
+# Unique Soccer Academy
 
-The goal of this site is to provide a digital home for the academy—sharing updates, highlighting achievements, attracting sponsorships, and communicating our values to visitors. As we continue to nurture talent and build future champions, we believe digital visibility plays a vital role in expanding our reach and opportunities.
+### *Where Champions Are Made*
 
-### 💻 Features
+The official website of **Unique Soccer Academy**, a third-division football club in
+**Kasoa-Apra, Gomoa East, Central Region, Ghana**.
 
-- Club mission and core values
-- Weekly training schedule table
-- Dynamic layout and hover effects for engaging content
-- Sponsorship invitation section
-- Responsive footer with social and contact links
-- Mobile-friendly design (coming soon)
+[**🌐 Live Site**](https://isaaccodes01.github.io/unique-soccer-academy/) ·
+[Facebook](https://facebook.com/profile.php?id=61565360907088) ·
+[WhatsApp](https://wa.me/233544400543) ·
+[Email](mailto:uniquesocceracademy1@gmail.com)
 
-### 🧰 Tech Stack
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![GitHub Pages](https://img.shields.io/badge/Hosted%20on-GitHub%20Pages-222?style=flat&logo=github)
 
-- HTML5
-- CSS3 with Flexbox
-- JavaScript (light interactivity and mobile touch enhancements)
-- GitHub Pages (for hosting)
+</div>
 
-### 📌 Status
+---
 
-Currently under active development and refinement. Contributions and suggestions are welcome.
+## 📸 Preview
 
-### 🤝 Sponsorship Opportunity
+| Before (2025, first-year project) | After (2026 redesign) |
+|---|---|
+| ![Before](docs/screenshots/before/home.png) | ![After](docs/screenshots/after/home.png) |
 
-We're open to partnerships and sponsorships that help us achieve our goals—whether through equipment, training support, or visibility. For inquiries, please contact us via the website or email provided.
+---
 
-### 👨🏾‍💻 Author
+## ⚽ About the Club
 
-Built and maintained by **Isaac Otabil**, systems designer and frontend developer passionate about bridging technology and sports development.
+Unique Soccer Academy was founded on **20th March 2020** by **Mr. Nii Perrygrino Otoo** in Anyaa,
+Greater Accra, with just 12 players training at Anyaa M/A School. The academy later moved to
+Auntie-Aku's Kokompe Park, and on **11th February 2024** it moved to its current home in **Apra**.
+Mr. Otoo now leads the academy alongside **Mr. Emmanuel Opare Asamoah**, CEO of
+**Opass Construction**, the club's major sponsor.
 
-## Live Site
+**Mission:** To nurture football talent while creating pathways for our players to reach
+professional clubs, academies and scholarship opportunities, locally and internationally.
+
+**Vision:** To become a globally respected institution that transforms promising young
+footballers into professional athletes and well-rounded individuals.
+
+---
+
+## ✨ Features
+
+### Design and experience
+- [ ] Modern brand design based on the club crest (black, gold and red), with Oswald + Inter fonts
+- [ ] Sticky header that turns from transparent to solid on scroll, with a scroll-progress bar
+- [ ] Animated hamburger menu with a slide-in mobile navigation (keyboard and screen-reader friendly)
+- [ ] Full-screen hero with a Ken Burns background, animated headline and call-to-action buttons
+- [ ] Scroll-reveal animations, count-up stats, hover micro-interactions and page transitions
+- [ ] Fully responsive from 360px phones to large desktops
+- [ ] Respects the user's *reduced motion* setting
+
+### Pages
+- [ ] **Home**: hero, stats, mission & vision, what we offer, latest news, gallery preview, sponsors
+- [ ] **About**: club story, interactive timeline, leadership, training schedule, who can join
+- [ ] **Team**: coaches and players with position filters
+- [ ] **News**: news & announcements, next-match countdown, fixtures and results
+- [ ] **Gallery**: photo grid with a swipeable lightbox, plus a video player modal
+- [ ] **Contact**: contact cards, *Join the Academy* form (sends via WhatsApp), maps, FAQ
+- [ ] **404**: a friendly "Offside!" page
+
+### Under the hood
+- [ ] Header and footer written once in `js/layout.js` and shared by every page
+- [ ] Content (news, fixtures, players, photos) lives in `js/data.js`, so updates need no HTML
+- [ ] Optimised WebP images, lazy loading and a fast Lighthouse score
+- [ ] SEO meta tags, Open Graph share previews, sitemap and structured data
+
+---
+
+## 🗂️ Project Structure
+
+```
+unique-soccer-academy/
+├── index.html          # Home
+├── about.html          # Story, timeline, leadership, schedule
+├── team.html           # Coaches and players
+├── news.html           # News, announcements, fixtures & results
+├── gallery.html        # Photos and videos
+├── contact.html        # Contact, join form, maps, FAQ
+├── 404.html            # Page not found
+├── css/
+│   └── style.css       # All styles (tokens → base → components → pages → animations)
+├── js/
+│   ├── layout.js       # Shared header + footer
+│   ├── main.js         # Menu, scroll effects, animations
+│   ├── data.js         # ✏️ Editable site content
+│   ├── gallery.js      # Gallery tabs and lightbox
+│   └── contact.js      # Join form → WhatsApp
+├── assets/
+│   ├── images/
+│   └── videos/
+├── docs/screenshots/   # Before/after screenshots
+├── CLAUDE.md           # Rules for Claude Code
+└── REDESIGN_PHASES.md  # Step-by-step redesign plan
+```
+
+---
+
+## 🚀 Run It Locally
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/IsaacCodes01/unique-soccer-academy.git
+   cd unique-soccer-academy
+   ```
+2. Open the folder in **VS Code**.
+3. Install the **Live Server** extension, right-click `index.html`, and choose **Open with Live Server**.
+
+No installs or build step needed. It's plain HTML, CSS and JavaScript.
+
+---
+
+## ✏️ Updating the Content
+
+All changing content lives in **`js/data.js`**. To add a news post, a fixture, a result or a
+player, copy an example object, fill it in, save, and refresh the page.
+
+```js
+news: [
+  {
+    date: "2026-11-15",
+    title: "Pre-season training camp begins",
+    summary: "Players report to Apra for the start of camp.",
+    image: "assets/images/news/camp.webp",
+    category: "News"            // or "Announcement"
+  }
+],
+```
+
+---
+
+## 🌍 Deployment
+
+The site is hosted on **GitHub Pages** from the `main` branch.
+Any push to `main` updates the live site within a minute or two.
+
+*Settings → Pages → Source: Deploy from a branch → `main` / root*
+
+---
+
+## 🎨 Brand Colours
+
+| Colour | Hex | Use |
+|---|---|---|
+| ⬛ Black | `#0B0B0D` | Header, footer, dark sections |
+| 🟨 Gold | `#F5C518` | Main accent and buttons |
+| 🟥 Red | `#D62828` | Highlights and badges |
+| ⬜ Off-white | `#F7F5EF` | Light sections |
+
+---
+
+## 🤝 Sponsorship
+
+We welcome individuals, businesses and organisations who want to support young football talent,
+through equipment, training support or visibility.
+Reach us on [WhatsApp](https://wa.me/233544400543) or at
+[uniquesocceracademy1@gmail.com](mailto:uniquesocceracademy1@gmail.com).
+
+**Proudly sponsored by Opass Construction.**
+
+---
+
+## 👨🏾‍💻 Author
+
+Built and maintained by **Isaac Otabil**, an IT student at Ghana Communications Technology University.
+
+The first version was built in my first year as a mid-semester exam project (graded **A**).
+The 2026 redesign was planned and built with the help of Claude Code.
+
+---
+
+<div align="center">
+
+© Unique Soccer Academy · Kasoa-Apra, Ghana
+
+</div>
