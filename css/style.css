@@ -3149,12 +3149,100 @@ body.dialog-open {
     border-top: 1px solid var(--line-light);
 }
 
-/* 10px padding + a 24px line = a 44px tall, easy-to-tap link */
-.contact-row a {
-    display: block;
+/* Each contact detail is a whole row: an icon tile, the text, and an
+   arrow that slides in on hover/focus, instead of an underlined link.
+   The row stretches 8px past the card's text on each side (negative
+   margin), so its hover highlight has some breathing room.
+   ".contact-card .contact-row a" is more specific than ".card a:not(.btn)"
+   in section 8, so it wins and switches the underline off. */
+.contact-card .contact-row a,
+.contact-row__soon {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
     min-width: 0;
-    padding-block: 10px;
-    line-height: 1.5;
+    min-height: 52px;
+    margin-inline: calc(var(--space-2) * -1) 0;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--black);
+    text-decoration: none;
+    transition:
+        background-color var(--dur-hover) var(--ease),
+        color var(--dur-hover) var(--ease);
+}
+
+.contact-card .contact-row a::after {
+    content: "\f061";           /* Font Awesome "arrow-right" */
+    margin-left: auto;
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 0.8rem;
+    color: var(--gold-ink);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+        opacity var(--dur-hover) var(--ease),
+        transform var(--dur-hover) var(--ease);
+}
+
+.contact-card .contact-row a:hover,
+.contact-card .contact-row a:focus-visible {
+    border-radius: var(--radius-sm); /* keep the round corners with the focus ring */
+    background-color: var(--off-white);
+    color: var(--black);
+}
+
+.contact-card .contact-row a:hover::after,
+.contact-card .contact-row a:focus-visible::after {
+    opacity: 1;
+    transform: none;
+}
+
+/* Small rounded square with the icon; turns gold on hover */
+.contact-row__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background-color: rgba(245, 197, 24, 0.18);
+    color: var(--black);
+    font-size: 0.95rem;
+    transition: background-color var(--dur-hover) var(--ease);
+}
+
+.contact-row a:hover .contact-row__icon,
+.contact-row a:focus-visible .contact-row__icon {
+    background-color: var(--gold);
+}
+
+/* min-width: 0 lets the long email wrap (at the <wbr> break points in
+   the HTML) instead of pushing the card wider */
+.contact-row__text {
+    min-width: 0;
+    overflow-wrap: break-word;
+}
+
+/* Not a link yet (Instagram): greyed out */
+.contact-row__soon {
+    color: var(--grey);
+}
+
+.contact-row__soon .contact-row__icon {
+    background-color: var(--off-white);
+    color: var(--grey);
+}
+
+/* "Coming soon" on its own small line under the name */
+.contact-row__note {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
 .copy-btn {
@@ -4551,5 +4639,10 @@ body.dialog-open {
     .toast,
     .toast.is-visible {
         transform: translateX(-50%);
+    }
+
+    /* Contact rows: the arrow just appears, no slide */
+    .contact-card .contact-row a::after {
+        transform: none;
     }
 }

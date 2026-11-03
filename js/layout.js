@@ -17,7 +17,7 @@ const NAV_LINKS = [
 ];
 
 // The gold call-to-action button at the end of the menu
-const JOIN_LINK = { label: "Join Us", href: "contact.html", icon: "fa-solid fa-futbol" };
+const JOIN_LINK = { label: "Join Us", href: "contact.html#join", icon: "fa-solid fa-futbol" };
 
 // Social icons shown at the bottom of the mobile menu and in the footer.
 // A link with an empty href still shows its icon, but as a "coming soon"
