@@ -1228,7 +1228,10 @@ a.social-btn:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 60%;
+    /* Which part of the photo stays in view when it is cropped: 0% = top,
+       100% = bottom. Wide screens crop the most. A page can choose its
+       own with style="--banner-focus: 30%" on the <img>. */
+    object-position: center var(--banner-focus, 60%);
     animation: banner-zoom 1.8s var(--ease) both;
 }
 
