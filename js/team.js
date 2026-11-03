@@ -1,7 +1,8 @@
 /* ==========================================================================
    team.js (team.html only)
    Builds the coach and player cards from STAFF and PLAYERS in js/data.js.
-   Uses reducedMotion and escapeHTML from js/main.js, which loads first.
+   Uses reducedMotion, escapeHTML and watchReveals from js/main.js,
+   which loads first.
    1. Helpers        2. Cards          3. Filter chips
    4. 3D tilt        5. Start-up
    ========================================================================== */
@@ -52,28 +53,10 @@ function emptyState(icon, title, text) {
 
 /* --------------------------------------------------------------------------
    2. CARDS
-   Each card gets --i (0, 1, 2...) so the CSS can start each one 80ms
-   after the last as it rises in (the same .rise animation as the news).
+   Every card has data-reveal="up". After drawing a list, watchReveals()
+   (main.js, section 9) makes the cards rise in, one after another, as
+   they scroll into view.
    -------------------------------------------------------------------------- */
-let cardObserver = null;
-if ("IntersectionObserver" in window && !reducedMotion.matches) {
-    cardObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target); // animate only once
-        });
-    }, { rootMargin: "0px 0px -8% 0px" });
-}
-
-function riseIn(list) {
-    if (!cardObserver) return;
-    list.querySelectorAll(".profile-card").forEach((card, i) => {
-        card.style.setProperty("--i", Math.min(i, 5)); // don't make card 20 wait 1.6s
-        card.classList.add("rise");
-        cardObserver.observe(card);
-    });
-}
 
 // The photo, or a silhouette until there is one
 function cardMedia(person) {
@@ -93,7 +76,7 @@ function playerCard(player) {
     ].filter(Boolean).join(" &middot; ");
 
     return `
-        <article class="profile-card">
+        <article class="profile-card" data-reveal="up">
             ${cardMedia(player)}
             ${hasNumber ? `<span class="profile-card__number" aria-hidden="true">${escapeHTML(player.number)}</span>` : ""}
             <div class="profile-card__body">
@@ -114,7 +97,7 @@ function staffCard(person) {
         : "";
 
     return `
-        <article class="profile-card">
+        <article class="profile-card" data-reveal="up">
             ${cardMedia(person)}
             <div class="profile-card__body">
                 <span class="badge badge--gold">${escapeHTML(person.role)}</span>
@@ -134,7 +117,7 @@ function renderStaff() {
         return;
     }
     staffList.innerHTML = STAFF.map(staffCard).join("");
-    riseIn(staffList);
+    watchReveals(staffList);
 }
 
 // Drawn again every time a filter chip is clicked
@@ -155,7 +138,7 @@ function renderSquad(filter) {
     }
 
     squadList.innerHTML = players.map(playerCard).join("");
-    riseIn(squadList);
+    watchReveals(squadList);
 }
 
 /* --------------------------------------------------------------------------

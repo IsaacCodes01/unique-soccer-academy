@@ -5,6 +5,7 @@
    3. Newsletter form (footer)   4. Hero slideshow (home)
    5. Stat counters (home)       6. Latest news (home)
    7. Timeline dots (about)      8. Today's training (about)
+   9. Scroll reveal              10. Page fade-out
    ========================================================================== */
 
 // True when the visitor has asked their device for less motion
@@ -100,6 +101,7 @@ if (header) {
     const HIDE_AFTER = 5;    // ignore tiny wobbles smaller than this
     const BACK_TO_TOP_AT = 600; // px scrolled before the back-to-top button appears
     const backToTop = document.querySelector(".back-to-top");
+    const ring = backToTop && backToTop.querySelector(".back-to-top__progress");
     let lastY = window.scrollY;
     let ticking = false;
 
@@ -114,8 +116,12 @@ if (header) {
         const progress = scrollable > 0 ? Math.min(y / scrollable, 1) : 0;
         progressBar.style.setProperty("--progress", progress);
 
-        // Back-to-top button: only once we are far enough down
-        if (backToTop) backToTop.classList.toggle("is-visible", y > BACK_TO_TOP_AT);
+        // Back-to-top button: only once we are far enough down. Its ring
+        // fills up with the same progress: dash offset 100 = empty, 0 = full.
+        if (backToTop) {
+            backToTop.classList.toggle("is-visible", y > BACK_TO_TOP_AT);
+            ring.style.strokeDashoffset = 100 - progress * 100;
+        }
 
         // Hide on scroll down, show on scroll up (mobile only, menu closed)
         const delta = y - lastY;
@@ -376,6 +382,7 @@ function initials(name) {
 // own: news.html on the home page, nowhere ("") on news.html itself.
 // A link starting with "http" goes to another website (e.g. our Facebook
 // post), so it opens in a new tab and the card says where it goes.
+// data-reveal="up": it rises in when scrolled to (section 9).
 function newsCard(item, fallbackLink = NEWS_PAGE) {
     const link = item.link || fallbackLink;
     const isExternal = /^https?:/.test(link);
@@ -410,7 +417,7 @@ function newsCard(item, fallbackLink = NEWS_PAGE) {
     else if (isExternal) source = `<span class="news-card__source"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Read more</span>`;
 
     return `
-        <article class="news-card${link ? " news-card--link" : ""}">
+        <article class="news-card${link ? " news-card--link" : ""}" data-reveal="up">
             <div class="news-card__media">${media}</div>
             <div class="news-card__body">
                 <div class="news-card__meta">
@@ -508,3 +515,95 @@ if (scheduleRows.length && scheduleToday) {
 
     scheduleToday.hidden = false;
 }
+
+/* ==========================================================================
+   9. SCROLL REVEAL (every page)
+   Give an element data-reveal="up", "left", "right" or "zoom" and it
+   animates in the first time it scrolls into view (the animations are in
+   section 10 of style.css). data-delay="200" makes it wait 200ms first,
+   which staggers the cards in a grid.
+
+   IntersectionObserver: we tell the browser which elements to watch and
+   it calls us back when one enters or leaves the screen. Much cheaper
+   than checking every element's position on every scroll event.
+   rootMargin "-8%" at the bottom means "count it as visible once it is
+   8% of the screen height above the bottom edge", so the animation
+   happens where you can actually see it.
+
+   Elements without data-delay that come into view at the same moment
+   (they arrive in one batch of "entries") are staggered automatically,
+   80ms apart. That's how the cards drawn by news.js, team.js and
+   gallery.js ripple in without each needing its own delay.
+   ========================================================================== */
+const REVEAL_STAGGER = 80;   // ms between items revealed together
+const REVEAL_MAX_DELAY = 400; // so the 20th photo doesn't wait 1.6 seconds
+
+let revealObserver = null;
+
+if ("IntersectionObserver" in window && !reducedMotion.matches) {
+    revealObserver = new IntersectionObserver((entries, observer) => {
+        let inBatch = 0;
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            // ?? means "use the right side when the left is missing"
+            const delay = el.dataset.delay ?? Math.min(inBatch * REVEAL_STAGGER, REVEAL_MAX_DELAY);
+            inBatch++;
+            el.style.setProperty("--reveal-delay", `${delay}ms`);
+            el.classList.add("is-revealed");
+            observer.unobserve(el); // animate only once
+        });
+    }, { rootMargin: "0px 0px -8% 0px" });
+}
+
+// Starts watching every [data-reveal] inside "root" that hasn't been
+// revealed yet. news.js, team.js and gallery.js call it again after
+// drawing new cards. Without the observer (old browser or reduced
+// motion) everything is simply marked as revealed.
+function watchReveals(root = document) {
+    root.querySelectorAll("[data-reveal]:not(.is-revealed)").forEach((el) => {
+        if (revealObserver) revealObserver.observe(el);
+        else el.classList.add("is-revealed");
+    });
+}
+
+watchReveals();
+
+/* ==========================================================================
+   10. PAGE FADE-OUT (every page)
+   Clicking a link to another page of this site fades the page out
+   (.is-leaving in style.css), waits for the fade, then goes. The next
+   page fades itself in with CSS. Links that open something else
+   (other websites, email, phone, new tabs, #sections of this page)
+   are left completely alone.
+   ========================================================================== */
+const LEAVE_TIME = 250; // ms, the same as the .is-leaving fade in style.css
+
+document.addEventListener("click", (event) => {
+    // defaultPrevented: another script already handled this click
+    if (reducedMotion.matches || event.defaultPrevented) return;
+
+    // Ctrl/Cmd/Shift-click and middle-click open new tabs or windows
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+
+    const link = event.target.closest("a[href]");
+    if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
+
+    // link.href is always the full address, e.g. http://127.0.0.1:5500/about.html
+    const url = new URL(link.href);
+    if (!url.protocol.startsWith("http") || url.origin !== location.origin) return;
+    if (url.pathname === location.pathname && url.hash) return; // a #section on this page
+
+    event.preventDefault();
+    document.documentElement.classList.add("is-leaving");
+    setTimeout(() => {
+        location.href = url.href;
+    }, LEAVE_TIME);
+});
+
+// The Back button can bring a page back from the browser's memory (the
+// "back/forward cache") exactly as we left it: faded out. "pageshow"
+// fires then with event.persisted = true, so we fade it back in.
+window.addEventListener("pageshow", (event) => {
+    if (event.persisted) document.documentElement.classList.remove("is-leaving");
+});

@@ -201,8 +201,8 @@ if (joinForm) {
    3. FAQ ACCORDION
    Each question is a <button> with aria-expanded="true/false", which
    screen readers announce as "expanded" or "collapsed". The CSS reads
-   the .is-open class to slide the answer open. Opening one closes the
-   others, so only one answer shows at a time.
+   the .is-open class to show the answer and fade it in. Opening one
+   closes the others, so only one answer shows at a time.
    ========================================================================== */
 const faq = document.querySelector(".faq");
 

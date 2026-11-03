@@ -1,11 +1,10 @@
 /* ==========================================================================
    gallery.js (gallery.html only)
    Builds the photo grid and the video cards from PHOTOS and VIDEOS in
-   js/data.js. Uses reducedMotion and escapeHTML from js/main.js, which
-   loads first.
+   js/data.js. Uses reducedMotion, escapeHTML and watchReveals from
+   js/main.js, which loads first.
    1. Tabs          2. Photo grid     3. Video cards
-   4. Scroll-in     5. Dialog helpers 6. Lightbox      7. Video modal
-   8. Start-up
+   4. Dialog helpers 5. Lightbox      6. Video modal    7. Start-up
    ========================================================================== */
 
 const gallery = document.querySelector(".gallery");
@@ -77,12 +76,15 @@ function initTabs() {
    Each photo is a real <button>, so it works with Tab + Enter. The
    button's name for screen readers is the photo's alt text.
    data-index remembers which photo it is, for the lightbox.
+   data-reveal="zoom": each photo grows in as it scrolls into view
+   (main.js, section 9). Photos in the hidden Videos/Photos tab aren't
+   on screen, so they animate when their tab is opened.
    -------------------------------------------------------------------------- */
 function buildPhotoGrid() {
     const photoGrid = document.getElementById("photo-grid");
 
     photoGrid.innerHTML = PHOTOS.map((photo, i) => `
-        <li class="masonry__item">
+        <li class="masonry__item" data-reveal="zoom">
             <button class="masonry__btn" type="button" data-index="${i}" aria-haspopup="dialog">
                 <img src="${escapeHTML(photo.src)}" alt="${escapeHTML(photo.alt)}"
                      width="${Number(photo.width) || ""}" height="${Number(photo.height) || ""}"
@@ -110,7 +112,7 @@ function buildVideoGrid() {
     const videoGrid = document.getElementById("video-grid");
 
     videoGrid.innerHTML = VIDEOS.map((video, i) => `
-        <li class="video-card">
+        <li class="video-card" data-reveal="zoom">
             <button class="video-card__btn" type="button" data-index="${i}" aria-haspopup="dialog">
                 <span class="video-card__media">
                     <video class="video-card__thumb" src="${escapeHTML(video.src)}#t=0.1"
@@ -144,32 +146,7 @@ function buildVideoGrid() {
 }
 
 /* --------------------------------------------------------------------------
-   4. SCROLL-IN ANIMATION
-   Same idea as the stat counters in main.js: an IntersectionObserver adds
-   .is-visible when an item scrolls into view, and the CSS fades and
-   scales it in (section 10 of style.css). Items in the hidden tab aren't
-   on screen, so they animate when their tab is opened.
-   With reduced motion we skip this: everything is simply there.
-   -------------------------------------------------------------------------- */
-function initScrollIn() {
-    if (!("IntersectionObserver" in window) || reducedMotion.matches) return;
-
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target); // animate only once
-        });
-    }, { rootMargin: "0px 0px -8% 0px" });
-
-    gallery.querySelectorAll(".masonry__item, .video-card").forEach((item) => {
-        item.classList.add("reveal");
-        revealObserver.observe(item);
-    });
-}
-
-/* --------------------------------------------------------------------------
-   5. DIALOG HELPERS (shared by the lightbox and the video modal)
+   4. DIALOG HELPERS (shared by the lightbox and the video modal)
    showModal() opens a <dialog> on top of the page, makes everything
    behind it unclickable and closes it on Escape. We also stop the page
    scrolling behind it, and on close send keyboard focus back to the
@@ -193,7 +170,7 @@ function initDialog(dialog) {
 }
 
 /* --------------------------------------------------------------------------
-   6. LIGHTBOX
+   5. LIGHTBOX
    -------------------------------------------------------------------------- */
 const SWIPE_MIN = 50; // px a finger must travel sideways to count as a swipe
 let currentPhoto = 0;
@@ -271,7 +248,7 @@ function initLightbox() {
 }
 
 /* --------------------------------------------------------------------------
-   7. VIDEO MODAL
+   6. VIDEO MODAL
    One <video> player is reused for every video: we just swap its src.
    -------------------------------------------------------------------------- */
 function openVideo(index, button) {
@@ -304,13 +281,13 @@ function initVideoModal() {
 }
 
 /* --------------------------------------------------------------------------
-   8. START-UP
+   7. START-UP
    -------------------------------------------------------------------------- */
 if (gallery && lightbox && videoModal && typeof PHOTOS !== "undefined" && typeof VIDEOS !== "undefined") {
     initTabs();
     buildPhotoGrid();
     buildVideoGrid();
-    initScrollIn();
+    watchReveals(gallery);
     initDialog(lightbox);
     initDialog(videoModal);
     initLightbox();

@@ -1,0 +1,52 @@
+/* ==========================================================================
+   boot.js
+   The only script loaded in the <head> WITHOUT "defer", so it runs before
+   the browser draws anything. It must stay tiny: the page waits for it.
+   1. Adds the "js" class to <html>. The CSS only hides things that are
+      waiting to animate in (data-reveal) when this class is there, so
+      without JavaScript nothing is ever left invisible.
+   2. Decides whether to show the preloader (the pulsing crest). Only on
+      the first page of a visit, and never with reduced motion.
+
+   The whole file is wrapped in (function () { ... })(), a function that
+   runs straight away. Its variables stay inside it, so they can't clash
+   with names in the other scripts.
+   ========================================================================== */
+(function () {
+    const root = document.documentElement; // the <html> element
+    root.classList.add("js");
+
+    const MIN_TIME = 400; // ms: long enough to see one pulse
+    const MAX_TIME = 800; // ms: never keep anyone waiting longer than this
+
+    // sessionStorage remembers things until the tab is closed, so the
+    // preloader shows once per visit, not on every page. It can throw an
+    // error (e.g. some private-browsing modes), hence the try/catch.
+    let seenThisVisit = false;
+    try {
+        seenThisVisit = sessionStorage.getItem("usa-preloaded") === "yes";
+        sessionStorage.setItem("usa-preloaded", "yes");
+    } catch (error) {
+        // No storage: just show the preloader, it's short anyway
+    }
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (seenThisVisit || reducedMotion) return;
+
+    // CSS (section 10) draws the black screen and crest while
+    // .is-preloading is on, and fades them out when it comes off
+    root.classList.add("has-preloader", "is-preloading");
+
+    const start = Date.now();
+    const finish = () => root.classList.remove("is-preloading");
+
+    // Whatever happens, stop at MAX_TIME
+    setTimeout(finish, MAX_TIME);
+
+    // "load" = page, images and fonts finished. If that's quick, still
+    // wait until MIN_TIME so the crest doesn't just flicker.
+    window.addEventListener("load", () => {
+        const waited = Date.now() - start;
+        setTimeout(finish, Math.max(0, MIN_TIME - waited));
+    }, { once: true });
+})();

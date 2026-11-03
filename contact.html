@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Runs before the page is drawn: no "defer" on purpose (see the file) -->
+    <script src="js/boot.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
@@ -45,9 +47,9 @@
                 <section class="section section--light" id="contact-cards">
                     <div class="container">
                         <p class="eyebrow">Get in touch</p>
-                        <h2 class="section-title">Talk to us</h2>
+                        <h2 class="section-title" data-reveal="up">Talk to us</h2>
                         <div class="contact-grid">
-                            <article class="card card--feature contact-card">
+                            <article class="card card--feature contact-card" data-reveal="up" data-delay="0">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></span>
                                 <h3 class="contact-card__title">Call us</h3>
                                 <p class="contact-card__text">Our two hotlines</p>
@@ -66,7 +68,7 @@
                                     </li>
                                 </ul>
                             </article>
-                            <article class="card card--feature contact-card">
+                            <article class="card card--feature contact-card" data-reveal="up" data-delay="100">
                                 <span class="card__icon" aria-hidden="true"><i class="fab fa-whatsapp"></i></span>
                                 <h3 class="contact-card__title">WhatsApp</h3>
                                 <p class="contact-card__text">Send us a message</p>
@@ -79,7 +81,7 @@
                                     </li>
                                 </ul>
                             </article>
-                            <article class="card card--feature contact-card">
+                            <article class="card card--feature contact-card" data-reveal="up" data-delay="200">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></span>
                                 <h3 class="contact-card__title">Email</h3>
                                 <p class="contact-card__text">We reply as soon as we can</p>
@@ -92,7 +94,7 @@
                                     </li>
                                 </ul>
                             </article>
-                            <article class="card card--feature contact-card">
+                            <article class="card card--feature contact-card" data-reveal="up" data-delay="300">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-hashtag"></i></span>
                                 <h3 class="contact-card__title">Follow us</h3>
                                 <p class="contact-card__text">News, photos and match days</p>
@@ -121,9 +123,9 @@
                     decides where the floating label sits.-->
                 <section class="section section--dark" id="join">
                     <div class="container join">
-                        <div class="join__intro">
+                        <div class="join__intro" data-reveal="left">
                             <p class="eyebrow">Join the academy</p>
-                            <h2 class="section-title">Join the Academy</h2>
+                            <h2 class="section-title" data-reveal="up">Join the Academy</h2>
                             <p>Fill in the form and press the button. Your details are sent straight to the club on WhatsApp, and we'll get back to you.</p>
                             <ul class="join__points">
                                 <li><i class="fa-solid fa-user-group" aria-hidden="true"></i> For players aged 14 to 19</li>
@@ -132,7 +134,7 @@
                             </ul>
                         </div>
 
-                        <form class="join-form" id="join-form" novalidate>
+                        <form class="join-form" id="join-form" novalidate data-reveal="right">
                             <p class="join-form__note">All fields are required unless marked optional.</p>
                             <div class="join-form__grid">
                                 <div class="field field--full">
@@ -191,9 +193,9 @@
                 <section class="section section--light" id="find-us">
                     <div class="container">
                         <p class="eyebrow">Where we are</p>
-                        <h2 class="section-title">Find Us</h2>
+                        <h2 class="section-title" data-reveal="up">Find Us</h2>
                         <div class="grid grid--2">
-                            <article class="map-card">
+                            <article class="map-card" data-reveal="up" data-delay="0">
                                 <div class="map-card__head">
                                     <span class="map-card__icon" aria-hidden="true"><i class="fa-solid fa-futbol"></i></span>
                                     <div>
@@ -209,7 +211,7 @@
                                     <i class="fa-solid fa-diamond-turn-right" aria-hidden="true"></i> Get directions<span class="visually-hidden"> to the training ground (opens Google Maps in a new tab)</span>
                                 </a>
                             </article>
-                            <article class="map-card">
+                            <article class="map-card" data-reveal="up" data-delay="120">
                                 <div class="map-card__head">
                                     <span class="map-card__icon" aria-hidden="true"><i class="fa-solid fa-building"></i></span>
                                     <div>
@@ -236,9 +238,9 @@
                 <section class="section section--dark" id="faq">
                     <div class="container faq-wrap">
                         <p class="eyebrow">Questions</p>
-                        <h2 class="section-title">Frequently Asked</h2>
+                        <h2 class="section-title" data-reveal="up">Frequently Asked</h2>
                         <div class="faq">
-                            <div class="faq__item">
+                            <div class="faq__item" data-reveal="up" data-delay="0">
                                 <h3 class="faq__heading">
                                     <button class="faq__btn" type="button" aria-expanded="true" aria-controls="faq-age" id="faq-age-btn">
                                         What age can join?
@@ -251,7 +253,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="faq__item">
+                            <div class="faq__item" data-reveal="up" data-delay="80">
                                 <h3 class="faq__heading">
                                     <button class="faq__btn" type="button" aria-expanded="true" aria-controls="faq-training" id="faq-training-btn">
                                         When is training?
@@ -270,7 +272,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="faq__item">
+                            <div class="faq__item" data-reveal="up" data-delay="160">
                                 <h3 class="faq__heading">
                                     <button class="faq__btn" type="button" aria-expanded="true" aria-controls="faq-join" id="faq-join-btn">
                                         How do I join?
@@ -283,7 +285,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="faq__item">
+                            <div class="faq__item" data-reveal="up" data-delay="240">
                                 <h3 class="faq__heading">
                                     <button class="faq__btn" type="button" aria-expanded="true" aria-controls="faq-sponsor" id="faq-sponsor-btn">
                                         How can I sponsor?

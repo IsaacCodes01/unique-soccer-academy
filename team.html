@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Runs before the page is drawn: no "defer" on purpose (see the file) -->
+    <script src="js/boot.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
@@ -44,7 +46,7 @@
                 <section class="section section--light team-page">
                     <div class="container">
                         <p class="eyebrow">Coaches &amp; players</p>
-                        <h2 class="section-title">Meet the team</h2>
+                        <h2 class="section-title" data-reveal="up">Meet the team</h2>
 
                         <!-- Filter chips: toggle buttons, aria-pressed says which one is on -->
                         <div class="chips" role="group" aria-label="Show">

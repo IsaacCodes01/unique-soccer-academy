@@ -1,8 +1,8 @@
 /* ==========================================================================
    news.js (news.html only)
    Builds the news page from NEWS, FIXTURES, RESULTS and CLUB_NAMES in
-   js/data.js. Uses reducedMotion, escapeHTML, formatDate, formatTime and
-   newsCard from js/main.js, which loads first.
+   js/data.js. Uses reducedMotion, escapeHTML, formatDate, formatTime,
+   newsCard and watchReveals from js/main.js, which loads first.
    1. Helpers        2. Ticker          3. News cards
    4. Next match     5. Results         6. Filter chips
    7. Start-up
@@ -94,21 +94,11 @@ function initTicker() {
 
 /* --------------------------------------------------------------------------
    3. NEWS CARDS
-   Drawn again every time a filter chip is clicked. Each card gets --i
-   (0, 1, 2...) so the CSS can start each one 80ms after the last.
+   Drawn again every time a filter chip is clicked. Each card already has
+   data-reveal (see newsCard in main.js); watchReveals() makes the new
+   cards rise in, one after another, as they scroll into view.
    -------------------------------------------------------------------------- */
 const newsList = document.getElementById("news-list");
-
-let cardObserver = null;
-if ("IntersectionObserver" in window && !reducedMotion.matches) {
-    cardObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target); // animate only once
-        });
-    }, { rootMargin: "0px 0px -8% 0px" });
-}
 
 const NEWS_EMPTY = {
     all:           ["No news yet. Check back soon", "News and announcements from the club will appear here."],
@@ -131,14 +121,7 @@ function renderNews(filter) {
 
     // "" = no fallback link: a card without its own link isn't clickable here
     newsList.innerHTML = items.map((item) => newsCard(item, "")).join("");
-
-    if (cardObserver) {
-        newsList.querySelectorAll(".news-card").forEach((card, i) => {
-            card.style.setProperty("--i", Math.min(i, 5)); // don't make card 20 wait 1.6s
-            card.classList.add("rise");
-            cardObserver.observe(card);
-        });
-    }
+    watchReveals(newsList);
 }
 
 /* --------------------------------------------------------------------------

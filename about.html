@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Runs before the page is drawn: no "defer" on purpose (see the file) -->
+    <script src="js/boot.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
@@ -46,12 +48,12 @@
                 <!--Start of Our story-->
                 <section class="section section--light">
                     <div class="container story">
-                        <div class="story__crest">
+                        <div class="story__crest" data-reveal="zoom">
                             <img src="assets/images/RYFC copy.png" alt="Unique Soccer Academy crest" width="804" height="933">
                         </div>
                         <div class="story__text">
                             <p class="eyebrow">Since 2020</p>
-                            <h2 class="section-title">Our Story</h2>
+                            <h2 class="section-title" data-reveal="up">Our Story</h2>
                             <p class="story__lead">Unique Soccer Academy is a vibrant third-division football club located in <a href="https://maps.app.goo.gl/uH5maqUhNKFrEUw36" target="_blank" rel="noopener">Kasoa-Apra</a>, in the Central Region of Ghana.</p>
                             <p>It was founded on <strong>20th March 2020</strong> by the visionary <a href="https://wa.me/233577789073" target="_blank" rel="noopener">Mr. Nii Perrygrino Otoo</a>. The academy began in Anyaa, Greater Accra, with just 12 passionate players training at Anyaa M/A School.</p>
                             <p>Over the years, the academy relocated twice: first to Auntie-Aku's Kokompe Park, and later to its current home in Apra on <strong>11th February 2024</strong>. Despite challenges, its growth has been driven by unwavering commitment and leadership.</p>
@@ -70,14 +72,14 @@
                     <div class="container">
                         <div class="text-center">
                             <p class="eyebrow">How we got here</p>
-                            <h2 class="section-title">Our Journey</h2>
+                            <h2 class="section-title" data-reveal="up">Our Journey</h2>
                         </div>
                         <!-- js/main.js fills each dot gold as it scrolls past the
                              middle of the screen. Without JS all dots are gold. -->
                         <ol class="timeline">
                             <li class="timeline__item">
                                 <span class="timeline__dot" aria-hidden="true"></span>
-                                <div class="timeline__card">
+                                <div class="timeline__card" data-reveal="left">
                                     <time class="timeline__date" datetime="2020-03-20">20 March 2020</time>
                                     <h3 class="timeline__title">Founded in Anyaa</h3>
                                     <p>Mr. Nii Perrygrino Otoo starts the academy in Anyaa, Greater Accra, with 12 players training at Anyaa M/A School.</p>
@@ -85,7 +87,7 @@
                             </li>
                             <li class="timeline__item">
                                 <span class="timeline__dot" aria-hidden="true"></span>
-                                <div class="timeline__card">
+                                <div class="timeline__card" data-reveal="right">
                                     <!-- TODO: add the real date of the move to Kokompe Park -->
                                     <span class="timeline__date timeline__date--tbc">Date to be confirmed</span>
                                     <h3 class="timeline__title">Move to Kokompe Park</h3>
@@ -94,7 +96,7 @@
                             </li>
                             <li class="timeline__item">
                                 <span class="timeline__dot" aria-hidden="true"></span>
-                                <div class="timeline__card">
+                                <div class="timeline__card" data-reveal="left">
                                     <time class="timeline__date" datetime="2024-02-11">11 February 2024</time>
                                     <h3 class="timeline__title">A New Home in Apra</h3>
                                     <p>The academy moves to its current home in Apra, Kasoa.</p>
@@ -102,7 +104,7 @@
                             </li>
                             <li class="timeline__item">
                                 <span class="timeline__dot" aria-hidden="true"></span>
-                                <div class="timeline__card">
+                                <div class="timeline__card" data-reveal="right">
                                     <!-- TODO: add the real date of the partnership with Mr. Asamoah -->
                                     <span class="timeline__date timeline__date--tbc">Date to be confirmed</span>
                                     <h3 class="timeline__title">Partnership with Opas Construction</h3>
@@ -118,9 +120,9 @@
                 <section class="section section--light">
                     <div class="container">
                         <p class="eyebrow">The people behind the club</p>
-                        <h2 class="section-title">Leadership</h2>
+                        <h2 class="section-title" data-reveal="up">Leadership</h2>
                         <div class="grid grid--2">
-                            <article class="card person-card">
+                            <article class="card person-card" data-reveal="up" data-delay="0">
                                 <!-- TODO: replace with a real photo of Mr. Otoo -->
                                 <div class="person-card__photo" role="img" aria-label="Photo of Mr. Nii Perrygrino Otoo coming soon">
                                     <i class="fa-solid fa-user" aria-hidden="true"></i>
@@ -136,7 +138,7 @@
                                 </div>
                             </article>
 
-                            <article class="card person-card">
+                            <article class="card person-card" data-reveal="up" data-delay="120">
                                 <!-- TODO: replace with a real photo of Mr. Asamoah -->
                                 <div class="person-card__photo" role="img" aria-label="Photo of Mr. Emmanuel Opare Asamoah coming soon">
                                     <i class="fa-solid fa-user" aria-hidden="true"></i>
@@ -166,11 +168,11 @@
                 <section class="section section--dark" id="schedule">
                     <div class="container">
                         <p class="eyebrow">Train with us</p>
-                        <h2 class="section-title">Training Schedule</h2>
+                        <h2 class="section-title" data-reveal="up">Training Schedule</h2>
                         <!-- js/main.js highlights today's row and writes a
                              one-line summary of today into this paragraph -->
                         <p class="schedule-today" id="schedule-today" hidden></p>
-                        <div class="schedule-wrap">
+                        <div class="schedule-wrap" data-reveal="up">
                             <table class="table schedule">
                                 <caption class="visually-hidden">Weekly training schedule</caption>
                                 <thead>
@@ -199,13 +201,13 @@
                 <!--Start of Who can join-->
                 <section class="section section--light">
                     <div class="container split">
-                        <figure class="framed-photo">
+                        <figure class="framed-photo" data-reveal="left">
                             <img src="assets/images/Unique_13.jpg" alt="Two academy players giving a thumbs up on the training pitch" width="1125" height="1138" loading="lazy">
                         </figure>
                         <div class="split__text">
                             <p class="eyebrow">Join the academy</p>
-                            <h2 class="section-title">Who Can Join</h2>
-                            <div class="card age-card">
+                            <h2 class="section-title" data-reveal="up">Who Can Join</h2>
+                            <div class="card age-card" data-reveal="zoom">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-user-group"></i></span>
                                 <p class="age-card__range">14&ndash;19 <span>years old</span></p>
                             </div>
@@ -226,7 +228,7 @@
                 <!--Start of Support us-->
                 <section class="section section--dark">
                     <div class="container">
-                        <div class="support">
+                        <div class="support" data-reveal="up">
                             <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-hand-holding-heart"></i></span>
                             <p class="eyebrow">Support us</p>
                             <h2 class="support__title">Help Us Shape Future Champions</h2>

@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Runs before the page is drawn: no "defer" on purpose (see the file) -->
+    <script src="js/boot.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
@@ -82,22 +84,22 @@
                      visually-hidden copy instead of every in-between number. -->
                 <section class="stats" id="stats" aria-label="The academy in numbers">
                     <ul class="stats__list container">
-                        <li class="stat">
+                        <li class="stat" data-reveal="up" data-delay="0">
                             <span class="stat__number" aria-hidden="true"><span data-count="2020">2020</span></span>
                             <span class="visually-hidden">2020</span>
                             <span class="stat__label">Founded</span>
                         </li>
-                        <li class="stat">
+                        <li class="stat" data-reveal="up" data-delay="100">
                             <span class="stat__number" aria-hidden="true"><span data-count="14">14</span>&ndash;<span data-count="19">19</span></span>
                             <span class="visually-hidden">14 to 19</span>
                             <span class="stat__label">Age group</span>
                         </li>
-                        <li class="stat">
+                        <li class="stat" data-reveal="up" data-delay="200">
                             <span class="stat__number" aria-hidden="true"><span data-count="5">5</span></span>
                             <span class="visually-hidden">5</span>
                             <span class="stat__label">Training days a week</span>
                         </li>
-                        <li class="stat">
+                        <li class="stat" data-reveal="up" data-delay="300">
                             <!-- TODO: add the real number of players, then give it data-count like the others -->
                             <span class="stat__number">TODO</span>
                             <span class="stat__label">Players</span>
@@ -109,12 +111,12 @@
                 <!--Start of About preview-->
                 <section class="section section--light">
                     <div class="container split">
-                        <figure class="framed-photo">
+                        <figure class="framed-photo" data-reveal="left">
                             <img src="assets/images/Unique_7.jpg" alt="Academy player in the yellow club kit standing over a ball on the training pitch" width="958" height="1280" loading="lazy">
                         </figure>
                         <div class="split__text">
                             <p class="eyebrow">Who we are</p>
-                            <h2 class="section-title">Our Story</h2>
+                            <h2 class="section-title" data-reveal="up">Our Story</h2>
                             <p>Unique Soccer Academy is a vibrant third-division football club in Kasoa-Apra, in the Central Region of Ghana. It was founded on <strong>20th March 2020</strong> by Mr. Nii Perrygrino Otoo, and began in Anyaa, Greater Accra, with just 12 passionate players training at Anyaa M/A School.</p>
                             <p>After two moves, the academy found its current home in Apra on <strong>11th February 2024</strong>, where it keeps nurturing the dreams of young athletes.</p>
                             <div class="btn-group">
@@ -131,14 +133,14 @@
                 <section class="section section--dark">
                     <div class="container">
                         <p class="eyebrow">What drives us</p>
-                        <h2 class="section-title">Mission &amp; Vision</h2>
+                        <h2 class="section-title" data-reveal="up">Mission &amp; Vision</h2>
                         <div class="grid grid--2">
-                            <article class="card card--feature">
+                            <article class="card card--feature" data-reveal="up" data-delay="0">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-bullseye"></i></span>
                                 <h3 class="card__title">Our Mission</h3>
                                 <p>Our mission is to nurture football talent while creating pathways for our players to reach professional clubs, academies, and scholarship opportunities locally and internationally.</p>
                             </article>
-                            <article class="card card--feature">
+                            <article class="card card--feature" data-reveal="up" data-delay="120">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-eye"></i></span>
                                 <h3 class="card__title">Our Vision</h3>
                                 <p>To establish Unique Soccer Academy as a globally respected institution that transforms promising young footballers into professional athletes and well-rounded individuals, setting the gold standard for player development and opportunity creation.</p>
@@ -152,24 +154,24 @@
                 <section class="section section--light">
                     <div class="container">
                         <p class="eyebrow">Programmes</p>
-                        <h2 class="section-title">What We Offer</h2>
+                        <h2 class="section-title" data-reveal="up">What We Offer</h2>
                         <div class="grid grid--4">
-                            <article class="card card--feature">
+                            <article class="card card--feature" data-reveal="up" data-delay="0">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-users"></i></span>
                                 <h3 class="card__title">Team Training</h3>
                                 <p>Tuesday to Friday, 5:30am &ndash; 7:30am.</p>
                             </article>
-                            <article class="card card--feature">
+                            <article class="card card--feature" data-reveal="up" data-delay="100">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-user-clock"></i></span>
                                 <h3 class="card__title">Personal Training</h3>
                                 <p>Every Monday, 7am &ndash; 9am.</p>
                             </article>
-                            <article class="card card--feature">
+                            <article class="card card--feature" data-reveal="up" data-delay="200">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-graduation-cap"></i></span>
                                 <h3 class="card__title">Scholarship Pathways</h3>
                                 <p>Pathways to professional clubs, academies and scholarship opportunities, locally and internationally.</p>
                             </article>
-                            <article class="card card--feature">
+                            <article class="card card--feature" data-reveal="up" data-delay="300">
                                 <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-hand-holding-heart"></i></span>
                                 <h3 class="card__title">Character Development</h3>
                                 <p>Shaping well-rounded individuals, not just footballers. Sunday church service, 9am &ndash; 12pm.</p>
@@ -185,7 +187,7 @@
                         <div class="section-head">
                             <div>
                                 <p class="eyebrow">Club updates</p>
-                                <h2 class="section-title">Latest News</h2>
+                                <h2 class="section-title" data-reveal="up">Latest News</h2>
                             </div>
                             <a class="btn btn--outline" href="news.html">
                                 All News <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
@@ -194,7 +196,7 @@
                         <!-- js/main.js replaces the empty state with the 3 newest
                              items from js/data.js, once there are any. -->
                         <div class="news-list" id="latest-news">
-                            <div class="news-empty">
+                            <div class="news-empty" data-reveal="up">
                                 <span class="news-empty__icon" aria-hidden="true"><i class="fa-regular fa-newspaper"></i></span>
                                 <h3 class="news-empty__title">No news yet. Stay tuned!</h3>
                                 <p>Follow us on Facebook for the latest club updates.</p>
@@ -213,19 +215,19 @@
                         <div class="section-head">
                             <div>
                                 <p class="eyebrow">On the pitch</p>
-                                <h2 class="section-title">Gallery</h2>
+                                <h2 class="section-title" data-reveal="up">Gallery</h2>
                             </div>
                             <a class="btn btn--dark" href="gallery.html">
                                 View Gallery <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                             </a>
                         </div>
                         <ul class="photo-grid">
-                            <li><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_6.jpg" alt="Three academy players in yellow kits smiling on the pitch" width="960" height="1280" loading="lazy"></a></li>
-                            <li><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_3.jpg" alt="Player in the yellow kit stretching before training" width="960" height="1280" loading="lazy"></a></li>
-                            <li><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_8.jpg" alt="Player controlling the ball on the grass" width="810" height="1080" loading="lazy"></a></li>
-                            <li><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_4.jpg" alt="Two players, one in goalkeeper gloves and a training bib, posing on the pitch" width="810" height="1080" loading="lazy"></a></li>
-                            <li><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_5.jpg" alt="Player in the yellow kit and red boots on the training ground" width="960" height="1280" loading="lazy"></a></li>
-                            <li><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_17.jpg" alt="Front and back of the black club shirt, number 31" width="1080" height="741" loading="lazy"></a></li>
+                            <li data-reveal="zoom" data-delay="0"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_6.jpg" alt="Three academy players in yellow kits smiling on the pitch" width="960" height="1280" loading="lazy"></a></li>
+                            <li data-reveal="zoom" data-delay="80"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_3.jpg" alt="Player in the yellow kit stretching before training" width="960" height="1280" loading="lazy"></a></li>
+                            <li data-reveal="zoom" data-delay="160"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_8.jpg" alt="Player controlling the ball on the grass" width="810" height="1080" loading="lazy"></a></li>
+                            <li data-reveal="zoom" data-delay="240"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_4.jpg" alt="Two players, one in goalkeeper gloves and a training bib, posing on the pitch" width="810" height="1080" loading="lazy"></a></li>
+                            <li data-reveal="zoom" data-delay="320"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_5.jpg" alt="Player in the yellow kit and red boots on the training ground" width="960" height="1280" loading="lazy"></a></li>
+                            <li data-reveal="zoom" data-delay="400"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_17.jpg" alt="Front and back of the black club shirt, number 31" width="1080" height="741" loading="lazy"></a></li>
                         </ul>
                     </div>
                 </section>
@@ -235,11 +237,11 @@
                 <section class="section section--dark">
                     <div class="container text-center">
                         <p class="eyebrow">Proudly supported by</p>
-                        <h2 class="section-title">Our Partners</h2>
+                        <h2 class="section-title" data-reveal="up">Our Partners</h2>
                         <p>Unique Soccer Academy warmly welcomes individuals, businesses, and organizations who wish to support our mission of nurturing young football talent.</p>
                         <ul class="partners">
                             <!-- TODO: link to Opas Construction's real website or page once Isaac has it -->
-                            <li class="partner">
+                            <li class="partner" data-reveal="zoom">
                                 <img class="partner__logo" src="assets/images/Opas.png" alt="Opas Construction logo" width="506" height="507" loading="lazy">
                                 <span class="partner__name">Opas Construction</span>
                             </li>

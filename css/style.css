@@ -162,6 +162,37 @@ table {
     color: var(--black);
 }
 
+/* Scrollbar in club colours: a gold handle on a black track.
+   scrollbar-color is the standard (Chrome, Edge, Firefox). It is
+   inherited, so inner scroll areas (tables, the ticker) match too. */
+html {
+    scrollbar-color: var(--gold) var(--black);
+}
+
+/* Older Safari doesn't know scrollbar-color, so it gets the old
+   ::-webkit-scrollbar version. @supports not (...) means "only browsers
+   that DON'T understand this", so newer browsers ignore it. */
+@supports not (scrollbar-color: auto) {
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--black);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border: 3px solid var(--black); /* black gap makes the handle look slimmer */
+        border-radius: 999px;
+        background: var(--gold);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--gold-dark);
+    }
+}
+
 
 /* ==========================================================================
    3. TYPOGRAPHY
@@ -230,6 +261,33 @@ p {
     transform: translateX(-50%);
 }
 
+/* The bar grows when the title scrolls in: scaleX(0) squashes it to no
+   width, scaleX(1) is full size. It starts 250ms after the title begins
+   rising. Only with JS (.js) and when motion is allowed; otherwise the
+   bar is simply there. */
+@media (prefers-reduced-motion: no-preference) {
+    .js .section-title[data-reveal]::before {
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform var(--dur-reveal) var(--ease);
+        transition-delay: calc(var(--reveal-delay, 0ms) + 250ms);
+    }
+
+    .js .section-title.is-revealed::before {
+        transform: scaleX(1);
+    }
+
+    /* Centred titles keep the move that centres the bar and grow from the middle */
+    .js .text-center .section-title[data-reveal]::before {
+        transform: translateX(-50%) scaleX(0);
+        transform-origin: center;
+    }
+
+    .js .text-center .section-title.is-revealed::before {
+        transform: translateX(-50%) scaleX(1);
+    }
+}
+
 
 /* ==========================================================================
    4. LAYOUT HELPERS
@@ -291,6 +349,9 @@ p {
    5. BUTTONS
    ========================================================================== */
 .btn {
+    position: relative; /* the shine (::after) is placed inside the button */
+    overflow: hidden;   /* ...and clipped to its rounded shape */
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -315,6 +376,44 @@ p {
 
 .btn:hover {
     transform: translateY(-2px);
+}
+
+/* Pressed: shrinks a touch, quickly, so it feels like a real button */
+.btn:active {
+    transform: scale(0.97);
+    transition-duration: 80ms;
+}
+
+/* Arrow icons nudge right on hover, pointing where the button goes */
+.btn .fa-arrow-right {
+    transition: transform var(--dur-hover) var(--ease);
+}
+
+.btn:hover .fa-arrow-right,
+.btn:focus-visible .fa-arrow-right {
+    transform: translateX(4px);
+}
+
+/* Shine: a see-through white stripe, tilted with skewX(), waiting just
+   past the left edge. On hover it sweeps across and out on the right.
+   It has no transition when not hovered, so it jumps straight back
+   (unseen, because it's outside the button). Only on devices with a
+   mouse: on phones a tap would leave it half-way. */
+@media (hover: hover) {
+    .btn::after {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 50%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+        transform: translateX(-150%) skewX(-20deg);
+        pointer-events: none;
+    }
+
+    .btn:hover::after {
+        transform: translateX(250%) skewX(-20deg);
+        transition: transform 700ms var(--ease);
+    }
 }
 
 .btn--primary {
@@ -395,9 +494,11 @@ p {
     -webkit-backdrop-filter: blur(12px) saturate(140%);
     backdrop-filter: blur(12px) saturate(140%);
     box-shadow: 0 1px 0 var(--line-dark), var(--shadow-sm);
+    transform-origin: top; /* squashes upwards when the header shrinks */
     transition:
         opacity var(--dur-hover) var(--ease),
-        background-color var(--dur-hover) var(--ease);
+        background-color var(--dur-hover) var(--ease),
+        transform var(--dur-hover) var(--ease);
 }
 
 /* Browsers without backdrop-filter get a fully solid bar instead */
@@ -427,7 +528,7 @@ p {
     align-items: center;
     gap: var(--space-4);
     height: var(--header-h);
-    transition: height var(--dur-hover) var(--ease);
+    transition: transform var(--dur-hover) var(--ease);
 }
 
 /* Crest + club name, as one link back to the home page */
@@ -453,7 +554,7 @@ p {
     width: 44px;
     height: 44px;
     object-fit: contain;
-    transition: width var(--dur-hover) var(--ease), height var(--dur-hover) var(--ease);
+    transition: transform var(--dur-hover) var(--ease);
 }
 
 /* Thin gold bar along the bottom edge. main.js sets --progress from 0 to 1,
@@ -467,6 +568,7 @@ p {
     background-color: var(--gold);
     transform: scaleX(var(--progress, 0));
     transform-origin: left center;
+    transition: transform var(--dur-hover) var(--ease);
 }
 
 /* ----- Hamburger button ----- */
@@ -1102,6 +1204,32 @@ a.social-btn:hover {
 .back-to-top:focus-visible {
     outline-color: var(--black);
     box-shadow: 0 0 0 2px var(--gold), var(--shadow-lg);
+}
+
+/* Progress ring around the arrow: an SVG circle drawn as one long dash.
+   pathLength="100" (in layout.js) tells the browser to treat the circle's
+   length as 100, so a dash of 100 is the whole ring. main.js moves the
+   dash's start (stroke-dashoffset) from 100 (empty ring) to 0 (full ring)
+   as you scroll. rotate(-90deg) makes it start at 12 o'clock. */
+.back-to-top__ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke-width: 3;
+    transform: rotate(-90deg);
+    pointer-events: none;
+}
+
+.back-to-top__track {
+    stroke: rgba(11, 11, 13, 0.2);
+}
+
+.back-to-top__progress {
+    stroke: var(--black);
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
 }
 
 /* Badge */
@@ -3624,26 +3752,24 @@ body.dialog-open {
     transform: rotate(0deg);
 }
 
+/* Folded answers are display: none. When one opens, the space for it
+   appears at once and the text fades in, dropping 8px into place.
+   (Sliding the height open would make the browser re-measure the page
+   on every frame, so we animate only opacity and transform.)
+   An animation replays each time an element stops being display: none. */
 .faq.is-enhanced .faq__panel {
-    display: grid;
-    grid-template-rows: 0fr;
-    visibility: hidden;
-    transition:
-        grid-template-rows 400ms var(--ease),
-        visibility 0s linear 400ms;
+    display: none;
 }
 
 .faq.is-enhanced .faq__item.is-open .faq__panel {
-    grid-template-rows: 1fr;
-    visibility: visible;
-    transition:
-        grid-template-rows 400ms var(--ease),
-        visibility 0s linear 0s;
+    display: block;
+}
+
+.faq.is-enhanced .faq__item.is-open .faq__inner {
+    animation: faq-open 400ms var(--ease);
 }
 
 .faq__inner {
-    min-height: 0;              /* lets the 0fr row squash it to nothing */
-    overflow: hidden;
     padding-inline: var(--space-5);
     color: var(--grey-light);   /* 8.9:1 on charcoal */
 }
@@ -3966,40 +4092,112 @@ body.dialog-open {
     to   { opacity: 1; transform: none; }
 }
 
-/* Scroll-in: gallery.js adds .reveal to each item, then .is-visible
-   once it scrolls into view. Without JS nothing gets .reveal, so
-   nothing is ever left invisible. */
-.reveal {
-    opacity: 0;
-    transform: translateY(24px) scale(0.96);
+/* Answers in the contact page FAQ fade in and drop into place */
+@keyframes faq-open {
+    from { opacity: 0; transform: translateY(-8px); }
+}
+
+/* ----- Scroll reveal (main.js, section 9) -----
+   An element with data-reveal="up", "left", "right" or "zoom" waits,
+   invisible, until it scrolls into view. Then main.js adds .is-revealed
+   and it plays the matching animation once. Its data-delay (or the
+   automatic stagger) arrives here as --reveal-delay.
+   Why an animation and not a transition? Cards have their own hover lift
+   (transform). An animation lets go of transform once it ends, so the
+   hover still works afterwards. "backwards" holds the first frame
+   (invisible, moved) while waiting for the delay.
+   Only hidden with JS (.js, added by boot.js) and with motion allowed,
+   so nothing is ever left invisible. */
+@media (prefers-reduced-motion: no-preference) {
+    .js [data-reveal]:not(.is-revealed) {
+        opacity: 0;
+    }
+
+    .js [data-reveal].is-revealed {
+        animation: reveal-up var(--dur-reveal) var(--ease) backwards;
+        animation-delay: var(--reveal-delay, 0ms);
+    }
+
+    .js [data-reveal="left"].is-revealed  { animation-name: reveal-left; }
+    .js [data-reveal="right"].is-revealed { animation-name: reveal-right; }
+    .js [data-reveal="zoom"].is-revealed  { animation-name: reveal-zoom; }
+}
+
+/* Only a "from" frame: the browser animates from it to the element's
+   normal look, whatever that is */
+@keyframes reveal-up    { from { opacity: 0; transform: translateY(32px); } }
+@keyframes reveal-left  { from { opacity: 0; transform: translateX(-40px); } }
+@keyframes reveal-right { from { opacity: 0; transform: translateX(40px); } }
+@keyframes reveal-zoom  { from { opacity: 0; transform: scale(0.92); } }
+
+/* ----- Preloader (js/boot.js) -----
+   No extra HTML needed: the black screen is body::before and the crest
+   is body::after. They only exist when boot.js added .has-preloader,
+   show while .is-preloading is on, and fade out when it comes off.
+   visibility switches off after the fade so they can't block clicks. */
+.has-preloader body::before,
+.has-preloader body::after {
+    content: "";
+    position: fixed;
+    z-index: 3000; /* above the header (1000) */
     transition:
-        opacity var(--dur-reveal) var(--ease),
-        transform var(--dur-reveal) var(--ease);
+        opacity 400ms var(--ease),
+        visibility 0s linear 400ms;
 }
 
-.reveal.is-visible {
-    opacity: 1;
-    transform: none;
+.has-preloader body::before {
+    inset: 0;
+    background-color: var(--black);
 }
 
-/* News cards rise in with an animation instead of a transition, so the
-   card's own hover lift still works afterwards. "backwards" holds the
-   first frame (invisible, 24px down) during the delay; once the
-   animation ends it lets go of the card completely. --i is the card's
-   position, set by news.js, so each one starts 80ms after the last. */
-.rise {
+.has-preloader body::after {
+    top: 50%;
+    left: 50%;
+    width: 96px;
+    height: 112px; /* the crest's own shape (804 x 933) */
+    margin: -56px 0 0 -48px; /* half the size: centres it */
+    background: url("../assets/images/RYFC copy.png") center / contain no-repeat;
+    animation: crest-pulse 400ms ease-in-out infinite alternate;
+}
+
+.has-preloader:not(.is-preloading) body::before,
+.has-preloader:not(.is-preloading) body::after {
     opacity: 0;
+    visibility: hidden;
 }
 
-.rise.is-visible {
-    opacity: 1;
-    animation: rise-in var(--dur-reveal) var(--ease) backwards;
-    animation-delay: calc(var(--i, 0) * 80ms);
+/* Freeze the pulse where it is (no jump) as the crest fades away */
+.has-preloader:not(.is-preloading) body::after {
+    animation-play-state: paused;
 }
 
-@keyframes rise-in {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: none; }
+/* Home hero: hold the headline animation behind the preloader, so it
+   plays when the visitor can actually see it */
+.is-preloading .hero__word > span {
+    animation-play-state: paused;
+}
+
+/* Scale only: an animated opacity would win over the fade-out above */
+@keyframes crest-pulse {
+    from { transform: scale(0.92); }
+    to   { transform: scale(1.04); }
+}
+
+/* ----- Page fade in / fade out (main.js, section 10) -----
+   Each page fades in as it opens, unless the preloader is doing that
+   job. Clicking a link to another page adds .is-leaving, which fades
+   this one out first. */
+.js:not(.has-preloader) body {
+    animation: page-in 400ms var(--ease);
+}
+
+.is-leaving body {
+    opacity: 0;
+    transition: opacity 250ms ease-in;
+}
+
+@keyframes page-in {
+    from { opacity: 0; }
 }
 
 
@@ -4369,14 +4567,25 @@ body.dialog-open {
         font-size: 1.05rem;
     }
 
-    /* Shrinks to 64px once the page is scrolled */
+    /* Shrinks from 72px to 64px once the page is scrolled. Animating the
+       real height would make the browser re-measure the whole layout every
+       frame, so instead we only use transform: the black background is
+       squashed to 64/72 of its height, the contents move up 4px to stay in
+       the middle, and the gold progress bar moves up 8px with the edge. */
+    .site-header.is-scrolled::before {
+        transform: scaleY(calc(64 / 72));
+    }
+
     .site-header.is-scrolled .site-header__inner {
-        height: 64px;
+        transform: translateY(-4px);
     }
 
     .site-header.is-scrolled .brand__crest {
-        width: 38px;
-        height: 38px;
+        transform: scale(calc(38 / 44)); /* 44px crest drawn at 38px */
+    }
+
+    .site-header.is-scrolled .scroll-progress {
+        transform: translateY(-8px) scaleX(var(--progress, 0));
     }
 
     .nav-toggle,
@@ -4550,6 +4759,9 @@ body.dialog-open {
     }
 
     .btn:hover,
+    .btn:active,
+    .btn:hover .fa-arrow-right,
+    .btn:focus-visible .fa-arrow-right,
     .social-btn:hover,
     .card:hover,
     .back-to-top,
@@ -4566,10 +4778,19 @@ body.dialog-open {
     .video-card__btn:hover .video-card__thumb,
     .video-card__btn:focus-visible .video-card__thumb,
     .dialog-close:hover,
-    .lightbox__img,
-    .reveal {
+    .lightbox__img {
         transform: none;
     }
+
+    /* Buttons: no shine sweeping across */
+    .btn::after {
+        display: none;
+    }
+
+    /* Nothing to do here for: scroll reveals and the growing title bar
+       (only switched on inside "no-preference" in sections 3 and 10), the
+       preloader (boot.js skips it) and the page fade-out (main.js skips
+       it). The page fade-in is made instant by the rule at the top. */
 
     /* The play button keeps the move that centres it, just no growing */
     .video-card__btn:hover .video-card__play,
@@ -4618,15 +4839,9 @@ body.dialog-open {
         }
     }
 
-    /* News page: no sliding ticker at all (news.js also keeps it hidden),
-       and the cards are simply there */
+    /* News page: no sliding ticker at all (news.js also keeps it hidden) */
     .ticker {
         display: none;
-    }
-
-    .rise {
-        opacity: 1;
-        animation: none;
     }
 
     /* Team page: no tilt and no moving light (team.js doesn't start
@@ -4641,7 +4856,7 @@ body.dialog-open {
 
     /* Contact: the toast just appears in place (it keeps the move that
        centres it), and FAQ answers open at once (the rule at the top
-       already makes the slide instant) */
+       already makes their fade instant) */
     .toast,
     .toast.is-visible {
         transform: translateX(-50%);

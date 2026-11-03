@@ -271,8 +271,15 @@ if (footerSlot) footerSlot.innerHTML = buildFooter(page);
 // Floating back-to-top button, bottom right. It is a real <button> because
 // it does something (scrolls) instead of going to another page.
 // main.js shows it after scrolling down and handles the click.
+// The SVG is the ring that fills up as you scroll: a faint full circle
+// (the track) with the progress circle on top. pathLength="100" lets
+// main.js and the CSS treat the ring's length as 100, whatever its size.
 document.body.insertAdjacentHTML("beforeend", `
     <button class="back-to-top" type="button">
+        <svg class="back-to-top__ring" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <circle class="back-to-top__track" cx="24" cy="24" r="22" pathLength="100"></circle>
+            <circle class="back-to-top__progress" cx="24" cy="24" r="22" pathLength="100"></circle>
+        </svg>
         <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
         <span class="visually-hidden">Back to top</span>
     </button>`);
