@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
-    
+
 
 </head>
 <body>
@@ -27,50 +27,240 @@
 
             <main>
                 <!--Start of Hero-->
-                <section class="hero">
-                    <h1 class="hero__title">WELCOME TO <span class="text-gold">UNIQUE</span> SOCCER ACADEMY</h1>
-                    <img class="hero__logo" src="assets/images/RYFC copy.png" alt="Unique Soccer Academy logo">
-                    <p class="hero__title">WHERE <span class="text-gold">CHAMPIONS</span> ARE MADE</p>
-                    <div class="btn-group">
-                        <a class="btn btn--primary" href="contact.html">Contact Us</a>
-                        <a class="btn btn--outline" href="about.html">About Us</a>
+                <section class="hero" aria-labelledby="hero-title">
+                    <!-- Background photos. Only this first one is in the HTML, so it
+                         loads first. js/main.js adds the rest (listed in js/data.js)
+                         after the page has loaded. They are decoration, so alt="". -->
+                    <div class="hero__slides" aria-hidden="true">
+                        <img class="hero__slide is-active" src="assets/images/Pitch.png" alt="" fetchpriority="high" width="1152" height="2048">
                     </div>
+
+                    <div class="hero__inner container">
+                        <div class="hero__content">
+                            <p class="eyebrow">Kasoa-Apra &middot; Est. 2020</p>
+                            <!-- Each word is wrapped so it can slide up on its own.
+                                 --i is the word's position, used for the delay. -->
+                            <h1 class="hero__title" id="hero-title">
+                                <span class="hero__word" style="--i: 0"><span>Where</span></span>
+                                <span class="hero__word" style="--i: 1"><span class="text-gold">Champions</span></span>
+                                <span class="hero__word" style="--i: 2"><span>Are</span></span>
+                                <span class="hero__word" style="--i: 3"><span>Made</span></span>
+                            </h1>
+                            <p class="hero__intro">Unique Soccer Academy nurtures football talent and creates pathways to professional clubs, academies and scholarships.</p>
+                            <div class="btn-group">
+                                <a class="btn btn--primary" href="https://wa.me/233544400543" target="_blank" rel="noopener">
+                                    <i class="fab fa-whatsapp" aria-hidden="true"></i> Join the Academy
+                                </a>
+                                <!-- TODO (Phase 8): change to gallery.html#videos once photos + videos are merged -->
+                                <a class="btn btn--outline" href="videos.html">
+                                    <i class="fa-solid fa-play" aria-hidden="true"></i> Watch Highlights
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Desktop only (hidden below 768px: the crest is already in the header) -->
+                        <img class="hero__crest" src="assets/images/RYFC copy.png" alt="" width="804" height="933">
+                    </div>
+
+                    <!-- Pause/play for the moving background. Hidden until main.js
+                         knows motion is allowed (not shown with reduced motion). -->
+                    <button class="hero__toggle" type="button" hidden>
+                        <i class="fa-solid fa-pause" aria-hidden="true"></i>
+                        <span class="visually-hidden">Pause background slideshow</span>
+                    </button>
+
+                    <a class="scroll-cue" href="#stats">
+                        <span class="scroll-cue__mouse" aria-hidden="true"></span>
+                        <span class="visually-hidden">Scroll to the next section</span>
+                    </a>
                 </section>
                 <!--End of Hero-->
 
-                <!--Start of Mission & Vision-->
+                <!--Start of Stats strip-->
+                <!-- The real number is in the HTML (for no-JS and reduced motion).
+                     js/main.js counts up from 0 to data-count when it scrolls into view.
+                     The animated number is aria-hidden; screen readers read the
+                     visually-hidden copy instead of every in-between number. -->
+                <section class="stats" id="stats" aria-label="The academy in numbers">
+                    <ul class="stats__list container">
+                        <li class="stat">
+                            <span class="stat__number" aria-hidden="true"><span data-count="2020">2020</span></span>
+                            <span class="visually-hidden">2020</span>
+                            <span class="stat__label">Founded</span>
+                        </li>
+                        <li class="stat">
+                            <span class="stat__number" aria-hidden="true"><span data-count="14">14</span>&ndash;<span data-count="19">19</span></span>
+                            <span class="visually-hidden">14 to 19</span>
+                            <span class="stat__label">Age group</span>
+                        </li>
+                        <li class="stat">
+                            <span class="stat__number" aria-hidden="true"><span data-count="5">5</span></span>
+                            <span class="visually-hidden">5</span>
+                            <span class="stat__label">Training days a week</span>
+                        </li>
+                        <li class="stat">
+                            <!-- TODO: add the real number of players, then give it data-count like the others -->
+                            <span class="stat__number">TODO</span>
+                            <span class="stat__label">Players</span>
+                        </li>
+                    </ul>
+                </section>
+                <!--End of Stats strip-->
+
+                <!--Start of About preview-->
                 <section class="section section--light">
+                    <div class="container split">
+                        <figure class="framed-photo">
+                            <img src="assets/images/Unique_7.jpg" alt="Academy player in the yellow club kit standing over a ball on the training pitch" width="958" height="1280" loading="lazy">
+                        </figure>
+                        <div class="split__text">
+                            <p class="eyebrow">Who we are</p>
+                            <h2 class="section-title">Our Story</h2>
+                            <p>Unique Soccer Academy is a vibrant third-division football club in Kasoa-Apra, in the Central Region of Ghana. It was founded on <strong>20th March 2020</strong> by Mr. Nii Perrygrino Otoo, and began in Anyaa, Greater Accra, with just 12 passionate players training at Anyaa M/A School.</p>
+                            <p>After two moves, the academy found its current home in Apra on <strong>11th February 2024</strong>, where it keeps nurturing the dreams of young athletes.</p>
+                            <div class="btn-group">
+                                <a class="btn btn--dark" href="about.html">
+                                    Our Story <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--End of About preview-->
+
+                <!--Start of Mission & Vision-->
+                <section class="section section--dark">
                     <div class="container">
                         <p class="eyebrow">What drives us</p>
                         <h2 class="section-title">Mission &amp; Vision</h2>
                         <div class="grid grid--2">
-                            <article class="card">
+                            <article class="card card--feature">
+                                <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-bullseye"></i></span>
                                 <h3 class="card__title">Our Mission</h3>
-                                <p>"Our mission is to nurture football talent while creating pathways for our players to reach professional clubs, academies, and scholarship opportunities locally and internationally."</p>
+                                <p>Our mission is to nurture football talent while creating pathways for our players to reach professional clubs, academies, and scholarship opportunities locally and internationally.</p>
                             </article>
-                            <article class="card">
+                            <article class="card card--feature">
+                                <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-eye"></i></span>
                                 <h3 class="card__title">Our Vision</h3>
-                                <p>"To establish Unique Soccer Academy as a globally respected institution that transforms promising young footballers into professional athletes and well-rounded individuals, setting the gold standard for player development and opportunity creation."</p>
+                                <p>To establish Unique Soccer Academy as a globally respected institution that transforms promising young footballers into professional athletes and well-rounded individuals, setting the gold standard for player development and opportunity creation.</p>
                             </article>
                         </div>
                     </div>
                 </section>
                 <!--End of Mission & Vision-->
+
+                <!--Start of What we offer-->
+                <section class="section section--light">
+                    <div class="container">
+                        <p class="eyebrow">Programmes</p>
+                        <h2 class="section-title">What We Offer</h2>
+                        <div class="grid grid--4">
+                            <article class="card card--feature">
+                                <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-users"></i></span>
+                                <h3 class="card__title">Team Training</h3>
+                                <p>Tuesday to Friday, 5:30am &ndash; 7:30am.</p>
+                            </article>
+                            <article class="card card--feature">
+                                <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-user-clock"></i></span>
+                                <h3 class="card__title">Personal Training</h3>
+                                <p>Every Monday, 7am &ndash; 9am.</p>
+                            </article>
+                            <article class="card card--feature">
+                                <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-graduation-cap"></i></span>
+                                <h3 class="card__title">Scholarship Pathways</h3>
+                                <p>Pathways to professional clubs, academies and scholarship opportunities, locally and internationally.</p>
+                            </article>
+                            <article class="card card--feature">
+                                <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-hand-holding-heart"></i></span>
+                                <h3 class="card__title">Character Development</h3>
+                                <p>Shaping well-rounded individuals, not just footballers. Sunday church service, 9am &ndash; 12pm.</p>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <!--End of What we offer-->
+
+                <!--Start of Latest news-->
+                <section class="section section--dark">
+                    <div class="container">
+                        <div class="section-head">
+                            <div>
+                                <p class="eyebrow">Club updates</p>
+                                <h2 class="section-title">Latest News</h2>
+                            </div>
+                            <!-- TODO (Phase 9): change to news.html once news1 + announcements are merged -->
+                            <a class="btn btn--outline" href="news1.html">
+                                All News <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <!-- js/main.js replaces the empty state with the 3 newest
+                             items from js/data.js, once there are any. -->
+                        <div class="news-list" id="latest-news">
+                            <div class="news-empty">
+                                <span class="news-empty__icon" aria-hidden="true"><i class="fa-regular fa-newspaper"></i></span>
+                                <h3 class="news-empty__title">No news yet. Stay tuned!</h3>
+                                <p>Follow us on Facebook for the latest club updates.</p>
+                                <a class="btn btn--primary" href="https://facebook.com/profile.php?id=61565360907088" target="_blank" rel="noopener">
+                                    <i class="fab fa-facebook-f" aria-hidden="true"></i> Follow on Facebook
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--End of Latest news-->
+
+                <!--Start of Gallery preview-->
+                <section class="section section--light">
+                    <div class="container">
+                        <div class="section-head">
+                            <div>
+                                <p class="eyebrow">On the pitch</p>
+                                <h2 class="section-title">Gallery</h2>
+                            </div>
+                            <!-- TODO (Phase 8): change to gallery.html once photos + videos are merged -->
+                            <a class="btn btn--dark" href="photos.html">
+                                View Gallery <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <!-- TODO (Phase 8): link each photo to the lightbox -->
+                        <ul class="photo-grid">
+                            <li><a class="photo-grid__item" href="photos.html"><img src="assets/images/Unique_6.jpg" alt="Three academy players in yellow kits smiling on the pitch" width="960" height="1280" loading="lazy"></a></li>
+                            <li><a class="photo-grid__item" href="photos.html"><img src="assets/images/Unique_3.jpg" alt="Player in the yellow kit stretching before training" width="960" height="1280" loading="lazy"></a></li>
+                            <li><a class="photo-grid__item" href="photos.html"><img src="assets/images/Unique_8.jpg" alt="Player controlling the ball on the grass" width="810" height="1080" loading="lazy"></a></li>
+                            <li><a class="photo-grid__item" href="photos.html"><img src="assets/images/Unique_4.jpg" alt="Two players, one in goalkeeper gloves and a training bib, posing on the pitch" width="810" height="1080" loading="lazy"></a></li>
+                            <li><a class="photo-grid__item" href="photos.html"><img src="assets/images/Unique_5.jpg" alt="Player in the yellow kit and red boots on the training ground" width="960" height="1280" loading="lazy"></a></li>
+                            <li><a class="photo-grid__item" href="photos.html"><img src="assets/images/Unique_17.jpg" alt="Front and back of the black club shirt, number 31" width="1080" height="741" loading="lazy"></a></li>
+                        </ul>
+                    </div>
+                </section>
+                <!--End of Gallery preview-->
+
+                <!--Start of Sponsors-->
+                <section class="section section--dark">
+                    <div class="container text-center">
+                        <p class="eyebrow">Proudly supported by</p>
+                        <h2 class="section-title">Our Partners</h2>
+                        <p>Unique Soccer Academy warmly welcomes individuals, businesses, and organizations who wish to support our mission of nurturing young football talent.</p>
+                        <ul class="partners">
+                            <!-- TODO: link to Opas Construction's real website or page once Isaac has it -->
+                            <li class="partner">
+                                <img class="partner__logo" src="assets/images/Opas.png" alt="Opas Construction logo" width="506" height="507" loading="lazy">
+                                <span class="partner__name">Opas Construction</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--End of Sponsors-->
             </main>
 
         <!-- Footer: built by js/layout.js -->
         <div id="site-footer"></div>
 
-
-
-        
-
     </div>
     <!--End of Main Container-->
 
+    <script src="js/data.js" defer></script>
     <script src="js/layout.js" defer></script>
     <script src="js/main.js" defer></script>
 </body>
 </html>
-
-              

@@ -259,3 +259,12 @@ if (headerSlot) {
     if (HERO_PAGES.includes(page)) document.body.classList.add("has-hero-header");
 }
 if (footerSlot) footerSlot.innerHTML = buildFooter();
+
+// Floating back-to-top button, bottom right. It is a real <button> because
+// it does something (scrolls) instead of going to another page.
+// main.js shows it after scrolling down and handles the click.
+document.body.insertAdjacentHTML("beforeend", `
+    <button class="back-to-top" type="button">
+        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+        <span class="visually-hidden">Back to top</span>
+    </button>`);
