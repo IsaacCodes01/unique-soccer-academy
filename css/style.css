@@ -655,6 +655,12 @@ body.menu-open {
     font-size: 0.95rem;
 }
 
+/* No gold band (contact page): a thin line keeps the black footer apart
+   from a dark section above it */
+.site-footer--no-cta {
+    border-top: 1px solid var(--line-dark);
+}
+
 /* ----- Gold call-to-action band ----- */
 .footer-cta {
     background-color: var(--gold);

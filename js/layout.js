@@ -43,6 +43,11 @@ const SPONSOR_LOGO_SRC = "assets/images/Opas.png";
 // Pages whose header starts transparent over a big hero image
 const HERO_PAGES = ["index.html"];
 
+// Pages without the gold "Ready to become a champion?" band in the footer.
+// The contact page already has the join form and contact details, so the
+// band would only send people to the page they're on.
+const NO_CTA_PAGES = ["contact.html"];
+
 // Works out the file name of the page we are on, e.g. "about.html".
 // "/unique-soccer-academy/" (GitHub Pages home) gives "" -> "index.html".
 // "/about" (GitHub Pages also serves pages without .html) gives "about.html".
@@ -130,7 +135,7 @@ function telHref(number) {
     return "tel:+233" + number.slice(1);
 }
 
-function buildFooter() {
+function buildFooter(currentPage) {
     const year = new Date().getFullYear();
 
     const quickLinks = NAV_LINKS.map((link) => `
@@ -144,22 +149,26 @@ function buildFooter() {
 
     const socials = SOCIAL_LINKS.map((s) => socialButton(s, "social-btn")).join("");
 
-    return `
-        <footer class="site-footer">
+    // Gold call-to-action band: "" (nothing) on NO_CTA_PAGES
+    const showCta = !NO_CTA_PAGES.includes(currentPage);
+    const cta = showCta ? `
             <!-- Gold call-to-action band -->
             <div class="footer-cta">
                 <div class="footer-cta__inner container">
                     <h2 class="footer-cta__title">Ready to become a champion?</h2>
                     <div class="btn-group">
-                        <a class="btn btn--dark" href="${CONTACT.whatsapp.href}" target="_blank" rel="noopener">
-                            <i class="fab fa-whatsapp" aria-hidden="true"></i> Join the Academy
+                        <a class="btn btn--dark" href="${JOIN_LINK.href}">
+                            <i class="${JOIN_LINK.icon}" aria-hidden="true"></i> Join the Academy
                         </a>
-                        <a class="btn btn--outline" href="contact.html">
+                        <a class="btn btn--outline" href="contact.html#contact-cards">
                             <i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact Us
                         </a>
                     </div>
                 </div>
-            </div>
+            </div>` : "";
+
+    return `
+        <footer class="site-footer${showCta ? "" : " site-footer--no-cta"}">${cta}
 
             <!-- Four columns: about, quick links, contact, follow us -->
             <div class="footer-main container">
@@ -250,13 +259,14 @@ function buildFooter() {
 const headerSlot = document.getElementById("site-header");
 const footerSlot = document.getElementById("site-footer");
 
+const page = getCurrentPage();
+
 if (headerSlot) {
-    const page = getCurrentPage();
     headerSlot.innerHTML = buildHeader(page);
     // Lets the CSS pull the hero up underneath the transparent header
     if (HERO_PAGES.includes(page)) document.body.classList.add("has-hero-header");
 }
-if (footerSlot) footerSlot.innerHTML = buildFooter();
+if (footerSlot) footerSlot.innerHTML = buildFooter(page);
 
 // Floating back-to-top button, bottom right. It is a real <button> because
 // it does something (scrolls) instead of going to another page.
