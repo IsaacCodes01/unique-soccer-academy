@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
-    
+
 
 </head>
 <body>
@@ -27,87 +27,231 @@
         <div id="site-header"></div>
 
             <main>
-                <!--Start of About intro-->
+                <!--Start of Page banner (same markup on every inner page:
+                    change the photo, the title and the last breadcrumb)-->
+                <section class="page-banner">
+                    <img class="page-banner__bg" src="assets/images/Unique_2.jpg" alt="" width="958" height="962">
+                    <div class="container">
+                        <h1 class="page-banner__title">About Us</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ol class="breadcrumb">
+                                <li><a href="index.html">Home</a></li>
+                                <li aria-current="page">About</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </section>
+                <!--End of Page banner-->
+
+                <!--Start of Our story-->
+                <section class="section section--light">
+                    <div class="container story">
+                        <div class="story__crest">
+                            <img src="assets/images/RYFC copy.png" alt="Unique Soccer Academy crest" width="804" height="933">
+                        </div>
+                        <div class="story__text">
+                            <p class="eyebrow">Since 2020</p>
+                            <h2 class="section-title">Our Story</h2>
+                            <p class="story__lead">Unique Soccer Academy is a vibrant third-division football club located in <a href="https://maps.app.goo.gl/uH5maqUhNKFrEUw36" target="_blank" rel="noopener">Kasoa-Apra</a>, in the Central Region of Ghana.</p>
+                            <p>It was founded on <strong>20th March 2020</strong> by the visionary <a href="https://wa.me/233577789073" target="_blank" rel="noopener">Mr. Nii Perrygrino Otoo</a>. The academy began in Anyaa, Greater Accra, with just 12 passionate players training at Anyaa M/A School.</p>
+                            <p>Over the years, the academy relocated twice: first to Auntie-Aku's Kokompe Park, and later to its current home in Apra on <strong>11th February 2024</strong>. Despite challenges, its growth has been driven by unwavering commitment and leadership.</p>
+                            <p>The academy was solely managed by <strong>Mr. Otoo</strong> until he partnered with <a href="https://wa.me/233544400543" target="_blank" rel="noopener">Mr. Emmanuel Opare Asamoah</a>, CEO of Opas Construction, who became a major sponsor. Together, they continue to guide and nurture the dreams of young athletes.</p>
+                            <p>Today, Unique Soccer Academy proudly trains many dedicated players, advancing its mission to nurture football talent and provide pathways to professional clubs, academies, and scholarship opportunities both locally and internationally.</p>
+                            <blockquote class="story__vision">
+                                <p>Our vision is clear: to become a globally respected institution that transforms promising young footballers into professional athletes and well-rounded individuals, setting the gold standard for development and opportunity.</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </section>
+                <!--End of Our story-->
+
+                <!--Start of Timeline-->
+                <section class="section section--dark">
+                    <div class="container">
+                        <div class="text-center">
+                            <p class="eyebrow">How we got here</p>
+                            <h2 class="section-title">Our Journey</h2>
+                        </div>
+                        <!-- js/main.js fills each dot gold as it scrolls past the
+                             middle of the screen. Without JS all dots are gold. -->
+                        <ol class="timeline">
+                            <li class="timeline__item">
+                                <span class="timeline__dot" aria-hidden="true"></span>
+                                <div class="timeline__card">
+                                    <time class="timeline__date" datetime="2020-03-20">20 March 2020</time>
+                                    <h3 class="timeline__title">Founded in Anyaa</h3>
+                                    <p>Mr. Nii Perrygrino Otoo starts the academy in Anyaa, Greater Accra, with 12 players training at Anyaa M/A School.</p>
+                                </div>
+                            </li>
+                            <li class="timeline__item">
+                                <span class="timeline__dot" aria-hidden="true"></span>
+                                <div class="timeline__card">
+                                    <!-- TODO: add the real date of the move to Kokompe Park -->
+                                    <span class="timeline__date timeline__date--tbc">Date to be confirmed</span>
+                                    <h3 class="timeline__title">Move to Kokompe Park</h3>
+                                    <p>The academy's first move: training moves to Auntie-Aku's Kokompe Park.</p>
+                                </div>
+                            </li>
+                            <li class="timeline__item">
+                                <span class="timeline__dot" aria-hidden="true"></span>
+                                <div class="timeline__card">
+                                    <time class="timeline__date" datetime="2024-02-11">11 February 2024</time>
+                                    <h3 class="timeline__title">A New Home in Apra</h3>
+                                    <p>The academy moves to its current home in Apra, Kasoa.</p>
+                                </div>
+                            </li>
+                            <li class="timeline__item">
+                                <span class="timeline__dot" aria-hidden="true"></span>
+                                <div class="timeline__card">
+                                    <!-- TODO: add the real date of the partnership with Mr. Asamoah -->
+                                    <span class="timeline__date timeline__date--tbc">Date to be confirmed</span>
+                                    <h3 class="timeline__title">Partnership with Opas Construction</h3>
+                                    <p>Mr. Emmanuel Opare Asamoah, CEO of Opas Construction, partners with Mr. Otoo and becomes a major sponsor.</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+                <!--End of Timeline-->
+
+                <!--Start of Leadership-->
                 <section class="section section--light">
                     <div class="container">
-                        <p class="eyebrow">About us</p>
-                        <h1 class="section-title">About Unique Soccer Academy</h1>
-                        <div class="about-intro">
-                            <img class="about-intro__logo" src="assets/images/RYFC copy.png" alt="Unique Soccer Academy logo">
-                            <div>
-                                <p>Unique Soccer Academy is a vibrant third-division football club located in <a href="https://maps.app.goo.gl/uH5maqUhNKFrEUw36" target="_blank">Kasoa-Apra,</a> in the Central Region of Ghana. Founded on <strong>20th March 2020</strong> by the visionary <a href="https://wa.me/233577789073" target="_blank">Mr. Nii Perrygrino Otoo,</a> the academy began in Anyaa, Greater Accra, with just 12 passionate players training at Anyaa M/A School.</p>
-                                <p>Over the years, the academy relocated twice—first to Auntie-Aku's Kokompe Park, and later to its current home in Apra on <strong>11th February 2024</strong>. Despite challenges, its growth has been driven by unwavering commitment and leadership.</p>
-                                <p>The academy was solely managed by <strong>Mr. Otoo</strong> until he partnered with <strong><a href="https://wa.me/233544400543" target="_blank">Mr. Emmanuel Opare Asamoah</a></strong>, CEO of Opas Construction, who became a major sponsor. Together, they continue to guide and nurture the dreams of young athletes.</p>
-                                <p>Today, Unique Soccer Academy proudly trains <strong>so many dedicated players</strong>, advancing its mission to nurture football talent and provide pathways to professional clubs, academies, and scholarship opportunities both locally and internationally.</p>
-                                <p>Our vision is clear—to become a globally respected institution that transforms promising young footballers into professional athletes and well-rounded individuals, setting the gold standard for development and opportunity.</p>
+                        <p class="eyebrow">The people behind the club</p>
+                        <h2 class="section-title">Leadership</h2>
+                        <div class="grid grid--2">
+                            <article class="card person-card">
+                                <!-- TODO: replace with a real photo of Mr. Otoo -->
+                                <div class="person-card__photo" role="img" aria-label="Photo of Mr. Nii Perrygrino Otoo coming soon">
+                                    <i class="fa-solid fa-user" aria-hidden="true"></i>
+                                    <span aria-hidden="true">Photo coming soon</span>
+                                </div>
+                                <div class="person-card__body">
+                                    <p><span class="badge">Founder</span></p>
+                                    <h3 class="person-card__name">Mr. Nii Perrygrino Otoo</h3>
+                                    <p>Founded the academy on 20 March 2020 and managed it on his own until the partnership with Opas Construction.</p>
+                                    <a class="btn btn--dark person-card__btn" href="https://wa.me/233577789073" target="_blank" rel="noopener">
+                                        <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                                    </a>
+                                </div>
+                            </article>
+
+                            <article class="card person-card">
+                                <!-- TODO: replace with a real photo of Mr. Asamoah -->
+                                <div class="person-card__photo" role="img" aria-label="Photo of Mr. Emmanuel Opare Asamoah coming soon">
+                                    <i class="fa-solid fa-user" aria-hidden="true"></i>
+                                    <span aria-hidden="true">Photo coming soon</span>
+                                </div>
+                                <div class="person-card__body">
+                                    <p class="person-card__badges">
+                                        <span class="badge">CEO, Opas Construction</span>
+                                        <span class="badge badge--gold">Major sponsor</span>
+                                    </p>
+                                    <h3 class="person-card__name">Mr. Emmanuel Opare Asamoah</h3>
+                                    <p>Partnered with Mr. Otoo and became a major sponsor. Together, they guide and nurture the dreams of young athletes.</p>
+                                    <div class="person-card__footer">
+                                        <a class="btn btn--dark person-card__btn" href="https://wa.me/233544400543" target="_blank" rel="noopener">
+                                            <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                                        </a>
+                                        <img class="person-card__logo" src="assets/images/Opas.png" alt="Opas Construction logo" width="506" height="507" loading="lazy">
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <!--End of Leadership-->
+
+                <!--Start of Training schedule-->
+                <section class="section section--dark" id="schedule">
+                    <div class="container">
+                        <p class="eyebrow">Train with us</p>
+                        <h2 class="section-title">Training Schedule</h2>
+                        <!-- js/main.js highlights today's row and writes a
+                             one-line summary of today into this paragraph -->
+                        <p class="schedule-today" id="schedule-today" hidden></p>
+                        <div class="schedule-wrap">
+                            <table class="table schedule">
+                                <caption class="visually-hidden">Weekly training schedule</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Day</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Programme</th>
+                                    </tr>
+                                </thead>
+                                <!-- data-day: 0 = Sunday, 1 = Monday ... 6 = Saturday
+                                     (the same numbers JavaScript's getDay() uses) -->
+                                <tbody>
+                                    <tr data-day="1"><th scope="row">Monday</th><td data-label="Time">7am &ndash; 9am</td><td data-label="Programme">Personal Training</td></tr>
+                                    <tr data-day="2"><th scope="row">Tuesday</th><td data-label="Time">5:30am &ndash; 7:30am</td><td data-label="Programme">Team Training</td></tr>
+                                    <tr data-day="3"><th scope="row">Wednesday</th><td data-label="Time">5:30am &ndash; 7:30am</td><td data-label="Programme">Team Training</td></tr>
+                                    <tr data-day="4"><th scope="row">Thursday</th><td data-label="Time">5:30am &ndash; 7:30am</td><td data-label="Programme">Team Training</td></tr>
+                                    <tr data-day="5"><th scope="row">Friday</th><td data-label="Time">5:30am &ndash; 7:30am</td><td data-label="Programme">Team Training</td></tr>
+                                    <tr data-day="0"><th scope="row">Sunday</th><td data-label="Time">9am &ndash; 12pm</td><td data-label="Programme">Church Service</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <!--End of Training schedule-->
+
+                <!--Start of Who can join-->
+                <section class="section section--light">
+                    <div class="container split">
+                        <figure class="framed-photo">
+                            <img src="assets/images/Unique_13.jpg" alt="Two academy players giving a thumbs up on the training pitch" width="1125" height="1138" loading="lazy">
+                        </figure>
+                        <div class="split__text">
+                            <p class="eyebrow">Join the academy</p>
+                            <h2 class="section-title">Who Can Join</h2>
+                            <div class="card age-card">
+                                <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-user-group"></i></span>
+                                <p class="age-card__range">14&ndash;19 <span>years old</span></p>
+                            </div>
+                            <p>Players should be between 14 and 19 years old. Come and train with us at our home ground in Apra.</p>
+                            <div class="btn-group">
+                                <a class="btn btn--primary" href="contact.html">
+                                    <i class="fa-solid fa-futbol" aria-hidden="true"></i> Join Us
+                                </a>
+                                <a class="btn btn--outline" href="#schedule">
+                                    <i class="fa-regular fa-calendar" aria-hidden="true"></i> See the Schedule
+                                </a>
                             </div>
                         </div>
                     </div>
                 </section>
-                <!--End of About intro-->
+                <!--End of Who can join-->
 
-                <!--Start of More details-->
+                <!--Start of Support us-->
                 <section class="section section--dark">
                     <div class="container">
-                        <p class="eyebrow">Training &amp; joining</p>
-                        <h2 class="section-title">More About Us</h2>
-                        <div class="grid">
-                            <article class="card">
-                                <h3 class="card__title">Schedule</h3>
-                                <div class="table-wrap">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Day</th>
-                                                <th scope="col">Time</th>
-                                                <th scope="col">Program</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td>Monday</td><td>7am-9am</td><td>Personal Training</td></tr>
-                                            <tr><td>Tuesday</td><td>5:30am-7:30am</td><td>Team Training</td></tr>
-                                            <tr><td>Wednesday</td><td>5:30am-7:30am</td><td>Team Training</td></tr>
-                                            <tr><td>Thursday</td><td>5:30am-7:30am</td><td>Team Training</td></tr>
-                                            <tr><td>Friday</td><td>5:30am-7:30am</td><td>Team Training</td></tr>
-                                            <tr><td>Sunday</td><td>9am-12pm</td><td>Church Service</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </article>
-
-                            <article class="card">
-                                <h3 class="card__title">Age Group</h3>
-                                <p><span class="badge badge--gold">14 – 19 years</span></p>
-                                <p>Should be between 14years to 19years</p>
-                            </article>
-
-                            <article class="card">
-                                <h3 class="card__title">Help &amp; Support</h3>
-                                <p>Unique Soccer Academy warmly welcomes individuals, businesses, and organizations who wish to support our mission of nurturing young football talent. With your sponsorship, we can provide better training resources, facilities, and opportunities for our dedicated players. Join us in shaping future champions—locally and internationally—as we work toward achieving our goals together.</p>
-                            </article>
+                        <div class="support">
+                            <span class="card__icon" aria-hidden="true"><i class="fa-solid fa-hand-holding-heart"></i></span>
+                            <p class="eyebrow">Support us</p>
+                            <h2 class="support__title">Help Us Shape Future Champions</h2>
+                            <p>Unique Soccer Academy warmly welcomes individuals, businesses, and organizations who wish to support our mission of nurturing young football talent. With your sponsorship, we can provide better training resources, facilities, and opportunities for our dedicated players. Join us in shaping future champions, locally and internationally, as we work toward achieving our goals together.</p>
+                            <div class="btn-group">
+                                <a class="btn btn--primary" href="contact.html">
+                                    <i class="fa-solid fa-handshake" aria-hidden="true"></i> Become a Sponsor
+                                </a>
+                                <a class="btn btn--outline" href="mailto:uniquesocceracademy1@gmail.com">
+                                    <i class="fa-solid fa-envelope" aria-hidden="true"></i> Email Us
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </section>
-                <!--End of More details-->
-
-                <!--Start of Sponsor-->
-                <section class="section section--light">
-                    <div class="container text-center">
-                        <p class="eyebrow">Our partner</p>
-                        <h2 class="section-title">Sponsor</h2>
-                        <img class="sponsor-logo" src="assets/images/Opas.png" alt="Opas Construction logo">
-                    </div>
-                </section>
-                <!--End of Sponsor-->
+                <!--End of Support us-->
             </main>
 
         <!-- Footer: built by js/layout.js -->
         <div id="site-footer"></div>
 
- 
+    </div>
+    <!--End of Main Container-->
+
     <script src="js/layout.js" defer></script>
     <script src="js/main.js" defer></script>
 </body>
 </html>
-
-  

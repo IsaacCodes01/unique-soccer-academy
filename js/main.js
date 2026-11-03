@@ -4,6 +4,7 @@
    1. Mobile menu   2. Header scroll effects   3. Old media helpers
    4. Newsletter form (footer)   5. Hero slideshow (home)
    6. Stat counters (home)       7. Latest news (home)
+   8. Timeline dots (about)      9. Today's training (about)
    ========================================================================== */
 
 // True when the visitor has asked their device for less motion
@@ -392,4 +393,75 @@ if (latestNews && typeof NEWS !== "undefined" && NEWS.length > 0) {
         .slice(0, 3);
 
     latestNews.innerHTML = newest.map(newsCard).join("");
+}
+
+/* ==========================================================================
+   8. TIMELINE DOTS (about page)
+   An IntersectionObserver watches each timeline item. rootMargin
+   "-40%" at the bottom shrinks the watched area to the top 60% of the
+   screen, so an item counts as "reached" once it scrolls up past that
+   line. Scrolling back up empties the dot again. Without JS (or this
+   browser feature) the list never gets .is-enhanced, so all dots stay gold.
+   Only colours change, so this also runs with reduced motion.
+   ========================================================================== */
+const timeline = document.querySelector(".timeline");
+
+if (timeline && "IntersectionObserver" in window) {
+    timeline.classList.add("is-enhanced"); // CSS: dots start hollow
+
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            // Inside the top 60%, or already scrolled off the top = reached.
+            // Still below the line = not yet.
+            const reached = entry.isIntersecting || entry.boundingClientRect.top < 0;
+            entry.target.classList.toggle("is-reached", reached);
+        });
+    }, { rootMargin: "0px 0px -40% 0px" });
+
+    timeline.querySelectorAll(".timeline__item").forEach((item) => timelineObserver.observe(item));
+}
+
+/* ==========================================================================
+   9. TODAY'S TRAINING (about page)
+   Each schedule row has data-day with the same number getDay() gives
+   (0 = Sunday ... 6 = Saturday). We colour today's row gold and write a
+   one-line summary above the table. On a day without a session (e.g.
+   Saturday), the summary names the next day that has one instead.
+   ========================================================================== */
+const scheduleRows = [...document.querySelectorAll(".schedule tr[data-day]")];
+const scheduleToday = document.getElementById("schedule-today");
+
+if (scheduleRows.length && scheduleToday) {
+    const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const today = new Date().getDay();
+
+    // The row for a day number, or undefined if there's no session that day
+    const rowFor = (day) => scheduleRows.find((row) => Number(row.dataset.day) === day);
+
+    // "Team Training, 5:30am – 7:30am", read from the row's two cells
+    const describe = (row) => {
+        const [time, programme] = row.querySelectorAll("td");
+        return escapeHTML(`${programme.textContent}, ${time.textContent}`);
+    };
+
+    const todayRow = rowFor(today);
+
+    if (todayRow) {
+        todayRow.classList.add("is-today");
+        todayRow.setAttribute("aria-current", "date"); // screen readers: "current date"
+        todayRow.querySelector("th").insertAdjacentHTML("beforeend", ' <span class="badge badge--dark">Today</span>');
+        scheduleToday.innerHTML = `<i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+            Today (${DAY_NAMES[today]}): <strong>${describe(todayRow)}</strong>`;
+    } else {
+        // Step forward a day at a time; % 7 wraps Saturday (6) round to Sunday (0)
+        let next = today;
+        do {
+            next = (next + 1) % 7;
+        } while (!rowFor(next));
+
+        scheduleToday.innerHTML = `<i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+            No session today (${DAY_NAMES[today]}). Next up: <strong>${DAY_NAMES[next]}, ${describe(rowFor(next))}</strong>`;
+    }
+
+    scheduleToday.hidden = false;
 }
