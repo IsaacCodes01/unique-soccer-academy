@@ -21,13 +21,26 @@ const NAV_LINKS = [
 // The gold call-to-action button at the end of the menu
 const JOIN_LINK = { label: "Join Us", href: "contact.html", icon: "fa-solid fa-futbol" };
 
-// Social icons shown at the bottom of the mobile menu (same links as the footer)
+// Social icons shown at the bottom of the mobile menu and in the footer.
+// A link with an empty href still shows its icon, but as a "coming soon"
+// icon that can't be clicked (see socialButton below).
 const SOCIAL_LINKS = [
-    { label: "Facebook", href: "https://facebook.com/profile.php?id=61565360907088", icon: "fab fa-facebook-f" },
-    { label: "WhatsApp", href: "https://wa.me/233544400543",                        icon: "fab fa-whatsapp" }
+    { label: "Facebook",  href: "https://facebook.com/profile.php?id=61565360907088", icon: "fab fa-facebook-f" },
+    { label: "WhatsApp",  href: "https://wa.me/233544400543",                        icon: "fab fa-whatsapp" },
+    // TODO: add the club's real Instagram URL
+    { label: "Instagram", href: "",                                                  icon: "fab fa-instagram" }
 ];
 
+// Contact details shown in the footer (the same ones as on contact.html)
+const CONTACT = {
+    location: { label: "Kasoa-Apra, Central Region, Ghana", href: "https://maps.app.goo.gl/uH5maqUhNKFrEUw36" },
+    phones: ["0533185607", "0544400543"],
+    email: "uniquesocceracademy1@gmail.com",
+    whatsapp: { label: "0544400543", href: "https://wa.me/233544400543" }
+};
+
 const LOGO_SRC = "assets/images/RYFC copy.png";
+const SPONSOR_LOGO_SRC = "assets/images/Opas.png";
 
 // Pages whose header starts transparent over a big hero image
 const HERO_PAGES = ["index.html"];
@@ -58,12 +71,26 @@ function navItem(link, index, currentPage) {
         </li>`;
 }
 
+// Builds one round social icon. With a real href it is a link that opens in
+// a new tab. Without one it is a plain <span>: you can see the icon, but it
+// can't be clicked or tabbed to, and screen readers hear "coming soon".
+function socialButton(s, className) {
+    if (!s.href) {
+        return `
+        <span class="${className} is-placeholder" title="${s.label} coming soon">
+            <i class="${s.icon}" aria-hidden="true"></i>
+            <span class="visually-hidden">${s.label} (coming soon)</span>
+        </span>`;
+    }
+    return `
+        <a class="${className}" href="${s.href}" target="_blank" rel="noopener" aria-label="${s.label}">
+            <i class="${s.icon}" aria-hidden="true"></i>
+        </a>`;
+}
+
 function buildHeader(currentPage) {
     const links = NAV_LINKS.map((link, i) => navItem(link, i, currentPage)).join("");
-    const socials = SOCIAL_LINKS.map((s) => `
-        <a class="nav__social" href="${s.href}" target="_blank" rel="noopener" aria-label="${s.label}">
-            <i class="${s.icon}" aria-hidden="true"></i>
-        </a>`).join("");
+    const socials = SOCIAL_LINKS.map((s) => socialButton(s, "nav__social")).join("");
     const overlayClass = HERO_PAGES.includes(currentPage) ? " site-header--overlay" : "";
 
     return `
@@ -99,45 +126,123 @@ function buildHeader(currentPage) {
         </header>`;
 }
 
-// Same content as the old copied footer (it gets a full redesign in Phase 5)
+// Turns "0544400543" into "tel:+233544400543" (Ghana's country code
+// replaces the leading 0) so tapping the number on a phone starts a call.
+function telHref(number) {
+    return "tel:+233" + number.slice(1);
+}
+
 function buildFooter() {
     const year = new Date().getFullYear();
 
+    const quickLinks = NAV_LINKS.map((link) => `
+        <li><a class="footer__link" href="${link.href}">${link.label}</a></li>`).join("");
+
+    const phones = CONTACT.phones.map((number) => `
+        <li>
+            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+            <a class="footer__link" href="${telHref(number)}"><span class="visually-hidden">Call </span>${number}</a>
+        </li>`).join("");
+
+    const socials = SOCIAL_LINKS.map((s) => socialButton(s, "social-btn")).join("");
+
     return `
-        <footer>
-            <div class="end">
-                <div class="footers">
-                    <div class="fh">
-                        <img class="ulogo" src="${LOGO_SRC}" alt="Unique Soccer Academy logo">
-                        <h3 class="usa"><span class="us">UNIQUE SOCCER</span><br>ACADEMY</h3>
+        <footer class="site-footer">
+            <!-- Gold call-to-action band -->
+            <div class="footer-cta">
+                <div class="footer-cta__inner container">
+                    <h2 class="footer-cta__title">Ready to become a champion?</h2>
+                    <div class="btn-group">
+                        <a class="btn btn--dark" href="${CONTACT.whatsapp.href}" target="_blank" rel="noopener">
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i> Join the Academy
+                        </a>
+                        <a class="btn btn--outline" href="contact.html">
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact Us
+                        </a>
                     </div>
+                </div>
+            </div>
+
+            <!-- Four columns: about, quick links, contact, follow us -->
+            <div class="footer-main container">
+                <div class="footer-col footer-col--about">
+                    <a class="footer-brand" href="index.html" aria-label="Unique Soccer Academy home">
+                        <img class="footer-brand__crest" src="${LOGO_SRC}" alt="">
+                        <span class="footer-brand__name">Unique Soccer <span class="text-gold">Academy</span></span>
+                    </a>
+                    <p>A third-division football club in Kasoa-Apra, in the Central Region of Ghana.</p>
+                    <p class="footer-motto">Where <span class="text-gold">Champions</span> Are Made</p>
+                </div>
+
+                <nav class="footer-col" aria-label="Footer">
+                    <h3 class="footer-col__title">Quick links</h3>
+                    <ul class="footer-list footer-list--pairs">${quickLinks}
+                    </ul>
+                </nav>
+
+                <div class="footer-col">
+                    <h3 class="footer-col__title">Contact</h3>
+                    <ul class="footer-list footer-list--icons">
+                        <li>
+                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                            <a class="footer__link" href="${CONTACT.location.href}" target="_blank" rel="noopener">${CONTACT.location.label}</a>
+                        </li>${phones}
+                        <li>
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                            <a class="footer__link" href="mailto:${CONTACT.email}">${CONTACT.email}</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                            <a class="footer__link" href="${CONTACT.whatsapp.href}" target="_blank" rel="noopener"><span class="visually-hidden">WhatsApp </span>${CONTACT.whatsapp.label}</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-col__title">Follow us</h3>
+                    <div class="social-list">${socials}
+                    </div>
+
+                    <div class="sponsor">
+                        <p class="sponsor__label">Proudly sponsored by</p>
+                        <!-- TODO: link to Opas Construction's real website or page once Isaac has it -->
+                        <div class="sponsor__body">
+                            <img class="sponsor__logo" src="${SPONSOR_LOGO_SRC}" alt="Opas Construction logo" width="56" height="56">
+                            <span class="sponsor__name">Opas Construction</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter. There is no mailing-list service yet, so js/main.js
+                 turns a sign-up into an email to the club (see section 4 there). -->
+            <div class="newsletter">
+              <div class="newsletter__inner container">
+                <div class="newsletter__text">
+                    <h3 class="newsletter__title">Subscribe to our newsletter</h3>
+                    <p>Get the latest club news and match updates in your inbox.</p>
+                </div>
+                <div class="newsletter__signup">
+                    <form class="newsletter__form" novalidate>
+                        <label class="visually-hidden" for="newsletter-email">Email address</label>
+                        <input class="newsletter__input" id="newsletter-email" name="email" type="email"
+                               placeholder="Your email address" autocomplete="email" required
+                               aria-describedby="newsletter-status">
+                        <button class="btn btn--primary" type="submit">Subscribe</button>
+                    </form>
+                    <p class="newsletter__status" id="newsletter-status" role="status"></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="footer-bottom">
+                <div class="footer-bottom__inner container">
                     <p>&copy; ${year} Unique Soccer Academy. All rights reserved.</p>
-                </div>
-                <div class="footers">
-                    <p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Location</p>
-                    <a href="https://maps.app.goo.gl/uH5maqUhNKFrEUw36" target="_blank" rel="noopener">Kasoa-Apra, Ghana</a>
-                </div>
-                <div class="footers">
-                    <p>Contact Us On Our Socials</p>
-                    <a href="https://facebook.com/profile.php?id=61565360907088" target="_blank" rel="noopener"><i class="fab fa-facebook-f" aria-hidden="true"></i> Facebook</a>
-                    <!-- TODO (Phase 5): placeholder link, needs the club's real Instagram URL -->
-                    <a href="https://instagram.com" target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i> Instagram</a>
-                    <a href="https://wa.me/233544400543" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
-                </div>
-                <div class="footers">
-                    <p>Sponsors</p>
-                    <div class="fh">
-                        <img class="ulogo" src="assets/images/Opas.png" alt="Opass Construction logo">
-                        <!-- TODO (Phase 5): sponsor should not link to WhatsApp -->
-                        <a href="https://wa.me/233544400543" target="_blank" rel="noopener">Opass Construction</a>
-                    </div>
-                </div>
-                <div class="footers">
-                    <p>Motto</p>
-                    <div class="fh">
-                        <img class="ulogo" src="${LOGO_SRC}" alt="Unique Soccer Academy logo">
-                        <h3>WHERE <span class="text-gold">CHAMPIONS</span> ARE MADE</h3>
-                    </div>
+                    <p>Built by Isaac Otabil</p>
+                    <a class="footer__link footer-bottom__top" href="#site-header">
+                        Back to top <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
         </footer>`;

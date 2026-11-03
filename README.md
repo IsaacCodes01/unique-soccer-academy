@@ -37,7 +37,7 @@ Unique Soccer Academy was founded on **20th March 2020** by **Mr. Nii Perrygrino
 Greater Accra, with just 12 players training at Anyaa M/A School. The academy later moved to
 Auntie-Aku's Kokompe Park, and on **11th February 2024** it moved to its current home in **Apra**.
 Mr. Otoo now leads the academy alongside **Mr. Emmanuel Opare Asamoah**, CEO of
-**Opass Construction**, the club's major sponsor.
+**Opas Construction**, the club's major sponsor.
 
 **Mission:** To nurture football talent while creating pathways for our players to reach
 professional clubs, academies and scholarship opportunities, locally and internationally.
@@ -164,7 +164,7 @@ through equipment, training support or visibility.
 Reach us on [WhatsApp](https://wa.me/233544400543) or at
 [uniquesocceracademy1@gmail.com](mailto:uniquesocceracademy1@gmail.com).
 
-**Proudly sponsored by Opass Construction.**
+**Proudly sponsored by Opas Construction.**
 
 ---
 

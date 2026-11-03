@@ -21,6 +21,7 @@
     --gold-dark: #D4A90F;
     --gold-ink: #7A5C00;      /* gold that is dark enough to read on light backgrounds */
     --red: #D62828;
+    --red-light: #FF6B6B;     /* red that is light enough to read on dark backgrounds */
     --white: #FFFFFF;
     --off-white: #F7F5EF;
     --grey: #6B6F76;          /* muted text on light backgrounds */
@@ -324,6 +325,17 @@ p {
     color: var(--black);
 }
 
+/* Black button, for use on gold backgrounds */
+.btn--dark {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.btn--dark:hover {
+    background-color: var(--charcoal);
+    color: var(--gold);
+}
+
 .btn--ghost {
     background-color: transparent;
 }
@@ -588,7 +600,8 @@ p {
         color var(--dur-hover) var(--ease);
 }
 
-.nav__social:hover {
+/* "a." means only real links react; "coming soon" icons are <span>s */
+a.nav__social:hover {
     background-color: var(--gold);
     color: var(--black);
 }
@@ -617,71 +630,304 @@ body.menu-open {
     transition-delay: calc(150ms + var(--i, 0) * 60ms);
 }
 
-/* Old logo + name classes, still used by the footer until Phase 5 */
-.ulogo {
+/* ==========================================================================
+   7. FOOTER
+   Three parts: a gold call-to-action band, the main 4-column area on black,
+   and a thin bottom bar. Mobile first: the columns stack, then become
+   2 columns at 768px and 4 at 1024px (see section 12).
+   Text contrast on --black: white 19.7:1, gold 12.1:1, --grey-light 9.8:1.
+   ========================================================================== */
+.site-footer {
+    background-color: var(--black);
+    color: var(--grey-light);
+    font-size: 0.95rem;
+}
+
+/* ----- Gold call-to-action band ----- */
+.footer-cta {
+    background-color: var(--gold);
+    color: var(--black);              /* black on gold: 12.1:1 */
+}
+
+.footer-cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    padding-block: var(--space-7);
+}
+
+.footer-cta__title {
+    font-size: clamp(1.6rem, 1.2rem + 2vw, 2.5rem);
+}
+
+/* The normal outline hover turns gold, which would vanish on the gold band */
+.footer-cta .btn--outline:hover {
+    background-color: var(--black);
+    border-color: var(--black);
+    color: var(--gold);
+}
+
+/* The gold focus ring would also vanish on gold, so it is black here */
+.footer-cta :focus-visible {
+    outline-color: var(--black);
+}
+
+/* ----- Main area ----- */
+.footer-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    padding-block: var(--space-8);
+}
+
+.footer-col__title {
+    position: relative;
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
+    color: var(--white);
+}
+
+/* Short red bar under each column title (matches .section-title) */
+.footer-col__title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 32px;
+    height: 3px;
+    border-radius: 2px;
+    background-color: var(--red);
+}
+
+.footer-col--about p + p {
+    margin-top: var(--space-4);
+}
+
+.footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+    color: var(--white);
+    text-decoration: none;
+}
+
+.footer-brand__crest {
     width: 56px;
     height: 56px;
     object-fit: contain;
 }
 
-.usa {
-    font-size: 1.1rem;
+.footer-brand__name {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
     line-height: 1.1;
-    text-align: center;
-    color: var(--gold);
+    text-transform: uppercase;
 }
 
-.us {
-    font-size: 0.75rem;
+.footer-motto {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--white);
 }
 
-
-
-/* ==========================================================================
-   7. FOOTER  (restyled only — rebuilt in Phase 3)
-   ========================================================================== */
-footer {
-    background-color: var(--black);
-    color: var(--white);
-    border-top: 4px solid var(--gold);
-}
-
-.end {
+/* Links in lists: muted grey, turning gold on hover */
+.footer-list {
     display: grid;
-    grid-template-columns: 1fr;
+    gap: var(--space-3);
 }
 
-.footers {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-6) var(--space-5);
-    font-size: 0.9rem;
-    text-align: center;
+/* Quick links in pairs: two columns, each as wide as its longest word */
+.footer-list--pairs {
+    grid-template-columns: repeat(2, max-content);
+    column-gap: var(--space-7);
+}
+
+.footer__link {
     color: var(--grey-light);
-}
-
-.footers h3 {
-    color: var(--white);
-}
-
-.footers a {
-    color: var(--gold);
     text-decoration: none;
+    overflow-wrap: break-word; /* lets the long email address wrap on small phones */
     transition: color var(--dur-hover) var(--ease);
 }
 
-.footers a:hover {
+.footer__link:hover {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* Contact rows: a fixed-width icon column, then the text */
+.footer-list--icons li {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: var(--space-3);
+    align-items: baseline;
+}
+
+.footer-list--icons i {
+    color: var(--gold);
+    text-align: center;
+}
+
+/* ----- Round social buttons ----- */
+.social-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.social-btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line-dark);
+    border-radius: 50%;
+    color: var(--white);
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition:
+        background-color var(--dur-hover) var(--ease),
+        color var(--dur-hover) var(--ease),
+        transform var(--dur-hover) var(--ease),
+        box-shadow var(--dur-hover) var(--ease);
+}
+
+/* Lift up 4px and glow gold (real links only, not "coming soon" icons) */
+a.social-btn:hover {
+    background-color: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(245, 197, 24, 0.45);
+}
+
+/* ----- Sponsor ----- */
+.sponsor {
+    margin-top: var(--space-6);
+}
+
+.sponsor__label {
+    margin-bottom: var(--space-3);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.sponsor__body {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.sponsor__logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+}
+
+.sponsor__name {
+    font-weight: 600;
     color: var(--white);
 }
 
-.fh {
+/* ----- Newsletter ----- */
+.newsletter {
+    border-top: 1px solid var(--line-dark);
+}
+
+.newsletter__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding-block: var(--space-7);
+}
+
+.newsletter__title {
+    margin-bottom: var(--space-2);
+    font-size: 1.25rem;
+    color: var(--white);
+}
+
+/* Input and button side by side; they wrap onto two lines if too narrow */
+.newsletter__form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.newsletter__input {
+    flex: 1 1 220px;
+    min-width: 0;
+    min-height: 44px;
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--line-dark);
+    border-radius: 999px;
+    background-color: var(--charcoal);
+    color: var(--white);
+    transition: border-color var(--dur-hover) var(--ease);
+}
+
+.newsletter__input::placeholder {
+    color: var(--grey-light);   /* 8.9:1 on charcoal */
+    opacity: 1;                 /* Firefox fades placeholders by default */
+}
+
+.newsletter__input:hover {
+    border-color: var(--grey-light);
+}
+
+.newsletter__input[aria-invalid="true"] {
+    border-color: var(--red-light);
+}
+
+/* Message under the form. It stays in the page (screen readers watch it
+   for changes) but is empty, so it takes no space, until the form is sent. */
+.newsletter__status {
+    font-size: 0.9rem;
+}
+
+.newsletter__status:not(:empty) {
+    margin-top: var(--space-3);
+}
+
+.newsletter__status.is-error {
+    color: var(--red-light);    /* 7.1:1 on black */
+}
+
+.newsletter__status.is-success {
+    color: var(--gold);
+}
+
+/* ----- Bottom bar ----- */
+.footer-bottom {
+    border-top: 1px solid var(--line-dark);
+    font-size: 0.85rem;
+}
+
+.footer-bottom__inner {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--space-2);
+    padding-block: var(--space-5);
+    text-align: center;
+}
+
+.footer-bottom__top {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px; /* comfortable tap target */
+    font-weight: 600;
 }
 
 
@@ -998,8 +1244,34 @@ footer {
         grid-template-columns: 150px 1fr;
     }
 
-    .end {
+    /* Footer: CTA text and buttons side by side, 2 columns below */
+    .footer-cta__inner {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .footer-main {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-bottom__inner {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    /* Newsletter: text on the left, form on the right */
+    .newsletter__inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .newsletter__signup {
+        flex: 0 1 460px;
     }
 
     .table td:nth-child(2) {
@@ -1119,8 +1391,12 @@ footer {
 }
 
 @media (min-width: 1024px) {
-    .end {
-        grid-template-columns: repeat(5, 1fr);
+    /* Footer: 4 columns. Contact and Follow us are "auto" (only as wide as
+       their content), so they sit close together; the about column and
+       quick links share the space that is left. */
+    .footer-main {
+        grid-template-columns: 1.3fr 1fr auto auto;
+        gap: var(--space-6);
     }
 }
 
@@ -1150,6 +1426,7 @@ footer {
     }
 
     .btn:hover,
+    .social-btn:hover,
     .card:hover,
     .media-grid__item:hover {
         transform: none;

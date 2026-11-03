@@ -192,7 +192,7 @@ Phase 5: footer. Rebuild the footer from js/layout.js:
   1) Crest, short club description, motto "Where Champions Are Made"
   2) Quick links (from the same nav array)
   3) Contact: location link, phone numbers, email, WhatsApp (keep the real ones)
-  4) Follow us: round social icon buttons with hover lift + gold glow; sponsor logo (Opass
+  4) Follow us: round social icon buttons with hover lift + gold glow; sponsor logo (Opas
      Construction) with the label "Proudly sponsored by"
 - Bottom bar: © current year, "Built by Isaac Otabil", back-to-top link.
 - The Instagram link is a placeholder: mark it TODO and hide it until I give the real URL.
@@ -242,7 +242,7 @@ Phase 6: home page. Rebuild index.html with these sections, using the shared cla
 6. LATEST NEWS: the 3 newest items from js/data.js (create data.js with an empty news array
    and a nice "No news yet. Stay tuned!" empty state).
 7. GALLERY PREVIEW: 6 photos in a modern grid + "View Gallery" button.
-8. SPONSORS: "Our Partners" with the Opass Construction logo, greyscale that turns colour on hover.
+8. SPONSORS: "Our Partners" with the Opas Construction logo, greyscale that turns colour on hover.
 Use only real text from the old site, or TODO placeholders. Explain the Ken Burns effect and
 the counter animation in simple words.
 ```
@@ -270,9 +270,9 @@ Phase 7: about page. Rebuild about.html:
    - 20 March 2020: founded in Anyaa, Greater Accra, with 12 players at Anyaa M/A School
    - Moved to Auntie-Aku's Kokompe Park (date: TODO)
    - 11 February 2024: moved to the current home in Apra
-   - Partnership with Mr. Emmanuel Opare Asamoah (Opass Construction) (date: TODO)
+   - Partnership with Mr. Emmanuel Opare Asamoah (Opas Construction) (date: TODO)
 4. LEADERSHIP: cards for Mr. Nii Perrygrino Otoo (Founder) and Mr. Emmanuel Opare Asamoah
-   (CEO, Opass Construction, major sponsor), with photo placeholders.
+   (CEO, Opas Construction, major sponsor), with photo placeholders.
 5. TRAINING SCHEDULE: a styled, always-visible table (proper <thead>, zebra rows, today's day
    highlighted gold using JS). On mobile it turns into stacked day cards. Fix "SCHUDLES".
 6. WHO CAN JOIN: age group 14–19 card + "Join Us" button.

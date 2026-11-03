@@ -2,6 +2,7 @@
    main.js
    Runs after layout.js has built the header, so the header already exists.
    1. Mobile menu   2. Header scroll effects   3. Old media helpers
+   4. Newsletter form (footer)
    ========================================================================== */
 
 const header = document.querySelector(".site-header");
@@ -146,4 +147,45 @@ function openImage(img){
 function openvideo(videoElement) {
     const videoSrc = videoElement.currentSrc || videoElement.src;
     window.open(videoSrc, '_blank');
+}
+
+/* ==========================================================================
+   4. NEWSLETTER FORM (footer)
+   The site has no server or mailing-list service yet, so a sign-up opens
+   the visitor's email app with a ready-made "please subscribe me" email
+   to the club. They only have to press Send.
+   TODO: swap this for a real mailing-list service when the club has one.
+   ========================================================================== */
+const newsletterForm = document.querySelector(".newsletter__form");
+
+if (newsletterForm) {
+    const emailInput = newsletterForm.querySelector(".newsletter__input");
+    const status = document.getElementById("newsletter-status");
+    const CLUB_EMAIL = "uniquesocceracademy1@gmail.com";
+
+    newsletterForm.addEventListener("submit", (event) => {
+        event.preventDefault(); // stop the browser reloading the page
+
+        const email = emailInput.value.trim();
+
+        // checkValidity() uses the browser's own rules for type="email"
+        if (!email || !emailInput.checkValidity()) {
+            emailInput.setAttribute("aria-invalid", "true");
+            status.className = "newsletter__status is-error";
+            status.textContent = "Please enter a valid email address, like name@example.com.";
+            emailInput.focus();
+            return;
+        }
+
+        emailInput.removeAttribute("aria-invalid");
+
+        // encodeURIComponent makes spaces, @ and line breaks safe inside a link
+        const subject = encodeURIComponent("Newsletter subscription");
+        const body = encodeURIComponent(`Hello, please add ${email} to the Unique Soccer Academy newsletter.`);
+        window.location.href = `mailto:${CLUB_EMAIL}?subject=${subject}&body=${body}`;
+
+        status.className = "newsletter__status is-success";
+        status.textContent = "Thanks! Your email app should open now. Press Send to finish subscribing.";
+        newsletterForm.reset();
+    });
 }
