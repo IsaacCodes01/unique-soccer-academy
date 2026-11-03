@@ -1,13 +1,32 @@
 /* ==========================================================================
    demo-data.js — SAMPLE CONTENT FOR PREVIEWING ONLY
-   Nothing here is real. It only switches on when "?demo" is added to the
-   address, e.g.  news.html?demo  or  index.html?demo. Without it, this
-   file does nothing and visitors see the real lists in js/data.js.
+   Nothing here is real. Two ways to switch it on:
+   1. Set DEMO_ALWAYS_ON below to true (and back to false when done), or
+   2. Add "?demo" to the address once, e.g. news.html?demo. It then stays
+      on while you click around the site, until you visit any page with
+      "?demo=off" or close the browser tab.
    Before the site goes live: delete this file and the <script> line that
    loads it in news.html and index.html.
    ========================================================================== */
 
-if (new URLSearchParams(window.location.search).has("demo")) {
+const DEMO_ALWAYS_ON = false;
+
+// sessionStorage remembers a value for this browser tab only. It can be
+// blocked (e.g. in some private windows), so it is wrapped in try/catch:
+// if it fails, "?demo" still works for the page it is on.
+function isDemoOn() {
+    const param = new URLSearchParams(window.location.search).get("demo"); // null if absent
+    let remembered = false;
+    try {
+        if (param !== null) sessionStorage.setItem("usa-demo", param === "off" ? "off" : "on");
+        remembered = sessionStorage.getItem("usa-demo") === "on";
+    } catch (error) {
+        remembered = param !== null && param !== "off";
+    }
+    return DEMO_ALWAYS_ON || remembered;
+}
+
+if (isDemoOn()) {
     // Dates are worked out from today, so the countdown always has a
     // match to count down to. daysFromToday(-3) = 3 days ago, "2026-11-01".
     const daysFromToday = (days) => {
@@ -60,5 +79,5 @@ if (new URLSearchParams(window.location.search).has("demo")) {
 
     // A gold label in the bottom-left corner so nobody mistakes this for real news
     document.body.insertAdjacentHTML("beforeend",
-        '<p class="demo-notice"><strong>Demo mode:</strong> sample content. Remove "?demo" from the address to hide it.</p>');
+        '<p class="demo-notice"><strong>Demo mode:</strong> sample content. Open <a href="?demo=off">?demo=off</a> to hide it.</p>');
 }
