@@ -3114,12 +3114,503 @@ body.dialog-open {
     font-size: 0.85rem;
 }
 
-/* Contact page */
-.map {
+/* ----- Contact: cards -----
+   1 column on phones, 2 x 2 from 600px (section 12). Four in a row
+   would squeeze the long email address onto three broken lines. */
+.contact-grid {
+    display: grid;
+    gap: var(--space-5);
+}
+
+.contact-card__title {
+    font-size: 1.5rem;
+}
+
+.contact-card__text {
+    color: var(--grey);         /* 5.3:1 on white */
+}
+
+/* The rows sit at the bottom of the card, so they line up across cards */
+.contact-card__list {
+    margin-top: auto;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line-light);
+}
+
+/* Link on the left, round copy button on the right */
+.contact-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.contact-row + .contact-row {
+    border-top: 1px solid var(--line-light);
+}
+
+/* 10px padding + a 24px line = a 44px tall, easy-to-tap link */
+.contact-row a {
+    display: block;
+    min-width: 0;
+    padding-block: 10px;
+    line-height: 1.5;
+}
+
+.copy-btn {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line-light);
+    border-radius: 50%;
+    background-color: var(--off-white);
+    color: var(--black);
+    transition:
+        background-color var(--dur-hover) var(--ease),
+        border-color var(--dur-hover) var(--ease);
+}
+
+.copy-btn:hover,
+.copy-btn.is-copied {
+    border-color: var(--gold);
+    background-color: var(--gold);
+}
+
+/* Just copied: swap the copy icon for a tick. "\f00c" is Font Awesome's
+   check mark, which only exists in the solid (weight 900) style. */
+.copy-btn.is-copied i {
+    font-weight: 900;
+}
+
+.copy-btn.is-copied i::before {
+    content: "\f00c";
+}
+
+/* ----- Contact: join form -----
+   Floating labels: the label sits inside the box like a placeholder.
+   When the box has focus or has something typed in it, the label shrinks
+   and moves up to the top edge. Typed in = ":not(:placeholder-shown)",
+   which is why every input has placeholder=" " in the HTML. */
+.join {
+    display: grid;
+    gap: var(--space-7);
+}
+
+.join__intro p:not(.eyebrow) {
+    color: var(--grey-light);   /* 9.6:1 on black */
+}
+
+.join__points {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+}
+
+.join__points li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-weight: 500;
+}
+
+.join__points i {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(245, 197, 24, 0.12);
+    color: var(--gold);
+}
+
+.join-form {
+    padding: var(--space-5);
+    border: 1px solid var(--line-dark);
+    border-radius: var(--radius-lg);
+    background-color: var(--charcoal);
+}
+
+.join-form__note {
+    margin-bottom: var(--space-5);
+    font-size: 0.85rem;
+    color: var(--grey-light);   /* 8.9:1 on charcoal */
+}
+
+/* One column on phones; two from 600px, where .field--full spans both */
+.join-form__grid {
+    display: grid;
+    gap: var(--space-4);
+}
+
+.field {
+    position: relative;
+}
+
+.field__input {
+    display: block;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    border: 0;
+    min-height: 58px;
+    padding: 26px var(--space-4) var(--space-2);
+    border: 1px solid var(--line-dark);
+    border-radius: var(--radius-sm);
+    background-color: var(--black);
+    font-size: 1rem;            /* 16px stops iPhones zooming in on focus */
+    color: var(--white);
+    transition: border-color var(--dur-hover) var(--ease);
+}
+
+.field__input:hover {
+    border-color: var(--grey-light);
+}
+
+.field__input:focus {
+    border-color: var(--gold);
+}
+
+.field__input[aria-invalid="true"] {
+    border-color: var(--red-light);
+}
+
+.field__input--area {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.field__label {
+    position: absolute;
+    top: 17px;
+    left: var(--space-4);
+    max-width: calc(100% - var(--space-6));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.5;
+    color: var(--grey-light);
+    pointer-events: none;       /* clicks go through to the box underneath */
+    transform-origin: left top;
+    transition:
+        transform var(--dur-hover) var(--ease),
+        color var(--dur-hover) var(--ease);
+}
+
+/* Float up: when focused, when filled in, or (select) once one is chosen.
+   A select never has a placeholder, so it's left out of the middle rule. */
+.field__input:focus + .field__label,
+.field__input:not(select):not(:placeholder-shown) + .field__label,
+.field--select .field__input:valid + .field__label {
+    transform: translateY(-10px) scale(0.75);
+}
+
+.field__input:focus + .field__label {
+    color: var(--gold);
+}
+
+/* Select: hide the browser's own arrow and draw a chevron instead
+   (a small square with two borders, turned 45 degrees) */
+.field--select .field__input {
+    padding-right: var(--space-7);
+    appearance: none;
+    cursor: pointer;
+}
+
+.field--select .field__input option {
+    background-color: var(--charcoal);
+    color: var(--white);
+}
+
+.field--select::after {
+    content: "";
+    position: absolute;
+    top: 24px;
+    right: var(--space-5);
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--grey-light);
+    border-bottom: 2px solid var(--grey-light);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.field__hint,
+.field__error {
+    margin-top: var(--space-1);
+    font-size: 0.85rem;
+}
+
+.field__hint {
+    color: var(--grey-light);
+}
+
+.field__error {
+    font-weight: 500;
+    color: var(--red-light);    /* 6.4:1 on charcoal */
+}
+
+/* Empty until there's a problem, so it takes no space */
+.field__error:empty {
+    display: none;
+}
+
+.field__error::before {
+    content: "\f06a";           /* Font Awesome "circle-exclamation" */
+    margin-right: var(--space-1);
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.join-form__submit {
+    width: 100%;
+    margin-top: var(--space-5);
+}
+
+.join-form__status {
+    font-size: 0.95rem;
+}
+
+.join-form__status:not(:empty) {
+    margin-top: var(--space-4);
+}
+
+.join-form__status.is-error {
+    color: var(--red-light);
+}
+
+.join-form__status.is-success i {
+    color: var(--gold);
+}
+
+.join-form__status a {
+    font-weight: 600;
+    color: var(--gold);
+}
+
+/* ----- Contact: find us -----
+   16:9 map frames. aspect-ratio keeps the shape at any width; the
+   iframe is stretched over the whole frame with position: absolute. */
+.map-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--line-light);
+    border-radius: var(--radius-lg);
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.map-card__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.map-card__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--black);
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+.map-card__label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey);
+}
+
+.map-card__title {
+    font-size: 1.4rem;
+}
+
+.map-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
     border-radius: var(--radius);
+    background-color: var(--line-light);   /* grey box while the map loads */
+}
+
+.map-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* ----- Contact: FAQ accordion -----
+   The smooth open/close: the panel is a one-row grid. A row of "0fr"
+   is zero tall, "1fr" is as tall as the answer, and browsers can
+   animate between the two. visibility: hidden stops keyboard and
+   screen-reader users landing on links inside a closed answer; when
+   closing it waits until the slide has finished (the 400ms delay). */
+.faq {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 800px;
+}
+
+.faq__item {
+    border: 1px solid var(--line-dark);
+    border-radius: var(--radius);
+    background-color: var(--charcoal);
+    transition: border-color var(--dur-hover) var(--ease);
+}
+
+.faq__item.is-open {
+    border-color: var(--gold);
+}
+
+.faq__heading {
+    font-size: inherit;
+}
+
+.faq__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    width: 100%;
+    min-height: 56px;
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius);
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--white);
+    transition: color var(--dur-hover) var(--ease);
+}
+
+.faq__btn:hover {
+    color: var(--gold);
+}
+
+/* A gold "+" made of two bars; when open the upright bar turns flat,
+   leaving a "−" */
+.faq__icon {
+    position: relative;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+}
+
+.faq__icon::before,
+.faq__icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 2px;
+    margin: -1px 0 0 -6px;
+    border-radius: 1px;
+    background-color: var(--gold);
+    transition: transform 400ms var(--ease);
+}
+
+.faq__icon::after {
+    transform: rotate(90deg);
+}
+
+.faq__item.is-open .faq__icon::after {
+    transform: rotate(0deg);
+}
+
+.faq.is-enhanced .faq__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition:
+        grid-template-rows 400ms var(--ease),
+        visibility 0s linear 400ms;
+}
+
+.faq.is-enhanced .faq__item.is-open .faq__panel {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition:
+        grid-template-rows 400ms var(--ease),
+        visibility 0s linear 0s;
+}
+
+.faq__inner {
+    min-height: 0;              /* lets the 0fr row squash it to nothing */
+    overflow: hidden;
+    padding-inline: var(--space-5);
+    color: var(--grey-light);   /* 8.9:1 on charcoal */
+}
+
+.faq__inner > * + * {
+    margin-top: var(--space-3);
+}
+
+.faq__inner > :last-child {
+    margin-bottom: var(--space-5);
+}
+
+.faq__inner ul {
+    padding-left: var(--space-5);
+}
+
+.faq__inner strong {
+    color: var(--white);
+}
+
+.faq__inner a {
+    font-weight: 600;
+    color: var(--gold);
+    text-underline-offset: 3px;
+}
+
+/* ----- Contact: "Copied!" toast -----
+   Fixed at the bottom centre. Hidden = see-through and 16px lower;
+   .is-visible fades it in and slides it up. pointer-events: none so the
+   invisible toast never blocks clicks on whatever is behind it. */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: var(--space-5);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    max-width: calc(100% - var(--space-6));
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--line-dark);
+    border-radius: 999px;
+    background-color: var(--black);
+    font-weight: 600;
+    color: var(--white);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 16px);
+    transition:
+        opacity 300ms var(--ease),
+        transform 300ms var(--ease);
+}
+
+.toast.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.toast i {
+    color: var(--gold);
 }
 
 /* ----- Gallery: photo grid -----
@@ -3576,6 +4067,26 @@ body.dialog-open {
         aspect-ratio: auto;
         min-height: 260px;
     }
+
+    /* Contact: cards 2 x 2; form fields in pairs; buttons only as wide
+       as their words */
+    .contact-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .join-form__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field--full {
+        grid-column: 1 / -1;
+    }
+
+    .join-form__submit,
+    .map-card__btn {
+        width: auto;
+        align-self: flex-start;
+    }
 }
 
 @media (min-width: 768px) {
@@ -3743,6 +4254,15 @@ body.dialog-open {
     .table td:nth-child(2) {
         white-space: nowrap; /* keep times like "5:30am-7:30am" on one line */
     }
+
+    /* Contact: roomier form box and map cards */
+    .join-form {
+        padding: var(--space-6);
+    }
+
+    .map-card {
+        padding: var(--space-5);
+    }
 }
 
 /* Desktop header: one row of links instead of the slide-in panel */
@@ -3872,6 +4392,13 @@ body.dialog-open {
     .story__crest {
         position: sticky;
         top: calc(var(--header-h) + var(--space-5));
+    }
+
+    /* Contact: intro on the left, form on the right */
+    .join {
+        grid-template-columns: 5fr 7fr;
+        align-items: start;
+        gap: var(--space-8);
     }
 }
 
@@ -4016,5 +4543,13 @@ body.dialog-open {
 
     .profile-card::after {
         display: none;
+    }
+
+    /* Contact: the toast just appears in place (it keeps the move that
+       centres it), and FAQ answers open at once (the rule at the top
+       already makes the slide instant) */
+    .toast,
+    .toast.is-visible {
+        transform: translateX(-50%);
     }
 }
