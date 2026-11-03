@@ -2959,16 +2959,159 @@ body.dialog-open {
     color: var(--gold);
 }
 
-/* Team page (until Phase 10) */
-.empty-state {
-    max-width: none;
-    padding-block: var(--space-8);
-    font-family: var(--font-heading);
-    font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
-    font-weight: 700;
-    text-align: center;
+/* ----- Team page -----
+   Coaches & staff, then the squad. js/team.js builds the cards from
+   STAFF and PLAYERS in js/data.js and hides a block the filter doesn't
+   need. 2 columns on phones, 3 from 768px, 4 from 1024px (section 12). */
+.team-block + .team-block {
+    margin-top: var(--space-8);
+}
+
+.team-block__heading {
+    margin-bottom: var(--space-5);
+}
+
+/* minmax(0, 1fr), not plain 1fr: a 1fr column never gets narrower than
+   its content, which pushed the cards off the side of small phones */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+
+/* Profile card: photo on top, name and badge below, and for players a
+   big faded shirt number behind the text.
+   The tilt: team.js sets --tilt-x and --tilt-y (in degrees) while the
+   mouse moves over the card. perspective(800px) is how far away the
+   "camera" is: smaller = a stronger 3D look. When the mouse leaves,
+   both go back to 0deg and the transition eases the card flat again. */
+.profile-card {
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    position: relative;
+    isolation: isolate;       /* keeps the z-index layers below inside the card */
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--line-dark);
+    border-radius: var(--radius);
+    background-color: var(--charcoal);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+    transform: perspective(800px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    transition:
+        transform var(--dur-hover) var(--ease),
+        box-shadow var(--dur-hover) var(--ease);
+}
+
+.profile-card.is-tilting {
+    box-shadow: var(--shadow-lg);
+}
+
+/* A soft light that follows the mouse (--shine-x / --shine-y, set by
+   team.js). Hidden until the card tilts. */
+.profile-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;     /* clicks go through to the WhatsApp button */
+    background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%),
+                rgba(255, 255, 255, 0.14), transparent 55%);
+    opacity: 0;
+    transition: opacity var(--dur-hover) var(--ease);
+}
+
+.profile-card.is-tilting::after {
+    opacity: 1;
+}
+
+.profile-card__media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background:
+        radial-gradient(circle at 50% 35%, rgba(245, 197, 24, 0.22), transparent 65%),
+        var(--black);
+}
+
+/* The bottom of the photo fades into the card colour */
+.profile-card__media::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 45%;
+    background: linear-gradient(to top, var(--charcoal), transparent);
+}
+
+.profile-card__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;  /* keep faces in view */
+}
+
+/* No photo yet: a silhouette */
+.profile-card__placeholder {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-2);
+    height: 100%;
+    color: rgba(245, 197, 24, 0.55);
+    font-size: clamp(2.5rem, 2rem + 3vw, 4rem);
+}
+
+.profile-card__placeholder span {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--red);
+    color: var(--grey-light);
+}
+
+/* The big shirt number. Decoration only (aria-hidden): the number is
+   also written in the text below for screen readers. */
+.profile-card__number {
+    position: absolute;
+    right: var(--space-3);
+    bottom: -0.15em;
+    z-index: 1;
+    font-family: var(--font-heading);
+    font-size: clamp(4.5rem, 3.5rem + 5vw, 7.5rem);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: rgba(245, 197, 24, 0.22);
+    pointer-events: none;
+}
+
+.profile-card__body {
+    position: relative;
+    z-index: 2;               /* above the shirt number */
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-4);
+}
+
+.profile-card__name {
+    overflow-wrap: anywhere;  /* a long name wraps instead of widening the card */
+    color: var(--white);
+}
+
+.profile-card__meta {
+    font-size: 0.85rem;
+    color: var(--grey-light); /* 8.9:1 on charcoal */
+}
+
+.profile-card__btn {
+    margin-top: auto;
+    min-height: 40px;
+    padding: var(--space-2) var(--space-4);
+    font-size: 0.85rem;
 }
 
 /* Contact page */
@@ -3436,6 +3579,12 @@ body.dialog-open {
 }
 
 @media (min-width: 768px) {
+    /* Team page: 3 cards in a row */
+    .profile-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-5);
+    }
+
     /* News cards: more room, so more padding and a longer summary */
     .news-card__body {
         gap: var(--space-3);
@@ -3727,6 +3876,11 @@ body.dialog-open {
 }
 
 @media (min-width: 1024px) {
+    /* Team page: 4 cards in a row */
+    .profile-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
     /* News page: next match on the left, results on the right */
     .matches {
         grid-template-columns: 1fr 1fr;
@@ -3852,5 +4006,15 @@ body.dialog-open {
     .rise {
         opacity: 1;
         animation: none;
+    }
+
+    /* Team page: no tilt and no moving light (team.js doesn't start
+       them either; this is a safety net) */
+    .profile-card {
+        transform: none;
+    }
+
+    .profile-card::after {
+        display: none;
     }
 }

@@ -3,6 +3,7 @@
    Editable content for the site. Change things here, not in the HTML.
    1. Hero slideshow photos   2. News & announcements   3. Fixtures
    4. Results                 5. Gallery photos         6. Gallery videos
+   7. Players                 8. Coaches & staff
 
    HOW TO ADD NEWS (or a fixture, or a result)
    1. Find the list below: NEWS, FIXTURES or RESULTS.
@@ -142,4 +143,42 @@ const VIDEOS = [
     { src: "assets/videos/Unique_vids_1.mp4", title: "Academy video 1", poster: "" },
     { src: "assets/videos/Unique_vids_2.mp4", title: "Academy video 2", poster: "" },
     { src: "assets/videos/Unique_vids_3.mp4", title: "Academy video 3", poster: "" }
+];
+
+/* --------------------------------------------------------------------------
+   7. PLAYERS (team.html)
+   The squad is sorted for you: goalkeepers, defenders, midfielders, then
+   forwards, and by shirt number inside each group. While this list is
+   empty, the page shows "Squad coming soon".
+
+   Example (copy into the list and fill in):
+   {
+       name: "Full Name",
+       number: 10,                          // shirt number, no quotes
+       position: "Midfielder",              // exactly one of: "Goalkeeper", "Defender",
+                                            // "Midfielder", "Forward" (the filter buttons use these)
+       photo: "assets/images/player-10.jpg", // optional; a portrait (taller than wide) looks best.
+                                            // Without it the card shows a silhouette.
+       age: 17                              // optional, a number, no quotes
+   },
+   TODO: add the real squad
+   -------------------------------------------------------------------------- */
+const PLAYERS = [];
+
+
+/* --------------------------------------------------------------------------
+   8. COACHES & STAFF (team.html)
+   Shown in this order, under the "Coaches" filter button.
+
+   Example:
+   {
+       name: "Full Name",
+       role: "Head Coach",                  // shown in the gold badge
+       photo: "",                           // optional, like the players' photos
+       whatsapp: ""                         // optional, a https://wa.me/233... link
+   },
+   TODO: add the real coaches and staff
+   -------------------------------------------------------------------------- */
+const STAFF = [
+    { name: "Mr. Nii Perrygrino Otoo", role: "Founder", photo: "", whatsapp: "https://wa.me/233577789073" }
 ];

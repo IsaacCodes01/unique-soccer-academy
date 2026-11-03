@@ -6,7 +6,7 @@
       on while you click around the site, until you visit any page with
       "?demo=off" or close the browser tab.
    Before the site goes live: delete this file and the <script> line that
-   loads it in news.html and index.html.
+   loads it in news.html, index.html and team.html.
    ========================================================================== */
 
 const DEMO_ALWAYS_ON = false;
@@ -76,6 +76,18 @@ if (isDemoOn()) {
         { date: daysFromToday(-11), home: "Demo Stars", away: "Unique Soccer Academy", homeScore: 1, awayScore: 1, competition: "Demo League" },
         { date: daysFromToday(-18), home: "Demo Athletic", away: "Unique Soccer Academy", homeScore: 3, awayScore: 0, competition: "Demo Cup" }
     );
+
+    // Made-up people with no photos: real photos would put fake names on
+    // real players. The kit photo shows how a picture is cropped.
+    PLAYERS.push(
+        { name: "Demo Keeper", number: 1, position: "Goalkeeper", photo: "", age: 18 },
+        { name: "Demo Defender", number: 4, position: "Defender", photo: "", age: 17 },
+        { name: "Demo Playmaker With A Long Name", number: 10, position: "Midfielder", photo: "", age: 16 },
+        { name: "Demo Kit Model", number: 31, position: "Midfielder", photo: "assets/images/Unique_17.jpg" },
+        { name: "Demo Striker", number: 9, position: "Forward", photo: "", age: 19 }
+    );
+
+    STAFF.push({ name: "Demo Coach", role: "Head Coach", photo: "" });
 
     // A gold label in the bottom-left corner so nobody mistakes this for real news
     document.body.insertAdjacentHTML("beforeend",

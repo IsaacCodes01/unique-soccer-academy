@@ -24,16 +24,83 @@
         <div id="site-header"></div>
 
             <main>
-                <!--Start of Team (placeholder: the real page is built in Phase 10)-->
-                <section class="section section--light">
+                <!--Start of Page banner-->
+                <section class="page-banner">
+                    <img class="page-banner__bg" src="assets/images/Unique_6.jpg" alt="" width="960" height="1280" style="--banner-focus: 30%">
                     <div class="container">
-                        <p class="eyebrow">Coaches &amp; players</p>
-                        <h1 class="section-title"><i class="fa-solid fa-users" aria-hidden="true"></i> Our Team</h1>
-                        <!-- TODO: add real coaches and players (Phase 10) -->
-                        <p class="empty-state">Team profiles are coming soon. <br>Stay tuned!</p>
+                        <h1 class="page-banner__title">Our Team</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ol class="breadcrumb">
+                                <li><a href="index.html">Home</a></li>
+                                <li aria-current="page">Team</li>
+                            </ol>
+                        </nav>
                     </div>
                 </section>
-                <!--End of Team-->
+                <!--End of Page banner-->
+
+                <!--Start of Coaches and players (filled in by js/team.js
+                    from STAFF and PLAYERS in js/data.js)-->
+                <section class="section section--light team-page">
+                    <div class="container">
+                        <p class="eyebrow">Coaches &amp; players</p>
+                        <h2 class="section-title">Meet the team</h2>
+
+                        <!-- Filter chips: toggle buttons, aria-pressed says which one is on -->
+                        <div class="chips" role="group" aria-label="Show">
+                            <button class="chip" type="button" data-filter="all" aria-pressed="true">
+                                All <span class="chip__count" data-count-for="all"></span>
+                            </button>
+                            <button class="chip" type="button" data-filter="coaches" aria-pressed="false">
+                                <i class="fa-solid fa-clipboard" aria-hidden="true"></i> Coaches
+                                <span class="chip__count"></span>
+                            </button>
+                            <button class="chip" type="button" data-filter="goalkeeper" aria-pressed="false">
+                                <i class="fa-solid fa-hand" aria-hidden="true"></i> Goalkeepers
+                                <span class="chip__count"></span>
+                            </button>
+                            <button class="chip" type="button" data-filter="defender" aria-pressed="false">
+                                <i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Defenders
+                                <span class="chip__count"></span>
+                            </button>
+                            <button class="chip" type="button" data-filter="midfielder" aria-pressed="false">
+                                <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> Midfielders
+                                <span class="chip__count"></span>
+                            </button>
+                            <button class="chip" type="button" data-filter="forward" aria-pressed="false">
+                                <i class="fa-solid fa-futbol" aria-hidden="true"></i> Forwards
+                                <span class="chip__count"></span>
+                            </button>
+                        </div>
+                        <!-- Read out by screen readers after each filter click -->
+                        <p class="visually-hidden" id="filter-status" aria-live="polite"></p>
+
+                        <!--Start of Coaches & staff-->
+                        <div class="team-block" id="staff-block">
+                            <h3 class="team-block__heading">Coaches &amp; Staff</h3>
+                            <div class="profile-grid" id="staff-list"></div>
+                        </div>
+                        <!--End of Coaches & staff-->
+
+                        <!--Start of Squad-->
+                        <div class="team-block" id="squad-block">
+                            <h3 class="team-block__heading">Squad</h3>
+                            <div class="profile-grid" id="squad-list">
+                                <div class="news-empty">
+                                    <span class="news-empty__icon" aria-hidden="true"><i class="fa-solid fa-shirt"></i></span>
+                                    <h4 class="news-empty__title">Squad coming soon</h4>
+                                    <p>Player profiles will appear here.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End of Squad-->
+
+                        <noscript>
+                            <p class="gallery__noscript">Please turn on JavaScript to see our coaches and players.</p>
+                        </noscript>
+                    </div>
+                </section>
+                <!--End of Coaches and players-->
             </main>
 
         <!-- Footer: built by js/layout.js -->
@@ -42,7 +109,11 @@
     </div>
     <!--End of Main Container-->
 
+    <script src="js/data.js" defer></script>
+    <!-- Sample content, only with ?demo in the address. Delete before launch. -->
+    <script src="js/demo-data.js" defer></script>
     <script src="js/layout.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script src="js/team.js" defer></script>
 </body>
 </html>

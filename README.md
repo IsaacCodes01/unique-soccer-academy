@@ -94,6 +94,7 @@ unique-soccer-academy/
 │   ├── data.js         # ✏️ Editable site content
 │   ├── gallery.js      # Gallery tabs and lightbox
 │   ├── news.js         # News page: ticker, filters, countdown, results
+│   ├── team.js         # Team page: cards, position filter, 3D tilt
 │   └── contact.js      # Join form → WhatsApp
 ├── assets/
 │   ├── images/
