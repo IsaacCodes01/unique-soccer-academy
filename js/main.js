@@ -1,10 +1,10 @@
 /* ==========================================================================
    main.js
    Runs after layout.js has built the header, so the header already exists.
-   1. Mobile menu   2. Header scroll effects   3. Old media helpers
-   4. Newsletter form (footer)   5. Hero slideshow (home)
-   6. Stat counters (home)       7. Latest news (home)
-   8. Timeline dots (about)      9. Today's training (about)
+   1. Mobile menu                2. Header scroll effects
+   3. Newsletter form (footer)   4. Hero slideshow (home)
+   5. Stat counters (home)       6. Latest news (home)
+   7. Timeline dots (about)      8. Today's training (about)
    ========================================================================== */
 
 // True when the visitor has asked their device for less motion
@@ -157,20 +157,7 @@ if (header) {
 }
 
 /* ==========================================================================
-   3. OLD MEDIA HELPERS (replaced by the lightbox in Phase 8)
-   ========================================================================== */
-//Opens the image in another tab for a better view
-function openImage(img){
-    window.open(img.src, '_blank');
-}
-// Opens the video in another tab foe a better view
-function openvideo(videoElement) {
-    const videoSrc = videoElement.currentSrc || videoElement.src;
-    window.open(videoSrc, '_blank');
-}
-
-/* ==========================================================================
-   4. NEWSLETTER FORM (footer)
+   3. NEWSLETTER FORM (footer)
    The site has no server or mailing-list service yet, so a sign-up opens
    the visitor's email app with a ready-made "please subscribe me" email
    to the club. They only have to press Send.
@@ -211,7 +198,7 @@ if (newsletterForm) {
 }
 
 /* ==========================================================================
-   5. HERO SLIDESHOW (home page)
+   4. HERO SLIDESHOW (home page)
    The photos sit on top of each other; only the one with .is-active is
    visible (opacity 1). Every 6 seconds we move .is-active to the next
    photo and the CSS opacity transition makes them cross-fade.
@@ -302,7 +289,7 @@ if (hero && !reducedMotion.matches) {
 }
 
 /* ==========================================================================
-   6. STAT COUNTERS (home page)
+   5. STAT COUNTERS (home page)
    An IntersectionObserver tells us when an element scrolls into view,
    without us checking the scroll position ourselves. When a number is
    60% visible we count it up from 0 to its data-count value, once.
@@ -344,7 +331,7 @@ if (counters.length && "IntersectionObserver" in window && !reducedMotion.matche
 }
 
 /* ==========================================================================
-   7. LATEST NEWS (home page)
+   6. LATEST NEWS (home page)
    Shows the 3 newest items from NEWS in js/data.js. While NEWS is empty,
    the "No news yet" message written in index.html simply stays.
    ========================================================================== */
@@ -396,7 +383,7 @@ if (latestNews && typeof NEWS !== "undefined" && NEWS.length > 0) {
 }
 
 /* ==========================================================================
-   8. TIMELINE DOTS (about page)
+   7. TIMELINE DOTS (about page)
    An IntersectionObserver watches each timeline item. rootMargin
    "-40%" at the bottom shrinks the watched area to the top 60% of the
    screen, so an item counts as "reached" once it scrolls up past that
@@ -422,7 +409,7 @@ if (timeline && "IntersectionObserver" in window) {
 }
 
 /* ==========================================================================
-   9. TODAY'S TRAINING (about page)
+   8. TODAY'S TRAINING (about page)
    Each schedule row has data-day with the same number getDay() gives
    (0 = Sunday ... 6 = Saturday). We colour today's row gold and write a
    one-line summary above the table. On a day without a session (e.g.

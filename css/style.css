@@ -937,7 +937,7 @@ a.social-btn:hover {
 
 
 /* ==========================================================================
-   8. COMPONENTS (cards, badges, tables, page banner, timeline)
+   8. COMPONENTS (cards, badges, tables, page banner, timeline, tabs, dialogs)
    ========================================================================== */
 
 /* Card */
@@ -1461,6 +1461,274 @@ img.person-card__photo {
     width: 56px;
     height: 56px;
     object-fit: contain;
+}
+
+/* ----- Tabs -----
+   A row of pill buttons. The selected one is black with gold text.
+   [aria-selected="true"] is an attribute selector: the same attribute
+   that tells screen readers which tab is chosen also styles it, so the
+   look and the meaning can never disagree.
+   Phones: the tabs share the full width equally. From 600px (section 12)
+   the bar shrinks to fit its tabs. */
+.tabs {
+    display: flex;
+    gap: var(--space-1);
+    margin-bottom: var(--space-6);
+    padding: var(--space-1);
+    border: 1px solid var(--line-light);
+    border-radius: 999px;
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.tabs__tab {
+    display: inline-flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: 999px;
+    font-weight: 600;
+    color: var(--grey);       /* 5:1 on white */
+    transition:
+        background-color var(--dur-hover) var(--ease),
+        color var(--dur-hover) var(--ease);
+}
+
+.tabs__tab:hover {
+    background-color: var(--off-white);
+    color: var(--black);
+}
+
+.tabs__tab[aria-selected="true"] {
+    background-color: var(--black);
+    color: var(--gold);
+}
+
+.tabs__count {
+    min-width: 24px;
+    padding-inline: var(--space-2);
+    border-radius: 999px;
+    background-color: var(--line-light);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.tabs__count:empty {
+    display: none;
+}
+
+.tabs__tab[aria-selected="true"] .tabs__count {
+    background-color: var(--gold);
+    color: var(--black);
+}
+
+.tabs__panel:focus-visible {
+    outline-offset: 8px;
+    border-radius: var(--radius);
+}
+
+/* ----- Dialogs (lightbox + video modal) -----
+   The browser keeps a <dialog> on "display: none" until it opens. So the
+   layout goes on [open]: "display: grid" on .lightbox alone would beat
+   the browser's rule and show the dialog all the time.
+   ::backdrop is the layer the browser puts between the page and an open
+   dialog. It doesn't see our CSS variables in every browser, so its
+   colours are written out in full. */
+body.dialog-open {
+    overflow: hidden; /* the page behind doesn't scroll */
+}
+
+.dialog-close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    font-size: 1.25rem;
+    transition:
+        background-color var(--dur-hover) var(--ease),
+        color var(--dur-hover) var(--ease),
+        transform var(--dur-hover) var(--ease);
+}
+
+.dialog-close:hover {
+    background-color: var(--gold);
+    color: var(--black);
+    transform: rotate(90deg);
+}
+
+/* Lightbox: fills the whole screen with its own dark background */
+.lightbox {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: rgba(11, 11, 13, 0.95);
+    color: var(--white);
+    /* Sideways swipes are ours (gallery.js turns them into next/previous),
+       so the browser mustn't treat them as "go back a page". Up/down
+       scrolling and pinch-zoom still work as normal. */
+    touch-action: pan-y pinch-zoom;
+    overscroll-behavior: contain;
+}
+
+.lightbox::backdrop {
+    background-color: rgba(11, 11, 13, 0.6);
+}
+
+.lightbox[open] {
+    display: grid;
+    place-items: center;
+    animation: dialog-fade 300ms var(--ease);
+}
+
+.lightbox .dialog-close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    z-index: 2;
+}
+
+.lightbox__figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    max-width: 100%;
+    padding: var(--space-8) var(--space-4) var(--space-5);
+}
+
+/* Fits the screen whatever its shape: never wider than the space, and
+   short enough to leave room for the caption. dvh ("dynamic viewport
+   height") is the height that is really visible on phones, between the
+   address bar and the bottom toolbar; the vh line is for older browsers. */
+.lightbox__img {
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 200px);
+    max-height: calc(100dvh - 200px);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: scale(0.97);
+    transition:
+        opacity 300ms var(--ease),
+        transform 300ms var(--ease);
+}
+
+/* gallery.js adds .is-loaded once the photo has downloaded */
+.lightbox__img.is-loaded {
+    opacity: 1;
+    transform: none;
+}
+
+.lightbox__caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2) var(--space-3);
+    max-width: 60ch;
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--grey-light);  /* 9:1 on the dark background */
+}
+
+.lightbox__counter {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--white);
+}
+
+.lightbox__text {
+    flex-basis: 100%; /* the description gets its own line */
+}
+
+/* On phones the arrows sit over the edges of the photo; from 768px
+   (section 12) the photo gets narrower and they sit beside it */
+.lightbox__arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--line-dark);
+    border-radius: 50%;
+    background-color: rgba(11, 11, 13, 0.6);
+    color: var(--white);
+    font-size: 1.1rem;
+    transform: translateY(-50%);
+    transition:
+        background-color var(--dur-hover) var(--ease),
+        color var(--dur-hover) var(--ease);
+}
+
+.lightbox__arrow:hover {
+    background-color: var(--gold);
+    color: var(--black);
+}
+
+.lightbox__arrow--prev {
+    left: var(--space-3);
+}
+
+.lightbox__arrow--next {
+    right: var(--space-3);
+}
+
+/* Video modal: a box in the middle of the screen */
+.video-modal {
+    width: min(960px, calc(100% - 2 * var(--gutter)));
+    max-width: none;
+    max-height: calc(100dvh - var(--space-6));
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background-color: var(--charcoal);
+    color: var(--white);
+    box-shadow: var(--shadow-lg);
+}
+
+.video-modal::backdrop {
+    background-color: rgba(11, 11, 13, 0.88);
+}
+
+.video-modal[open] {
+    animation: dialog-in 300ms var(--ease);
+}
+
+.video-modal__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+}
+
+.video-modal__title {
+    font-size: clamp(1.05rem, 1rem + 0.25vw, 1.25rem);
+}
+
+.video-modal__player {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: calc(100dvh - 140px);
+    background-color: var(--black);
 }
 
 
@@ -2114,42 +2382,209 @@ img.person-card__photo {
     border-radius: var(--radius);
 }
 
-/* Photos & videos */
-.media-grid {
-    display: grid;
-    gap: var(--space-4);
-    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+/* ----- Gallery: photo grid -----
+   "Masonry" with CSS columns: the list is poured into columns like a
+   newspaper (down the first column, then the next), and every photo
+   keeps its own height, so they fit together like bricks.
+   break-inside: avoid stops a photo being split across two columns.
+   2 columns on phones, 3 from 768px, 4 from 1024px (section 12). */
+.masonry {
+    columns: 2;
+    column-gap: var(--space-3);
 }
 
-.media-grid__item {
+.masonry__item {
+    margin-bottom: var(--space-3);
+    break-inside: avoid;
+}
+
+.masonry__btn {
+    position: relative;
+    display: block;
     width: 100%;
-    height: 260px;
+    overflow: hidden; /* hides the zoomed-in edges of the photo */
     border-radius: var(--radius);
-    object-fit: cover;
     background-color: var(--black);
-    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    cursor: zoom-in;
+    transition: box-shadow var(--dur-hover) var(--ease);
+}
+
+.masonry__btn img {
+    width: 100%;
+    transition: transform var(--dur-reveal) var(--ease);
+}
+
+/* Dark layer with a gold expand icon, hidden until hover or focus */
+.masonry__overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background-color: rgba(11, 11, 13, 0.5);
+    opacity: 0;
+    transition: opacity var(--dur-hover) var(--ease);
+}
+
+.masonry__overlay i {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: var(--gold);
+    color: var(--black);
+    font-size: 1.1rem;
+    transform: scale(0.6);
+    transition: transform var(--dur-hover) var(--ease);
+}
+
+.masonry__btn:hover,
+.masonry__btn:focus-visible {
+    box-shadow: var(--shadow-lg);
+}
+
+.masonry__btn:hover img,
+.masonry__btn:focus-visible img {
+    transform: scale(1.08);
+}
+
+.masonry__btn:hover .masonry__overlay,
+.masonry__btn:focus-visible .masonry__overlay {
+    opacity: 1;
+}
+
+.masonry__btn:hover .masonry__overlay i,
+.masonry__btn:focus-visible .masonry__overlay i {
+    transform: none;
+}
+
+/* ----- Gallery: video cards ----- */
+.video-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+
+.video-card__btn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background-color: var(--black);
+    color: var(--white);
+    text-align: left;
     box-shadow: var(--shadow-sm);
     transition:
         transform var(--dur-hover) var(--ease),
         box-shadow var(--dur-hover) var(--ease);
 }
 
-.media-grid__item:hover {
-    transform: scale(1.03);
+.video-card__btn:hover,
+.video-card__btn:focus-visible {
+    transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
 }
 
-/* Photos: 2 columns of tall (3:4) tiles on phones, so the mostly
-   portrait photos keep heads and feet; 3 columns from 600px and 4
-   from 1024px (section 12). aspect-ratio sets the height from the width. */
-.media-grid--photos {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-3);
+.video-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--charcoal);
 }
 
-.media-grid--photos .media-grid__item {
-    height: auto;
-    aspect-ratio: 3 / 4;
+.video-card__thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none; /* clicks go to the button, never the video */
+    transition: transform var(--dur-reveal) var(--ease);
+}
+
+/* Darkens the bottom so the duration label is easy to read */
+.video-card__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(11, 11, 13, 0.6), transparent 50%);
+}
+
+.video-card__btn:hover .video-card__thumb,
+.video-card__btn:focus-visible .video-card__thumb {
+    transform: scale(1.06);
+}
+
+/* The big gold play button, centred with the translate(-50%, -50%) trick:
+   top/left 50% puts its corner in the middle, then it moves back by
+   half its own size */
+.video-card__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background-color: var(--gold);
+    color: var(--black);
+    font-size: 1.5rem;
+    box-shadow: 0 0 0 8px rgba(245, 197, 24, 0.25);
+    transform: translate(-50%, -50%);
+    transition:
+        transform var(--dur-hover) var(--ease),
+        box-shadow var(--dur-hover) var(--ease);
+}
+
+.video-card__play i {
+    margin-left: 4px; /* a triangle only looks centred when nudged right */
+}
+
+.video-card__btn:hover .video-card__play,
+.video-card__btn:focus-visible .video-card__play {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 0 14px rgba(245, 197, 24, 0.2);
+}
+
+.video-card__duration {
+    position: absolute;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    z-index: 1;
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-sm);
+    background-color: rgba(11, 11, 13, 0.8);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.video-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+.video-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.video-card__hint {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+.gallery__noscript {
+    color: var(--grey);
 }
 
 
@@ -2191,6 +2626,33 @@ img.person-card__photo {
     0%   { transform: translateY(0); opacity: 1; }
     70%  { transform: translateY(12px); opacity: 0; }
     100% { transform: translateY(0); opacity: 0; }
+}
+
+/* Dialogs: the lightbox fades in, the video modal also rises a little */
+@keyframes dialog-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes dialog-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Scroll-in: gallery.js adds .reveal to each item, then .is-visible
+   once it scrolls into view. Without JS nothing gets .reveal, so
+   nothing is ever left invisible. */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    transition:
+        opacity var(--dur-reveal) var(--ease),
+        transform var(--dur-reveal) var(--ease);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
 }
 
 
@@ -2317,9 +2779,13 @@ img.person-card__photo {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .media-grid--photos {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-4);
+    .tabs {
+        width: fit-content;
+    }
+
+    .tabs__tab {
+        flex: none;
+        padding-inline: var(--space-5);
     }
 
     /* Leadership: photo on the left, text on the right */
@@ -2337,6 +2803,39 @@ img.person-card__photo {
 @media (min-width: 768px) {
     :root {
         --gutter: var(--space-6);
+    }
+
+    /* Gallery: 3 photo columns, a bit more space between them */
+    .masonry {
+        columns: 3;
+        column-gap: var(--space-4);
+    }
+
+    .masonry__item {
+        margin-bottom: var(--space-4);
+    }
+
+    /* Lightbox: room at the sides for the arrows, beside the photo */
+    .lightbox__figure {
+        padding-inline: var(--space-9);
+    }
+
+    .lightbox__img {
+        max-height: calc(100vh - 170px);
+        max-height: calc(100dvh - 170px);
+    }
+
+    .lightbox__arrow {
+        width: 56px;
+        height: 56px;
+    }
+
+    .lightbox__arrow--prev {
+        left: var(--space-5);
+    }
+
+    .lightbox__arrow--next {
+        right: var(--space-5);
     }
 
     /* Hero: text on the left, floating crest on the right; the overlay is
@@ -2582,8 +3081,8 @@ img.person-card__photo {
         grid-template-columns: repeat(4, 1fr);
     }
 
-    .media-grid--photos {
-        grid-template-columns: repeat(4, 1fr);
+    .masonry {
+        columns: 4;
     }
 
     /* Footer: 4 columns. Contact and Follow us are "auto" (only as wide as
@@ -2627,10 +3126,24 @@ img.person-card__photo {
     .back-to-top:hover,
     .news-card:hover,
     .news-card:focus-within,
-    .media-grid__item:hover,
     .photo-grid__item:hover img,
-    .photo-grid__item:focus-visible img {
+    .photo-grid__item:focus-visible img,
+    .masonry__btn:hover img,
+    .masonry__btn:focus-visible img,
+    .video-card__btn:hover,
+    .video-card__btn:focus-visible,
+    .video-card__btn:hover .video-card__thumb,
+    .video-card__btn:focus-visible .video-card__thumb,
+    .dialog-close:hover,
+    .lightbox__img,
+    .reveal {
         transform: none;
+    }
+
+    /* The play button keeps the move that centres it, just no growing */
+    .video-card__btn:hover .video-card__play,
+    .video-card__btn:focus-visible .video-card__play {
+        transform: translate(-50%, -50%);
     }
 
     /* Home hero: one still photo, no zoom, no floating crest, words

@@ -135,6 +135,29 @@ news: [
 ],
 ```
 
+### Gallery photos and videos
+
+Photos and videos are listed in `PHOTOS` and `VIDEOS` in `js/data.js`. To add a photo, put the
+file in `assets/images/` and add one line with its `src`, `alt` (what the photo shows), `category`,
+`width` and `height`.
+
+### Video posters
+
+Until a video has a `poster`, its card shows the video's own first frame. To make real poster
+images, install [ffmpeg](https://ffmpeg.org/download.html) and run this from the project folder
+(Git Bash):
+
+```bash
+mkdir -p assets/videos/posters
+for v in assets/videos/*.mp4; do
+  ffmpeg -y -ss 0.5 -i "$v" -frames:v 1 -q:v 3 "assets/videos/posters/$(basename "${v%.mp4}").jpg"
+done
+```
+
+`-ss 0.5` takes the frame at half a second (the very first frame is often black), `-frames:v 1`
+saves one frame, and `-q:v 3` is the JPEG quality (2 = best, 31 = worst). Then set each video's
+poster in `js/data.js`, e.g. `poster: "assets/videos/posters/Unique_vids_1.jpg"`.
+
 ---
 
 ## 🌍 Deployment

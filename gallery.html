@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Unique Soccer Academy</title>
+    <meta name="description" content="Photos and videos from Unique Soccer Academy, a football club in Kasoa-Apra, Ghana.">
+    <meta name="theme-color" content="#0B0B0D">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+
+</head>
+<body>
+
+    <!--Start of Main Container-->
+    <div class="maincontainer">
+
+        <!-- Header + navigation: built by js/layout.js -->
+        <div id="site-header"></div>
+
+            <main>
+                <!--Start of Page banner-->
+                <section class="page-banner">
+                    <img class="page-banner__bg" src="assets/images/Unique_13.jpg" alt="" width="1125" height="1138">
+                    <div class="container">
+                        <h1 class="page-banner__title">Gallery</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ol class="breadcrumb">
+                                <li><a href="index.html">Home</a></li>
+                                <li aria-current="page">Gallery</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </section>
+                <!--End of Page banner-->
+
+                <!--Start of Gallery (the photos and videos are built by
+                    js/gallery.js from the lists in js/data.js)-->
+                <section class="section section--light gallery">
+                    <div class="container">
+                        <p class="eyebrow">On the pitch</p>
+                        <h2 class="section-title">Photos &amp; Videos</h2>
+
+                        <!-- Tabs: the arrow keys move between them (js/gallery.js) -->
+                        <div class="tabs" role="tablist" aria-label="Gallery">
+                            <button class="tabs__tab" type="button" role="tab" id="tab-photos" aria-controls="photos" aria-selected="true">
+                                <i class="fa-solid fa-images" aria-hidden="true"></i> Photos
+                                <span class="tabs__count" data-count-for="photos"></span>
+                            </button>
+                            <button class="tabs__tab" type="button" role="tab" id="tab-videos" aria-controls="videos" aria-selected="false" tabindex="-1">
+                                <i class="fa-solid fa-film" aria-hidden="true"></i> Videos
+                                <span class="tabs__count" data-count-for="videos"></span>
+                            </button>
+                        </div>
+
+                        <div class="tabs__panel" role="tabpanel" id="photos" aria-labelledby="tab-photos" tabindex="0">
+                            <ul class="masonry" id="photo-grid"></ul>
+                        </div>
+
+                        <div class="tabs__panel" role="tabpanel" id="videos" aria-labelledby="tab-videos" tabindex="0" hidden>
+                            <ul class="video-grid" id="video-grid"></ul>
+                        </div>
+
+                        <noscript>
+                            <p class="gallery__noscript">Please turn on JavaScript to see our photos and videos.</p>
+                        </noscript>
+                    </div>
+                </section>
+                <!--End of Gallery-->
+            </main>
+
+        <!-- Footer: built by js/layout.js -->
+        <div id="site-footer"></div>
+
+    </div>
+    <!--End of Main Container-->
+
+    <!--Start of Lightbox. A <dialog> opened with showModal() sits on top
+        of everything, makes the rest of the page unclickable and closes
+        with Escape, all built into the browser.-->
+    <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+        <button class="dialog-close" type="button" autofocus>
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            <span class="visually-hidden">Close photo viewer</span>
+        </button>
+        <button class="lightbox__arrow lightbox__arrow--prev" type="button">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            <span class="visually-hidden">Previous photo</span>
+        </button>
+        <figure class="lightbox__figure">
+            <img class="lightbox__img" alt="">
+            <figcaption class="lightbox__caption" aria-live="polite">
+                <span class="lightbox__counter"></span>
+                <span class="badge lightbox__category"></span>
+                <span class="lightbox__text"></span>
+            </figcaption>
+        </figure>
+        <button class="lightbox__arrow lightbox__arrow--next" type="button">
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            <span class="visually-hidden">Next photo</span>
+        </button>
+    </dialog>
+    <!--End of Lightbox-->
+
+    <!--Start of Video modal-->
+    <dialog class="video-modal" id="video-modal" aria-labelledby="video-modal-title">
+        <div class="video-modal__head">
+            <h2 class="video-modal__title" id="video-modal-title"></h2>
+            <button class="dialog-close" type="button" autofocus>
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                <span class="visually-hidden">Close video</span>
+            </button>
+        </div>
+        <video class="video-modal__player" controls playsinline preload="none"></video>
+    </dialog>
+    <!--End of Video modal-->
+
+    <script src="js/data.js" defer></script>
+    <script src="js/layout.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/gallery.js" defer></script>
+</body>
+</html>

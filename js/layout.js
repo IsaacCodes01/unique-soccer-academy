@@ -13,8 +13,7 @@ const NAV_LINKS = [
     { label: "Team",    href: "team.html",    icon: "fa-solid fa-users" },
     // TODO (Phase 9): change to news.html once news1 + announcements are merged
     { label: "News",    href: "news1.html",   icon: "fa-solid fa-newspaper", match: ["announcements.html"] },
-    // TODO (Phase 8): change to gallery.html once photos + videos are merged
-    { label: "Gallery", href: "photos.html",  icon: "fa-solid fa-images",    match: ["videos.html"] },
+    { label: "Gallery", href: "gallery.html", icon: "fa-solid fa-images" },
     { label: "Contact", href: "contact.html", icon: "fa-solid fa-address-book" }
 ];
 
