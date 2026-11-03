@@ -22,6 +22,7 @@
     --gold-ink: #7A5C00;      /* gold that is dark enough to read on light backgrounds */
     --red: #D62828;
     --red-light: #FF6B6B;     /* red that is light enough to read on dark backgrounds */
+    --green: #15803D;         /* only for "W" (win) badges; white text on it is 5:1 */
     --white: #FFFFFF;
     --off-white: #F7F5EF;
     --grey: #6B6F76;          /* muted text on light backgrounds */
@@ -135,6 +136,12 @@ a {
 table {
     border-collapse: collapse;
     width: 100%;
+}
+
+/* The "hidden" attribute always wins. Without this, a class that sets
+   "display: flex" or "grid" would show a hidden element anyway. */
+[hidden] {
+    display: none !important;
 }
 
 /* Keyboard focus: a gold ring with a thin black inner ring,
@@ -1534,6 +1541,107 @@ img.person-card__photo {
     border-radius: var(--radius);
 }
 
+/* ----- Filter chips (news page) -----
+   Round toggle buttons that wrap onto a second line on small phones.
+   The chip that is on has aria-pressed="true", and the CSS styles that
+   attribute directly, so the look and the meaning can't disagree. */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-7);
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--line-light);
+    border-radius: 999px;
+    background-color: var(--white);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--grey);       /* 5:1 on white */
+    box-shadow: var(--shadow-sm);
+    transition:
+        background-color var(--dur-hover) var(--ease),
+        border-color var(--dur-hover) var(--ease),
+        color var(--dur-hover) var(--ease);
+}
+
+.chip:hover {
+    border-color: var(--black);
+    color: var(--black);
+}
+
+.chip[aria-pressed="true"] {
+    border-color: var(--black);
+    background-color: var(--black);
+    color: var(--gold);
+}
+
+.chip__count {
+    min-width: 24px;
+    padding-inline: var(--space-2);
+    border-radius: 999px;
+    background-color: var(--line-light);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.chip__count:empty {
+    display: none;
+}
+
+.chip[aria-pressed="true"] .chip__count {
+    background-color: var(--gold);
+    color: var(--black);
+}
+
+/* ----- Team crest (fixtures) -----
+   Our crest is an image; other teams get a round grey shield icon. */
+.crest {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.crest--other {
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background-color: var(--line-dark);
+    color: var(--grey-light);
+}
+
+.crest--lg {
+    width: clamp(64px, 14vw, 96px);
+    height: clamp(64px, 14vw, 96px);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+}
+
+/* ----- W / D / L badge (results) ----- */
+.result-badge {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.result-badge--win  { background-color: var(--green); } /* 5:1 */
+.result-badge--draw { background-color: var(--grey); }  /* 5:1 */
+.result-badge--loss { background-color: var(--red); }   /* 4.9:1 */
+
 /* ----- Dialogs (lightbox + video modal) -----
    The browser keeps a <dialog> on "display: none" until it opens. So the
    layout goes on [open]: "display: grid" on .lightbox alone would beat
@@ -2027,8 +2135,10 @@ body.dialog-open {
         border-color var(--dur-hover) var(--ease);
 }
 
-.news-card:hover,
-.news-card:focus-within {
+/* Only cards that are links lift up (a card that goes nowhere shouldn't
+   look clickable) */
+.news-card--link:hover,
+.news-card--link:focus-within {
     transform: translateY(-4px);
     border-color: var(--gold);
 }
@@ -2044,6 +2154,14 @@ body.dialog-open {
     flex-direction: column;
     gap: var(--space-3);
     padding: var(--space-5);
+}
+
+/* Category badge and date on one line */
+.news-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
 }
 
 .news-card__date {
@@ -2341,31 +2459,393 @@ body.dialog-open {
     margin-top: var(--space-6);
 }
 
-/* News & announcements */
+/* ----- News page ----- */
+
+/* Ticker: "Latest" label | sliding headlines | pause button.
+   The window hides whatever slides outside it (overflow: hidden). */
 .ticker {
-    position: relative;
-    overflow: hidden;
-    height: 36px;
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--line-dark);
     background-color: var(--black);
     color: var(--white);
     font-size: 0.85rem;
     font-weight: 600;
+}
+
+.ticker__label {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-2);
+    padding-inline: var(--gutter);
+    background-color: var(--red);
+    font-family: var(--font-heading);
     letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-.ticker__text {
-    position: absolute;
-    top: 50%;
-    left: 0;
+.ticker__window {
+    flex: 1;
+    min-width: 0;   /* lets the window shrink below its content's width */
+    overflow: hidden;
+}
+
+/* width: max-content keeps every headline on one line, however long */
+.ticker__track {
+    display: flex;
+    width: max-content;
+    height: 100%;
+    animation: ticker-slide var(--ticker-duration, 30s) linear infinite;
+}
+
+/* Paused by hovering, by keyboard focus on the button, or by the button */
+.ticker:hover .ticker__track,
+.ticker:focus-within .ticker__track,
+.ticker.is-paused .ticker__track {
+    animation-play-state: paused;
+}
+
+.ticker__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding-inline: var(--space-6);
     white-space: nowrap;
-    transform: translateY(-50%);
-    animation: ticker-slide 20s linear infinite;
 }
 
-.ticker__text i {
+/* A small gold dot before each headline */
+.ticker__item::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    margin-right: var(--space-4);
+    border-radius: 50%;
+    background-color: var(--gold);
+}
+
+.ticker__tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+.ticker__toggle {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 44px;
+    min-height: 44px;
+    border-left: 1px solid var(--line-dark);
+    color: var(--grey-light);
+    transition: color var(--dur-hover) var(--ease);
+}
+
+.ticker__toggle:hover {
+    color: var(--gold);
+}
+
+.news-page__heading {
+    margin-bottom: var(--space-5);
+}
+
+.news-block + .matches {
+    margin-top: var(--space-8);
+}
+
+/* News cards and empty states on a light background: white instead
+   of charcoal, dark text instead of light */
+.section--light .news-card {
+    border-color: var(--line-light);
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.section--light .news-card__title,
+.section--light .news-card__title a {
+    color: var(--black);
+}
+
+.section--light .news-card p,
+.section--light .news-empty p {
+    color: var(--grey);         /* 5:1 on white */
+}
+
+.section--light .news-card__date {
+    color: var(--gold-ink);     /* 6.5:1 on white */
+}
+
+.section--light .news-empty {
+    border-color: rgba(11, 11, 13, 0.2);
+    background-color: var(--white);
+}
+
+.section--light .news-empty__icon {
+    background-color: rgba(245, 197, 24, 0.2);
+    color: var(--gold-ink);
+}
+
+/* Smaller empty state inside the fixtures/results columns */
+.matches .news-empty {
+    padding: var(--space-7) var(--space-5);
+}
+
+.matches .news-empty__title {
+    font-size: clamp(1.25rem, 1.1rem + 0.75vw, 1.6rem);
+}
+
+/* Fixtures & results: one column on phones, two from 1024px (section 12).
+   min-width: 0 stops a long team name from stretching its column. */
+.matches {
+    display: grid;
+    gap: var(--space-7);
+}
+
+.matches__col {
+    min-width: 0;
+}
+
+/* Next match: a big black card. A faint gold glow at the top and a
+   red-and-gold stripe along the bottom make it the star of the page. */
+.next-match {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-6) var(--space-4);
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(245, 197, 24, 0.18), transparent 60%),
+        var(--black);
+    color: var(--white);
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.next-match::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--red) 50%, var(--gold) 50%);
+}
+
+.next-match__competition {
+    margin: 0 auto var(--space-5);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+/* Home team | vs | away team. The two team columns share the space
+   equally (1fr each); "vs" only takes what it needs (auto). */
+.next-match__teams {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+}
+
+.next-match__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 0;
+}
+
+.next-match__name {
+    font-family: var(--font-heading);
+    font-size: clamp(1rem, 0.8rem + 1.2vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.15;
+    text-transform: uppercase;
+    overflow-wrap: break-word;  /* only a word too long for the line is split */
+}
+
+/* "vs" sits level with the middle of the crests, not the names */
+.next-match__vs {
+    align-self: start;
+    margin-top: calc(clamp(64px, 14vw, 96px) / 2);
+    transform: translateY(-50%);
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 1rem + 2.5vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--red-light);   /* 6.8:1 on black */
+}
+
+/* Countdown: four boxes. tabular-nums gives every digit the same width,
+   so the numbers don't wobble as they change. */
+.countdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-2);
+    max-width: 420px;
+    margin: 0 auto var(--space-5);
+}
+
+.countdown__unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-3) var(--space-1);
+    border: 1px solid var(--line-dark);
+    border-radius: var(--radius);
+    background-color: var(--charcoal);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey-light);
+}
+
+.countdown__num {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 1.2rem + 2.5vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold);
+}
+
+.countdown__done {
+    margin: 0 auto var(--space-5);
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+.next-match__info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2) var(--space-5);
+    font-size: 0.9rem;
+    color: var(--grey-light);
+}
+
+.next-match__info i {
+    margin-right: var(--space-1);
+    color: var(--gold);
+}
+
+/* The fixtures after the next one */
+.fixture-list__title {
+    margin: var(--space-6) 0 var(--space-3);
+}
+
+.fixture-list {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.fixture {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    border: 1px solid var(--line-light);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-sm);
+    background-color: var(--white);
+}
+
+.fixture__date,
+.fixture__venue {
+    font-size: 0.8rem;
+    color: var(--grey);
+}
+
+.fixture__date {
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.fixture__teams {
+    font-weight: 600;
+    overflow-wrap: break-word;
+}
+
+.fixture__vs {
+    margin-inline: var(--space-1);
+    font-size: 0.8rem;
+    text-transform: uppercase;
     color: var(--red);
 }
 
+/* Results: badge on the left, then the date and the score line */
+.results {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.result {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--line-light);
+    border-radius: var(--radius);
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.result__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.result__meta {
+    margin-bottom: var(--space-1);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--grey);
+}
+
+/* Home team (right-aligned) | score | away team, so the score always
+   sits in the middle whatever the names' lengths */
+.result__line {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-3);
+    max-width: none;
+}
+
+.result__team {
+    font-weight: 500;
+    overflow-wrap: break-word;
+}
+
+.result__team:first-child {
+    text-align: right;
+}
+
+.result__team.is-ours {
+    font-weight: 700;
+}
+
+.result__score {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    background-color: var(--black);
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--gold);
+}
+
+/* Team page (until Phase 10) */
 .empty-state {
     max-width: none;
     padding-block: var(--space-8);
@@ -2594,9 +3074,11 @@ body.dialog-open {
 /* ==========================================================================
    10. ANIMATIONS
    ========================================================================== */
+/* Ticker: slide left by half the strip, i.e. exactly one copy of the
+   headlines, then start again (see js/news.js) */
 @keyframes ticker-slide {
-    from { transform: translate(100vw, -50%); }
-    to   { transform: translate(-100%, -50%); }
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
 }
 
 /* Ken Burns: a photo slowly zooms in by 15%. "alternate" in the hero
@@ -2656,6 +3138,26 @@ body.dialog-open {
 .reveal.is-visible {
     opacity: 1;
     transform: none;
+}
+
+/* News cards rise in with an animation instead of a transition, so the
+   card's own hover lift still works afterwards. "backwards" holds the
+   first frame (invisible, 24px down) during the delay; once the
+   animation ends it lets go of the card completely. --i is the card's
+   position, set by news.js, so each one starts 80ms after the last. */
+.rise {
+    opacity: 0;
+}
+
+.rise.is-visible {
+    opacity: 1;
+    animation: rise-in var(--dur-reveal) var(--ease) backwards;
+    animation-delay: calc(var(--i, 0) * 80ms);
+}
+
+@keyframes rise-in {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
 }
 
 
@@ -3080,6 +3582,11 @@ body.dialog-open {
 }
 
 @media (min-width: 1024px) {
+    /* News page: next match on the left, results on the right */
+    .matches {
+        grid-template-columns: 1fr 1fr;
+    }
+
     .grid--4 {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -3190,13 +3697,14 @@ body.dialog-open {
         }
     }
 
-    .ticker__text {
+    /* News page: no sliding ticker at all (news.js also keeps it hidden),
+       and the cards are simply there */
+    .ticker {
+        display: none;
+    }
+
+    .rise {
+        opacity: 1;
         animation: none;
-        position: static;
-        display: block;
-        padding: var(--space-2) var(--gutter);
-        transform: none;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 }

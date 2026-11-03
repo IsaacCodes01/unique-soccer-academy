@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News | Unique Soccer Academy</title>
+    <meta name="description" content="News, announcements, fixtures and results from Unique Soccer Academy, a football club in Kasoa-Apra, Ghana.">
+    <meta name="theme-color" content="#0B0B0D">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+
+</head>
+<body>
+
+    <!--Start of Main Container-->
+    <div class="maincontainer">
+
+        <!-- Header + navigation: built by js/layout.js -->
+        <div id="site-header"></div>
+
+            <main>
+                <!--Start of Page banner-->
+                <section class="page-banner">
+                    <img class="page-banner__bg" src="assets/images/Unique_7.jpg" alt="" width="958" height="1280" style="--banner-focus: 40%">
+                    <div class="container">
+                        <h1 class="page-banner__title">News</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ol class="breadcrumb">
+                                <li><a href="index.html">Home</a></li>
+                                <li aria-current="page">News</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </section>
+                <!--End of Page banner-->
+
+                <!--Start of Ticker. Stays hidden until js/news.js has headlines
+                    to put in it, and always with reduced motion.-->
+                <div class="ticker" id="ticker" hidden>
+                    <span class="ticker__label"><i class="fa-solid fa-bell" aria-hidden="true"></i> Latest</span>
+                    <!-- aria-hidden: the same headlines are in the cards below,
+                         so screen readers don't need to hear them twice -->
+                    <div class="ticker__window" aria-hidden="true">
+                        <div class="ticker__track"></div>
+                    </div>
+                    <button class="ticker__toggle" type="button">
+                        <i class="fa-solid fa-pause" aria-hidden="true"></i>
+                        <span class="visually-hidden">Pause headlines</span>
+                    </button>
+                </div>
+                <!--End of Ticker-->
+
+                <!--Start of News, fixtures and results (filled in by js/news.js
+                    from the lists in js/data.js)-->
+                <section class="section section--light news-page">
+                    <div class="container">
+                        <p class="eyebrow">Club updates</p>
+                        <h2 class="section-title">What's happening</h2>
+
+                        <!-- Filter chips: toggle buttons, aria-pressed says which one is on -->
+                        <div class="chips" role="group" aria-label="Show">
+                            <button class="chip" type="button" data-filter="all" aria-pressed="true">
+                                All <span class="chip__count" data-count-for="all"></span>
+                            </button>
+                            <button class="chip" type="button" data-filter="news" aria-pressed="false">
+                                <i class="fa-regular fa-newspaper" aria-hidden="true"></i> News
+                                <span class="chip__count" data-count-for="news"></span>
+                            </button>
+                            <button class="chip" type="button" data-filter="announcements" aria-pressed="false">
+                                <i class="fa-solid fa-bullhorn" aria-hidden="true"></i> Announcements
+                                <span class="chip__count" data-count-for="announcements"></span>
+                            </button>
+                            <button class="chip" type="button" data-filter="fixtures" aria-pressed="false">
+                                <i class="fa-solid fa-futbol" aria-hidden="true"></i> Fixtures &amp; Results
+                                <span class="chip__count" data-count-for="fixtures"></span>
+                            </button>
+                        </div>
+                        <!-- Read out by screen readers after each filter click -->
+                        <p class="visually-hidden" id="filter-status" aria-live="polite"></p>
+
+                        <!--Start of News & announcements-->
+                        <div class="news-block" id="news-block">
+                            <h3 class="news-page__heading">News &amp; Announcements</h3>
+                            <div class="news-list" id="news-list">
+                                <div class="news-empty">
+                                    <span class="news-empty__icon" aria-hidden="true"><i class="fa-regular fa-newspaper"></i></span>
+                                    <h4 class="news-empty__title">No news yet. Check back soon</h4>
+                                    <p>Follow us on Facebook for the latest club updates.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End of News & announcements-->
+
+                        <!--Start of Fixtures & results-->
+                        <div class="matches" id="matches-block">
+                            <div class="matches__col">
+                                <h3 class="news-page__heading">Next Match</h3>
+                                <div id="next-match"></div>
+                                <div id="more-fixtures"></div>
+                            </div>
+                            <div class="matches__col">
+                                <h3 class="news-page__heading">Latest Results</h3>
+                                <div id="results"></div>
+                            </div>
+                        </div>
+                        <!--End of Fixtures & results-->
+
+                        <noscript>
+                            <p class="gallery__noscript">Please turn on JavaScript to see our news, fixtures and results.</p>
+                        </noscript>
+                    </div>
+                </section>
+                <!--End of News, fixtures and results-->
+            </main>
+
+        <!-- Footer: built by js/layout.js -->
+        <div id="site-footer"></div>
+
+    </div>
+    <!--End of Main Container-->
+
+    <script src="js/data.js" defer></script>
+    <script src="js/layout.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/news.js" defer></script>
+</body>
+</html>

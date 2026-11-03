@@ -1,7 +1,25 @@
 /* ==========================================================================
    data.js
    Editable content for the site. Change things here, not in the HTML.
-   1. Hero slideshow photos   2. News   3. Gallery photos   4. Gallery videos
+   1. Hero slideshow photos   2. News & announcements   3. Fixtures
+   4. Results                 5. Gallery photos         6. Gallery videos
+
+   HOW TO ADD NEWS (or a fixture, or a result)
+   1. Find the list below: NEWS, FIXTURES or RESULTS.
+   2. Copy the example in the comment just above it.
+   3. Paste it between the [ and the ], fill it in and keep the comma
+      after the closing }. Each item is one { ... } block.
+   4. Save, then open news.html to check it. The order in the list
+      doesn't matter: the pages sort everything by date for you.
+   Tips:
+   - Dates are always year-month-day: "2024-09-19".
+   - Times are 24-hour Ghana time: "14:30" is 2:30pm.
+   - Put text in "double quotes". If the text itself needs a double
+     quote, use a single one (') instead.
+   - A page went blank? Press F12 and look at the Console: it names the
+     line with the typo (usually a missing comma or quote).
+   - When a match is played, move it from FIXTURES to RESULTS and add
+     the score.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -18,25 +36,68 @@ const HERO_SLIDES = [
 ];
 
 /* --------------------------------------------------------------------------
-   2. NEWS
-   The home page shows the 3 newest items (sorted by date, newest first).
-   While this list is empty, the home page shows "No news yet. Stay tuned!".
+   2. NEWS & ANNOUNCEMENTS
+   news.html shows them all; the home page shows the 3 newest. While this
+   list is empty, both pages show "No news yet".
 
-   To add a story, copy this example into the list and fill it in:
+   Example (copy into the list and fill in):
    {
+       date: "2024-09-19",                  // year-month-day
        title: "Headline of the story",
-       date: "2024-09-19",                 // year-month-day
        summary: "One or two sentences about what happened.",
-       image: "assets/images/Unique_9.jpg", // optional
+       category: "News",                    // "News" or "Announcement"
+       image: "assets/images/Unique_9.jpg", // optional, leave out for no photo
        imageAlt: "What the photo shows",    // needed if there is an image
-       link: "news1.html"                   // optional, page with the full story
+       link: ""                             // optional, a page or Facebook post with the full story
    },
    -------------------------------------------------------------------------- */
 const NEWS = [];
 
 
 /* --------------------------------------------------------------------------
-   3. GALLERY PHOTOS (gallery.html)
+   3. FIXTURES (upcoming matches)
+   The soonest one becomes the big NEXT MATCH card with a countdown; the
+   rest are listed under it. A match drops off this list by itself two
+   hours after kick-off, so old fixtures never show as "next".
+
+   Example:
+   {
+       date: "2024-09-19",                  // year-month-day
+       time: "14:30",                       // 24-hour Ghana time
+       home: "Topsky FC Academy",           // the home team
+       away: "Unique Soccer Academy",       // the away team
+       venue: "Opeikuma Topsky School Park",
+       competition: "Pre-season friendly"
+   },
+   -------------------------------------------------------------------------- */
+const FIXTURES = [];
+
+
+/* --------------------------------------------------------------------------
+   4. RESULTS (matches already played)
+   Newest first on the page. The W / D / L badge is worked out from the
+   score, using CLUB_NAMES to know which side is ours.
+
+   Example:
+   {
+       date: "2024-10-05",
+       home: "Unique Soccer Academy",
+       away: "Example FC",                  // made-up example, not a real match
+       homeScore: 2,                        // numbers, no quotes
+       awayScore: 1,
+       competition: "League"
+   },
+   -------------------------------------------------------------------------- */
+const RESULTS = [];
+
+// The names our club may be written as in FIXTURES and RESULTS
+// (capital letters don't matter). Our side gets the club crest, the
+// other side a plain shield.
+const CLUB_NAMES = ["Unique Soccer Academy", "USA"];
+
+
+/* --------------------------------------------------------------------------
+   5. GALLERY PHOTOS (gallery.html)
    The grid and the lightbox show the photos in this order.
    - alt:      what the photo shows (read out by screen readers, and used
                as the caption in the lightbox)
@@ -65,7 +126,7 @@ const PHOTOS = [
 ];
 
 /* --------------------------------------------------------------------------
-   4. GALLERY VIDEOS (gallery.html)
+   6. GALLERY VIDEOS (gallery.html)
    - poster: a still image shown on the card before the video plays.
              While it is "", the card shows the video's own first frame
              instead. To make real posters, see "Video posters" in README.md.

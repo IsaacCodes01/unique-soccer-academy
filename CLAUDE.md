@@ -86,6 +86,7 @@ The colours come from the club crest (red shield, gold/yellow, black).
 ├── js/main.js            Menu, scroll effects, animations, back-to-top
 ├── js/data.js            Editable content: news, fixtures, players, gallery items
 ├── js/gallery.js         Gallery tabs and lightbox
+├── js/news.js            News page: ticker, filters, next-match countdown, results
 ├── js/contact.js         Join form validation → WhatsApp message
 ├── assets/images/        Optimised images (.webp + original fallback)
 ├── assets/videos/        Videos + poster images

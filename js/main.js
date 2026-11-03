@@ -334,10 +334,10 @@ if (counters.length && "IntersectionObserver" in window && !reducedMotion.matche
    6. LATEST NEWS (home page)
    Shows the 3 newest items from NEWS in js/data.js. While NEWS is empty,
    the "No news yet" message written in index.html simply stays.
+   escapeHTML, formatDate and newsCard are also used by js/news.js.
    ========================================================================== */
 const latestNews = document.getElementById("latest-news");
-// TODO (Phase 9): change to news.html once news1 + announcements are merged
-const NEWS_PAGE = "news1.html";
+const NEWS_PAGE = "news.html";
 
 // Turns characters like < and & into safe text, so a typo in data.js
 // can't break the page's HTML
@@ -354,19 +354,33 @@ function formatDate(isoDate) {
     });
 }
 
-function newsCard(item) {
+// One news card, shared by the home page and news.html.
+// "fallbackLink" is where the title goes when the item has no link of its
+// own: news.html on the home page, nowhere ("") on news.html itself.
+function newsCard(item, fallbackLink = NEWS_PAGE) {
+    const link = item.link || fallbackLink;
+    const isAnnouncement = item.category === "Announcement";
+
     const image = item.image
         ? `<img class="news-card__img" src="${escapeHTML(item.image)}" alt="${escapeHTML(item.imageAlt || "")}" loading="lazy">`
         : "";
 
+    const title = link
+        ? `<a href="${escapeHTML(link)}">${escapeHTML(item.title)}</a>`
+        : escapeHTML(item.title);
+
     return `
-        <article class="news-card">
+        <article class="news-card${link ? " news-card--link" : ""}">
             ${image}
             <div class="news-card__body">
-                <time class="news-card__date" datetime="${escapeHTML(item.date)}">${formatDate(item.date)}</time>
-                <h3 class="news-card__title">
-                    <a href="${escapeHTML(item.link || NEWS_PAGE)}">${escapeHTML(item.title)}</a>
-                </h3>
+                <div class="news-card__meta">
+                    <span class="badge${isAnnouncement ? "" : " badge--gold"}">
+                        <i class="fa-solid ${isAnnouncement ? "fa-bullhorn" : "fa-newspaper"}" aria-hidden="true"></i>
+                        ${isAnnouncement ? "Announcement" : "News"}
+                    </span>
+                    <time class="news-card__date" datetime="${escapeHTML(item.date)}">${formatDate(item.date)}</time>
+                </div>
+                <h3 class="news-card__title">${title}</h3>
                 <p>${escapeHTML(item.summary)}</p>
             </div>
         </article>`;
@@ -379,7 +393,7 @@ if (latestNews && typeof NEWS !== "undefined" && NEWS.length > 0) {
         .sort((a, b) => b.date.localeCompare(a.date))
         .slice(0, 3);
 
-    latestNews.innerHTML = newest.map(newsCard).join("");
+    latestNews.innerHTML = newest.map((item) => newsCard(item)).join("");
 }
 
 /* ==========================================================================

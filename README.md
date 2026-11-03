@@ -93,6 +93,7 @@ unique-soccer-academy/
 │   ├── main.js         # Menu, scroll effects, animations
 │   ├── data.js         # ✏️ Editable site content
 │   ├── gallery.js      # Gallery tabs and lightbox
+│   ├── news.js         # News page: ticker, filters, countdown, results
 │   └── contact.js      # Join form → WhatsApp
 ├── assets/
 │   ├── images/
