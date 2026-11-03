@@ -1,8 +1,8 @@
 /* ==========================================================================
    news.js (news.html only)
    Builds the news page from NEWS, FIXTURES, RESULTS and CLUB_NAMES in
-   js/data.js. Uses reducedMotion, escapeHTML, formatDate and newsCard
-   from js/main.js, which loads first.
+   js/data.js. Uses reducedMotion, escapeHTML, formatDate, formatTime and
+   newsCard from js/main.js, which loads first.
    1. Helpers        2. Ticker          3. News cards
    4. Next match     5. Results         6. Filter chips
    7. Start-up
@@ -28,13 +28,6 @@ function isClub(name) {
 // country still gets a countdown to the right moment.
 function kickOff(fixture) {
     return new Date(`${fixture.date}T${fixture.time || "00:00"}:00Z`);
-}
-
-// "14:30" -> "2:30pm"
-function formatTime(time) {
-    if (!time) return "Time TBC";
-    const [h, m] = time.split(":").map(Number);
-    return `${h % 12 || 12}:${String(m).padStart(2, "0")}${h < 12 ? "am" : "pm"}`;
 }
 
 // The friendly box shown when a list is empty

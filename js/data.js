@@ -42,14 +42,20 @@ const HERO_SLIDES = [
 
    Example (copy into the list and fill in):
    {
-       date: "2024-09-19",                  // year-month-day
+       date: "2024-09-19",                  // year-month-day it was published
+       time: "14:30",                       // optional, 24-hour time it was published
        title: "Headline of the story",
        summary: "One or two sentences about what happened.",
        category: "News",                    // "News" or "Announcement"
-       image: "assets/images/Unique_9.jpg", // optional, leave out for no photo
+       image: "assets/images/Unique_9.jpg", // optional; without it the card shows the club crest
        imageAlt: "What the photo shows",    // needed if there is an image
-       link: ""                             // optional, a page or Facebook post with the full story
+       author: "Full Name",                 // optional, who posted it (their initials show in a circle)
+       authorPhoto: "",                     // optional, a small square photo of them instead of initials
+       link: ""                             // optional: paste the Facebook post's address here and
+                                            // clicking the card opens it on Facebook
    },
+   To get a Facebook post's address: on Facebook, click the post's date
+   (just under the page name) and copy the address from the address bar.
    -------------------------------------------------------------------------- */
 const NEWS = [];
 

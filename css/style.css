@@ -2117,15 +2117,21 @@ body.dialog-open {
     margin-bottom: 0;
 }
 
-/* ----- Home: latest news ----- */
+/* ----- News cards (home page + news page) -----
+   One card per row: a feed that works for 1 story or 50. */
 .news-list {
     display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: var(--space-4);
 }
 
+/* Picture on the left, words on the right, on every screen. The picture
+   column is 36% of the card, but never under 110px or over 340px.
+   align-items: stretch (the default) makes the picture as tall as the
+   words beside it. */
 .news-card {
     position: relative;
+    display: grid;
+    grid-template-columns: clamp(110px, 36%, 340px) 1fr;
     overflow: hidden;
     border: 1px solid var(--line-dark);
     border-radius: var(--radius);
@@ -2143,37 +2149,117 @@ body.dialog-open {
     border-color: var(--gold);
 }
 
+.news-card__media {
+    position: relative;
+    min-height: 140px;
+    background-color: var(--black);
+}
+
+/* position: absolute + inset: 0 makes the photo fill the column exactly,
+   however tall the text beside it is; object-fit: cover crops it neatly */
 .news-card__img {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 100%;
     object-fit: cover;
+    object-position: center 25%;   /* keep heads in view */
+    transition: transform var(--dur-reveal) var(--ease);
+}
+
+.news-card--link:hover .news-card__img {
+    transform: scale(1.05);
+}
+
+/* No photo: the club crest, faded, on black */
+.news-card__placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle, rgba(245, 197, 24, 0.15), transparent 70%), var(--black);
+}
+
+.news-card__placeholder img {
+    width: 45%;
+    max-width: 96px;
+    opacity: 0.85;
 }
 
 .news-card__body {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-5);
+    gap: var(--space-2);
+    min-width: 0;
+    padding: var(--space-4);
 }
 
-/* Category badge and date on one line */
+/* Top row: "|NEWS" on the left, avatar + date on the right.
+   It wraps onto two lines when there isn't room. */
 .news-card__meta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
     gap: var(--space-2) var(--space-3);
 }
 
-.news-card__date {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+/* The coloured bar before the word is a ::before box, 3px wide */
+.news-card__category {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+}
+
+.news-card__category::before {
+    content: "";
+    width: 3px;
+    height: 1.1em;
+    border-radius: 2px;
+    background-color: currentColor;
+}
+
+.news-card__category--news {
     color: var(--gold);
 }
 
+.news-card__category--announcement {
+    color: var(--red-light);    /* 6.3:1 on charcoal */
+}
+
+.news-card__byline {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* Round photo or initials of whoever posted it */
+.avatar {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--gold);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.news-card__date {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--grey-light);
+}
+
 .news-card__title {
-    font-size: 1.35rem;
+    font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.4rem);
 }
 
 .news-card__title a {
@@ -2188,8 +2274,27 @@ body.dialog-open {
     inset: 0;
 }
 
-.news-card p {
+/* Summary: at most 3 lines on phones (the rest becomes "..."),
+   4 from 768px (section 12) */
+.news-card__summary {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    font-size: 0.9rem;
     color: var(--grey-light);
+}
+
+/* "Read on Facebook" hint */
+.news-card__source {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-1);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gold);
 }
 
 /* "No news yet" box, across the full width of the grid */
@@ -2573,7 +2678,16 @@ body.dialog-open {
 }
 
 .section--light .news-card__date {
+    color: var(--grey);         /* 5:1 on white */
+}
+
+.section--light .news-card__category--news,
+.section--light .news-card__source {
     color: var(--gold-ink);     /* 6.5:1 on white */
+}
+
+.section--light .news-card__category--announcement {
+    color: var(--red);          /* 4.9:1 on white */
 }
 
 .section--light .news-empty {
@@ -3176,6 +3290,22 @@ body.dialog-open {
     color: var(--gold);
 }
 
+/* Gold label fixed in the bottom-left corner in demo mode (js/demo-data.js).
+   The right side is left free for the back-to-top button. */
+.demo-notice {
+    position: fixed;
+    left: var(--space-4);
+    bottom: var(--space-4);
+    z-index: 200;
+    max-width: calc(100% - 96px);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    background-color: var(--gold);
+    font-size: 0.8rem;
+    color: var(--black);
+    box-shadow: var(--shadow-lg);
+}
+
 /* Hidden on screen but still read out by screen readers */
 .visually-hidden {
     position: absolute;
@@ -3306,6 +3436,21 @@ body.dialog-open {
 }
 
 @media (min-width: 768px) {
+    /* News cards: more room, so more padding and a longer summary */
+    .news-card__body {
+        gap: var(--space-3);
+        padding: var(--space-5) var(--space-6);
+    }
+
+    .news-card__media {
+        min-height: 200px;
+    }
+
+    .news-card__summary {
+        -webkit-line-clamp: 4;
+        font-size: 1rem;
+    }
+
     :root {
         --gutter: var(--space-6);
     }
@@ -3636,6 +3781,7 @@ body.dialog-open {
     .back-to-top:hover,
     .news-card:hover,
     .news-card:focus-within,
+    .news-card--link:hover .news-card__img,
     .photo-grid__item:hover img,
     .photo-grid__item:focus-visible img,
     .masonry__btn:hover img,

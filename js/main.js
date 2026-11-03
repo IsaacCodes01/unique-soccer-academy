@@ -354,34 +354,76 @@ function formatDate(isoDate) {
     });
 }
 
+// "14:30" -> "2:30pm" (also used by js/news.js)
+function formatTime(time) {
+    if (!time) return "Time TBC";
+    const [h, m] = time.split(":").map(Number);
+    return `${h % 12 || 12}:${String(m).padStart(2, "0")}${h < 12 ? "am" : "pm"}`;
+}
+
+// "Isaac Otabil" -> "IO", "Coach" -> "C": the first letter of the first
+// and the last word
+function initials(name) {
+    const words = name.trim().split(/\s+/);
+    const first = words[0][0];
+    const last = words.length > 1 ? words[words.length - 1][0] : "";
+    return (first + last).toUpperCase();
+}
+
 // One news card, shared by the home page and news.html.
+// Layout: picture on the left, words on the right (on every screen size).
 // "fallbackLink" is where the title goes when the item has no link of its
 // own: news.html on the home page, nowhere ("") on news.html itself.
+// A link starting with "http" goes to another website (e.g. our Facebook
+// post), so it opens in a new tab and the card says where it goes.
 function newsCard(item, fallbackLink = NEWS_PAGE) {
     const link = item.link || fallbackLink;
-    const isAnnouncement = item.category === "Announcement";
+    const isExternal = /^https?:/.test(link);
+    const isFacebook = /facebook\.com|fb\.watch/.test(link);
+    const category = item.category === "Announcement" ? "Announcement" : "News";
 
-    const image = item.image
+    // No photo? The club crest on black keeps every card the same shape.
+    const media = item.image
         ? `<img class="news-card__img" src="${escapeHTML(item.image)}" alt="${escapeHTML(item.imageAlt || "")}" loading="lazy">`
-        : "";
+        : `<span class="news-card__placeholder"><img src="${escapeHTML(LOGO_SRC)}" alt="" loading="lazy"></span>`;
 
+    // Who posted it: their photo if there is one, otherwise their initials
+    let avatar = "";
+    if (item.author) {
+        avatar = item.authorPhoto
+            ? `<img class="avatar" src="${escapeHTML(item.authorPhoto)}" alt="" loading="lazy">`
+            : `<span class="avatar" aria-hidden="true">${escapeHTML(initials(item.author))}</span>`;
+    }
+
+    const published = formatDate(item.date) + (item.time ? `, ${formatTime(item.time)}` : "");
+
+    const newTab = isExternal
+        ? ` target="_blank" rel="noopener"`
+        : "";
     const title = link
-        ? `<a href="${escapeHTML(link)}">${escapeHTML(item.title)}</a>`
+        ? `<a href="${escapeHTML(link)}"${newTab}>${escapeHTML(item.title)}${isExternal ? '<span class="visually-hidden"> (opens in a new tab)</span>' : ""}</a>`
         : escapeHTML(item.title);
+
+    // A hint under the summary; the whole card is already the link
+    let source = "";
+    if (isFacebook) source = `<span class="news-card__source"><i class="fab fa-facebook-f" aria-hidden="true"></i> Read on Facebook</span>`;
+    else if (isExternal) source = `<span class="news-card__source"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Read more</span>`;
 
     return `
         <article class="news-card${link ? " news-card--link" : ""}">
-            ${image}
+            <div class="news-card__media">${media}</div>
             <div class="news-card__body">
                 <div class="news-card__meta">
-                    <span class="badge${isAnnouncement ? "" : " badge--gold"}">
-                        <i class="fa-solid ${isAnnouncement ? "fa-bullhorn" : "fa-newspaper"}" aria-hidden="true"></i>
-                        ${isAnnouncement ? "Announcement" : "News"}
+                    <span class="news-card__category news-card__category--${category.toLowerCase()}">${category}</span>
+                    <span class="news-card__byline">
+                        ${avatar}
+                        ${item.author ? `<span class="visually-hidden">Posted by ${escapeHTML(item.author)},</span>` : ""}
+                        <time class="news-card__date" datetime="${escapeHTML(item.date + (item.time ? "T" + item.time : ""))}">${published}</time>
                     </span>
-                    <time class="news-card__date" datetime="${escapeHTML(item.date)}">${formatDate(item.date)}</time>
                 </div>
                 <h3 class="news-card__title">${title}</h3>
-                <p>${escapeHTML(item.summary)}</p>
+                <p class="news-card__summary">${escapeHTML(item.summary)}</p>
+                ${source}
             </div>
         </article>`;
 }
