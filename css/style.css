@@ -418,46 +418,27 @@ p {
     color: var(--gold);
 }
 
-.dropdown {
-    position: relative;
+/* Logo + club name, as one link back to the home page */
+.header__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: inherit;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-decoration: none;
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    min-width: 160px;
-    padding: var(--space-2) 0;
-    border-radius: var(--radius-sm);
-    background-color: var(--white);
-    box-shadow: var(--shadow-lg);
-    list-style: none;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition:
-        opacity var(--dur-hover) var(--ease),
-        transform var(--dur-hover) var(--ease),
-        visibility var(--dur-hover);
+/* "Join Us" keeps its gold button look inside the white nav bar */
+.navbar ul li a.nav__cta {
+    min-height: 0;
+    padding: var(--space-1) var(--space-4);
+    background-color: var(--gold);
+    color: var(--black);
 }
 
-.navbar .dropdown-menu li {
-    margin: 0;
-}
-
-.navbar .dropdown-menu li a {
-    display: block;
-    padding: var(--space-2) var(--space-4);
-    border-radius: 0;
-}
-
-.dropdown:hover .dropdown-menu,
-.dropdown:focus-within .dropdown-menu,
-.dropdown.dropdown-open .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+.navbar ul li a.nav__cta:hover {
+    background-color: var(--gold-dark);
 }
 
 
