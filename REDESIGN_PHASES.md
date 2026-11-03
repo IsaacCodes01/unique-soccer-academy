@@ -28,6 +28,7 @@ mkdir -p docs/screenshots/before
 ```
 
 **Prompt:**
+
 ```
 Read CLAUDE.md and REDESIGN_PHASES.md, then read every file in this project.
 Don't change any code yet.
@@ -53,6 +54,7 @@ Don't change any code yet.
 vague titles, generic alt text, `.ogg` sources that don't exist.
 
 **Prompt:**
+
 ```
 Phase 1: cleanup and restructure. Follow CLAUDE.md.
 1. Create the target folders: css/, js/, assets/images/, assets/videos/, docs/.
@@ -83,6 +85,7 @@ Don't change the look of the site in this phase. Explain every change in plain w
 classes, no consistent spacing.
 
 **Prompt:**
+
 ```
 Phase 2: design system. Follow the "Brand and design system" and "CSS organisation" sections
 of CLAUDE.md.
@@ -113,6 +116,7 @@ unfinished, because the next phases rebuild them.
 **Fixes:** header/footer duplicated in every page, so every change had to be made 9 times.
 
 **Prompt:**
+
 ```
 Phase 3: shared layout. Create js/layout.js that inserts the header into
 <div id="site-header"></div> and the footer into <div id="site-footer"></div> on every page.
@@ -141,6 +145,7 @@ Explain what "defer" does and why we build the header in JS, in simple words.
 hard-coded `padding-top: 125px`, only the first dropdown working on tap, icons outside the links.
 
 **Prompt:**
+
 ```
 Phase 4: header and navigation. Restyle the header that js/layout.js builds.
 Desktop:
@@ -178,6 +183,7 @@ Explain aria-expanded, backdrop-filter and the scroll logic in simple words.
 placeholder Instagram link, sponsor link pointing to WhatsApp.
 
 **Prompt:**
+
 ```
 Phase 5: footer. Rebuild the footer from js/layout.js:
 - Top: a gold "call to action" band: "Ready to become a champion?" + "Join the Academy" button
@@ -206,16 +212,24 @@ Check text contrast is at least 4.5:1.
 `Pitch.png`, no sections showing what the club does.
 
 **Prompt:**
+
 ```
 Phase 6: home page. Rebuild index.html with these sections, using the shared classes:
 1. HERO (full viewport height, minus the header):
-   - Pitch photo background with a dark gradient overlay and a slow "Ken Burns" zoom.
+   - Background slideshow: 3–4 real club photos (Isaac adds them to assets/images/ before
+     this phase) that slowly cross-fade every ~6s, each with a slow "Ken Burns" zoom, under a
+     dark gradient overlay. Only the background changes; the text and buttons stay fixed.
+     Add a visible pause/play <button> (moving content longer than 5s needs one).
+     With prefers-reduced-motion: show only the first photo, no fading or zoom.
+     Load only the first photo up front; load the others after the page has loaded.
+     Fallback if the photos are not ready yet: the Pitch photo alone.
    - Small gold eyebrow "Kasoa-Apra · Est. 2020".
    - Huge Oswald headline "WHERE CHAMPIONS ARE MADE", with each word sliding up one after
      another on load.
    - One-line intro text, then two buttons: "Join the Academy" (primary, WhatsApp) and
      "Watch Highlights" (outline, goes to gallery.html#videos).
-   - Crest floating gently on the right on desktop (hidden on small phones).
+   - Crest floating gently on the right on desktop only (hidden below 768px, because the
+     crest is already in the header). Remove the old crest under the welcome heading.
    - An animated scroll-down mouse icon at the bottom.
 2. STATS STRIP: 4 counters that count up when they come into view:
    "2020 Founded", "14–19 Age group", "5 Training days a week", "TODO Players".
@@ -245,6 +259,7 @@ intentional and nothing should overlap.
 **Fixes:** wall of text, schedule hidden in a hover card, `border="5"` table, "SCHUDLES" typo.
 
 **Prompt:**
+
 ```
 Phase 7: about page. Rebuild about.html:
 1. PAGE BANNER (reusable component for all inner pages): short dark banner with a background
@@ -276,6 +291,7 @@ Phase 7: about page. Rebuild about.html:
 button also opened a new tab, videos had no posters, and Photos/Videos were separate pages.
 
 **Prompt:**
+
 ```
 Phase 8: gallery. Turn gallery.html into one page with two tabs, "Photos" and "Videos"
 (accessible tabs with role="tablist"; gallery.html#videos opens the Videos tab).
@@ -306,6 +322,7 @@ Explain how the lightbox code works step by step in plain words.
 **Fixes:** three empty pages (news1, announcements, news), a "BREAKING!" ticker with no news in it.
 
 **Prompt:**
+
 ```
 Phase 9: news. Merge news1.html and announcements.html into news.html, then delete them.
 In js/data.js define three arrays with an example structure in comments, all EMPTY for now:
@@ -333,6 +350,7 @@ Then add a short "How to add news" comment at the top of data.js so I can update
 **Goal:** Show the people behind the club.
 
 **Prompt:**
+
 ```
 Phase 10: team page. Build team.html:
 - Page banner.
@@ -357,6 +375,7 @@ Explain how the filter works and how the tilt effect calculates the angle.
 **Fixes:** big grey box of links, fixed-width 450px maps causing sideways scroll, no form.
 
 **Prompt:**
+
 ```
 Phase 11: contact page. Rebuild contact.html:
 1. Page banner.
@@ -384,6 +403,7 @@ Explain how the form builds the WhatsApp link, including encodeURIComponent, in 
 **Goal:** Smooth, premium motion across the whole site, without making it slow or annoying.
 
 **Prompt:**
+
 ```
 Phase 12: animations and polish across the whole site.
 1. Scroll-reveal system in js/main.js using IntersectionObserver: add data-reveal="up|left|
@@ -413,6 +433,7 @@ Explain IntersectionObserver and why we only animate transform and opacity.
 **Fixes:** 2.7 MB `Pitch.png`, uncompressed photos, no social preview, no 404 page.
 
 **Prompt:**
+
 ```
 Phase 13: performance and SEO.
 1. Convert all images to WebP (target: hero under 250KB, gallery photos under 150KB, max width
@@ -438,6 +459,7 @@ Phase 13: performance and SEO.
 **Goal:** Ship it.
 
 **Prompt:**
+
 ```
 Phase 14: final QA and deploy.
 1. Go through every page and list any bugs, layout issues, broken links, console errors,
@@ -462,23 +484,23 @@ git push origin main
 
 ## Problem → Phase map
 
-| Problem from the review | Fixed in |
-|---|---|
-| Two stacked header bars, nav covers content on mobile | 4 |
-| Only first dropdown works on tap, icons outside links | 3, 4 |
-| Times New Roman / Arial mix, harsh pure yellow | 2 |
-| Mission, Vision, Schedule, Age group hidden behind hover | 6, 7 |
-| Plain hero with no call to action | 6 |
-| Cramped 5-column footer, poor contrast | 5 |
-| Header/footer copied into 9 files | 3 |
-| Duplicate/unused pages (gallery, photos, news) | 1, 8, 9 |
-| Photos/videos open raw files in new tab, no posters | 8 |
-| Empty News/Announcement pages | 9 |
-| No team, fixtures or join section | 9, 10, 11 |
-| Fixed-width maps cause sideways scroll | 11 |
-| Placeholder Instagram link, sponsor → WhatsApp | 5 |
-| `<center>`, invalid CSS, duplicate classes, `node.js` name | 1, 2 |
-| Missing meta tags, vague titles, generic alt text | 1, 13 |
-| 2.7 MB hero image, uncompressed photos | 13 |
-| No animations | 4, 6, 12 |
-| Outdated README | 14 |
+| Problem from the review                                        | Fixed in  |
+| -------------------------------------------------------------- | --------- |
+| Two stacked header bars, nav covers content on mobile          | 4         |
+| Only first dropdown works on tap, icons outside links          | 3, 4      |
+| Times New Roman / Arial mix, harsh pure yellow                 | 2         |
+| Mission, Vision, Schedule, Age group hidden behind hover       | 6, 7      |
+| Plain hero with no call to action                              | 6         |
+| Cramped 5-column footer, poor contrast                         | 5         |
+| Header/footer copied into 9 files                              | 3         |
+| Duplicate/unused pages (gallery, photos, news)                 | 1, 8, 9   |
+| Photos/videos open raw files in new tab, no posters            | 8         |
+| Empty News/Announcement pages                                  | 9         |
+| No team, fixtures or join section                              | 9, 10, 11 |
+| Fixed-width maps cause sideways scroll                         | 11        |
+| Placeholder Instagram link, sponsor → WhatsApp                | 5         |
+| `<center>`, invalid CSS, duplicate classes, `node.js` name | 1, 2      |
+| Missing meta tags, vague titles, generic alt text              | 1, 13     |
+| 2.7 MB hero image, uncompressed photos                         | 13        |
+| No animations                                                  | 4, 6, 12  |
+| Outdated README                                                | 14        |
