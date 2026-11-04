@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/images/usa_logo.png" alt="Royal Unique FC crest" width="120">
+<img src="assets/images/RYFC%20copy.png" alt="Royal Unique FC crest" width="120">
 
 # Royal Unique FC
 
@@ -27,7 +27,8 @@ The official website of **Royal Unique FC** (formerly Unique Soccer Academy), a 
 
 | Before (2025, first-year project) | After (2026 redesign) |
 |---|---|
-| ![Before](docs/screenshots/before/home.png) | ![After](docs/screenshots/after/home.png) |
+| ![Home page before the redesign, desktop](docs/screenshots/before/home-1440.png) | ![Home page after the redesign, desktop](docs/screenshots/after/home-1440.png) |
+| ![Home page before the redesign, phone](docs/screenshots/before/home-360.png) | ![Home page after the redesign, phone](docs/screenshots/after/home-360.png) |
 
 ---
 
@@ -50,28 +51,28 @@ footballers into professional athletes and well-rounded individuals.
 ## ✨ Features
 
 ### Design and experience
-- [ ] Modern brand design based on the club crest (black, gold and red), with Oswald + Inter fonts
-- [ ] Sticky header that turns from transparent to solid on scroll, with a scroll-progress bar
-- [ ] Animated hamburger menu with a slide-in mobile navigation (keyboard and screen-reader friendly)
-- [ ] Full-screen hero with a Ken Burns background, animated headline and call-to-action buttons
-- [ ] Scroll-reveal animations, count-up stats, hover micro-interactions and page transitions
-- [ ] Fully responsive from 360px phones to large desktops
-- [ ] Respects the user's *reduced motion* setting
+- [x] Modern brand design based on the club crest (black, gold and red), with Oswald + Inter fonts
+- [x] Sticky header that turns from transparent to solid on scroll, with a scroll-progress bar
+- [x] Animated hamburger menu with a slide-in mobile navigation (keyboard and screen-reader friendly)
+- [x] Full-screen hero with a Ken Burns background, animated headline and call-to-action buttons
+- [x] Scroll-reveal animations, count-up stats, hover micro-interactions and page transitions
+- [x] Fully responsive from 360px phones to large desktops
+- [x] Respects the user's *reduced motion* setting
 
 ### Pages
-- [ ] **Home**: hero, stats, mission & vision, what we offer, latest news, gallery preview, sponsors
-- [ ] **About**: club story, interactive timeline, leadership, training schedule, who can join
-- [ ] **Team**: coaches and players with position filters
-- [ ] **News**: news & announcements, next-match countdown, fixtures and results
-- [ ] **Gallery**: photo grid with a swipeable lightbox, plus a video player modal
-- [ ] **Contact**: contact cards, *Join the Academy* form (sends via WhatsApp), maps, FAQ
-- [ ] **404**: a friendly "Offside!" page
+- [x] **Home**: hero, stats, mission & vision, what we offer, latest news, gallery preview, sponsors
+- [x] **About**: club story, interactive timeline, leadership, training schedule, who can join
+- [x] **Team**: coaches and players with position filters and a 3D tilt on hover
+- [x] **News**: news & announcements with a headline ticker, next-match countdown, fixtures and results
+- [x] **Gallery**: photo grid with a swipeable lightbox, plus a video player modal
+- [x] **Contact**: contact cards, *Join the Academy* form (sends via WhatsApp), maps, FAQ
+- [x] **404**: a friendly "Offside!" page
 
 ### Under the hood
-- [ ] Header and footer written once in `js/layout.js` and shared by every page
-- [ ] Content (news, fixtures, players, photos) lives in `js/data.js`, so updates need no HTML
-- [ ] Optimised WebP images, lazy loading and a fast Lighthouse score
-- [ ] SEO meta tags, Open Graph share previews, sitemap and structured data
+- [x] Header and footer written once in `js/layout.js` and shared by every page
+- [x] Content (news, fixtures, players, photos) lives in `js/data.js`, so updates need no HTML
+- [x] Optimised WebP images, lazy loading and a fast Lighthouse score
+- [x] SEO meta tags, Open Graph share previews, sitemap and structured data
 
 ---
 
@@ -87,22 +88,42 @@ unique-soccer-academy/
 ├── contact.html        # Contact, join form, maps, FAQ
 ├── 404.html            # Page not found
 ├── css/
-│   └── style.css       # All styles (tokens → base → components → pages → animations)
+│   └── style.css       # All styles, 12 numbered sections (tokens → base → … → media queries)
 ├── js/
-│   ├── layout.js       # Shared header + footer
-│   ├── main.js         # Menu, scroll effects, animations
-│   ├── data.js         # ✏️ Editable site content
-│   ├── gallery.js      # Gallery tabs and lightbox
+│   ├── boot.js         # Runs first, in <head>: preloader, WebP fallback
+│   ├── layout.js       # Shared header + footer, image helpers
+│   ├── main.js         # Menu, scroll effects, hero slideshow, reveals, page transitions
+│   ├── data.js         # ✏️ Editable site content (news, fixtures, results, photos, videos, team)
+│   ├── gallery.js      # Gallery tabs, lightbox and video player
 │   ├── news.js         # News page: ticker, filters, countdown, results
 │   ├── team.js         # Team page: cards, position filter, 3D tilt
-│   └── contact.js      # Join form → WhatsApp
+│   └── contact.js      # Copy buttons, join form → WhatsApp, FAQ
 ├── assets/
-│   ├── images/
-│   └── videos/
-├── docs/screenshots/   # Before/after screenshots
+│   ├── images/         # Photos (.jpg/.png + .webp + -thumb.webp), crest, icons, share image
+│   └── videos/         # Gallery videos
+├── docs/screenshots/
+│   ├── before/         # The 2025 site, at 360px and 1440px
+│   └── after/          # The 2026 redesign (add these, see below)
+├── .github/
+│   ├── workflows/optimize-images.yml   # Makes WebP copies when you push photos
+│   └── scripts/optimize-images.js
+├── site.webmanifest    # Name, colours and icons for "Add to Home screen"
+├── robots.txt          # Rules for search engines
+├── sitemap.xml         # List of pages for search engines
 ├── CLAUDE.md           # Rules for Claude Code
-└── REDESIGN_PHASES.md  # Step-by-step redesign plan
+└── REDESIGN_PHASES.md  # The 14-phase redesign plan
 ```
+
+### Adding the "after" screenshots
+
+Put them in **`docs/screenshots/after/`**, named exactly like the ones in `before/` so the two
+can be compared side by side: `home-1440.png`, `home-360.png`, `about-1440.png`, `about-360.png`,
+and so on for `team`, `news`, `gallery` and `contact`. The Preview table at the top already
+points to `after/home-1440.png` and `after/home-360.png`, so those two show up as soon as they exist.
+
+To take them in Chrome: open the live site, press `F12`, click the phone/tablet icon
+(*Toggle device toolbar*), type the width (360 or 1440) at the top, then open the `⋮` menu in that
+toolbar and choose **Capture full size screenshot**.
 
 ---
 
@@ -123,18 +144,20 @@ No installs or build step needed. It's plain HTML, CSS and JavaScript.
 ## ✏️ Updating the Content
 
 All changing content lives in **`js/data.js`**. To add a news post, a fixture, a result or a
-player, copy an example object, fill it in, save, and refresh the page.
+player, copy the example in the comment above that list, paste it between the `[` and `]`,
+fill it in, save, and refresh the page. The pages sort everything by date for you.
 
 ```js
-news: [
-  {
-    date: "2026-11-15",
-    title: "Pre-season training camp begins",
-    summary: "Players report to Apra for the start of camp.",
-    image: "assets/images/news/camp.webp",
-    category: "News"            // or "Announcement"
-  }
-],
+const NEWS = [
+    {
+        date: "2026-11-15",                  // year-month-day
+        title: "Headline of the story",
+        summary: "One or two sentences about what happened.",
+        category: "News",                    // or "Announcement"
+        image: "assets/images/Unique_9.jpg", // optional
+        imageAlt: "What the photo shows"
+    },
+];
 ```
 
 ### Gallery photos and videos
@@ -216,7 +239,9 @@ Targets: hero under 250KB, gallery photos under 150KB.
 The site is hosted on **GitHub Pages** from the `main` branch.
 Any push to `main` updates the live site within a minute or two.
 
-*Settings → Pages → Source: Deploy from a branch → `main` / root*
+*Settings → Pages → Build and deployment → Source: **Deploy from a branch** → Branch: **`main`**, folder **`/ (root)`***
+
+GitHub Pages shows `404.html` automatically for any address that doesn't exist.
 
 ---
 

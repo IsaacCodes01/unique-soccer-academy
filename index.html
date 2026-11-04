@@ -164,9 +164,11 @@
                             <span class="stat__label">Training days a week</span>
                         </li>
                         <li class="stat" data-reveal="up" data-delay="300">
-                            <!-- TODO: add the real number of players, then give it data-count like the others -->
-                            <span class="stat__number">TODO</span>
-                            <span class="stat__label">Players</span>
+                            <!-- TODO: when Isaac has the current squad size, show that instead
+                                 (change both 12s and the label to "Players") -->
+                            <span class="stat__number" aria-hidden="true"><span data-count="12">12</span></span>
+                            <span class="visually-hidden">12</span>
+                            <span class="stat__label">Founding players</span>
                         </li>
                     </ul>
                 </section>
@@ -326,8 +328,6 @@
     <!--End of Main Container-->
 
     <script src="js/data.js" defer></script>
-    <!-- Sample content, only with ?demo in the address. Delete before launch. -->
-    <script src="js/demo-data.js" defer></script>
     <script src="js/layout.js" defer></script>
     <script src="js/main.js" defer></script>
 </body>

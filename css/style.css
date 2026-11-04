@@ -368,10 +368,6 @@ p {
     grid-template-columns: 1fr;
 }
 
-.stack > * + * {
-    margin-top: var(--space-4);
-}
-
 
 /* ==========================================================================
    5. BUTTONS
@@ -473,14 +469,6 @@ p {
 .btn--dark:hover {
     background-color: var(--charcoal);
     color: var(--gold);
-}
-
-.btn--ghost {
-    background-color: transparent;
-}
-
-.btn--ghost:hover {
-    background-color: rgba(245, 197, 24, 0.15);
 }
 
 .btn-group {
@@ -1288,10 +1276,6 @@ a.social-btn:hover {
 }
 
 /* Table */
-.table-wrap {
-    overflow-x: auto; /* lets a wide table scroll inside its card, not the page */
-}
-
 .table {
     font-size: 0.95rem;
 }
@@ -4371,22 +4355,6 @@ body.dialog-open {
 
 .text-gold {
     color: var(--gold);
-}
-
-/* Gold label fixed in the bottom-left corner in demo mode (js/demo-data.js).
-   The right side is left free for the back-to-top button. */
-.demo-notice {
-    position: fixed;
-    left: var(--space-4);
-    bottom: var(--space-4);
-    z-index: 200;
-    max-width: calc(100% - 96px);
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-sm);
-    background-color: var(--gold);
-    font-size: 0.8rem;
-    color: var(--black);
-    box-shadow: var(--shadow-lg);
 }
 
 /* Hidden on screen but still read out by screen readers */
