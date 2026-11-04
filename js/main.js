@@ -164,10 +164,11 @@ if (header) {
 
 /* ==========================================================================
    3. NEWSLETTER FORM (footer)
-   The site has no server or mailing-list service yet, so a sign-up opens
-   the visitor's email app with a ready-made "please subscribe me" email
-   to the club. They only have to press Send.
-   TODO: swap this for a real mailing-list service when the club has one.
+   With a newsletter service set in NEWSLETTER (js/layout.js), the form
+   is sent to the service, which saves the subscriber and emails them a
+   "please confirm" link. Without one, a sign-up opens the visitor's email
+   app with a ready-made "please subscribe me" email to the club.
+   Either way we check the address first.
    ========================================================================== */
 const newsletterForm = document.querySelector(".newsletter__form");
 
@@ -177,12 +178,11 @@ if (newsletterForm) {
     const CLUB_EMAIL = "uniquesocceracademy1@gmail.com";
 
     newsletterForm.addEventListener("submit", (event) => {
-        event.preventDefault(); // stop the browser reloading the page
-
         const email = emailInput.value.trim();
 
         // checkValidity() uses the browser's own rules for type="email"
         if (!email || !emailInput.checkValidity()) {
+            event.preventDefault(); // don't send a bad address anywhere
             emailInput.setAttribute("aria-invalid", "true");
             status.className = "newsletter__status is-error";
             status.textContent = "Please enter a valid email address, like name@example.com.";
@@ -191,6 +191,19 @@ if (newsletterForm) {
         }
 
         emailInput.removeAttribute("aria-invalid");
+
+        // A service is set up: let the browser send the form (no
+        // preventDefault). The browser reads the fields only after this
+        // code has finished, so reset() waits a moment (setTimeout 0)
+        // or it would empty the box before the email is sent.
+        if (NEWSLETTER.action) {
+            status.className = "newsletter__status is-success";
+            status.textContent = "Almost done! Check your inbox for an email to confirm your subscription.";
+            setTimeout(() => newsletterForm.reset(), 0);
+            return;
+        }
+
+        event.preventDefault(); // stop the browser reloading the page
 
         // encodeURIComponent makes spaces, @ and line breaks safe inside a link
         const subject = encodeURIComponent("Newsletter subscription");

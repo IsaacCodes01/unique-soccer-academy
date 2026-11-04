@@ -232,6 +232,32 @@ Targets: hero under 250KB, gallery photos under 150KB.
   The file is ready for when the club gets its own domain; until then, submit the sitemap in
   Search Console.
 
+### Newsletter
+
+The footer's *Subscribe* form sends the visitor's email to a newsletter service, which keeps
+the list, asks each subscriber to confirm, and sends the newsletters (with the unsubscribe link
+the law expects). Until a service is connected, the form opens an email to the club instead.
+
+**Connecting Buttondown (one-time setup):**
+
+1. Make a free account at [buttondown.com](https://buttondown.com) with the club's email.
+   Check the current free-plan limits on its pricing page.
+2. In Buttondown, turn on **double opt-in** (subscribers confirm by email), then go to
+   **Settings → Embedding → Form** and copy the address after `action="`. It looks like
+   `https://buttondown.com/api/emails/embed-subscribe/USERNAME`.
+3. In `js/layout.js`, paste it into `NEWSLETTER`:
+   ```js
+   const NEWSLETTER = {
+       action: "https://buttondown.com/api/emails/embed-subscribe/USERNAME",
+       emailField: "email"
+   };
+   ```
+4. Commit and push. Test it by subscribing with your own email.
+
+Using **Brevo** or **MailerLite** instead? Copy the `action="..."` address from their
+"embedded form" HTML code in the same way, and set `emailField` to the `name` of their email
+box (`EMAIL` for Brevo, `fields[email]` for MailerLite).
+
 ---
 
 ## 🌍 Deployment

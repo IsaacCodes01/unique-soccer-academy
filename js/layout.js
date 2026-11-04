@@ -37,6 +37,19 @@ const CONTACT = {
     whatsapp: { label: "0544400543", href: "https://wa.me/233544400543" }
 };
 
+// The newsletter service that stores the subscribers and sends the emails
+// (see "Newsletter" in README.md).
+// - action: the address the service gives for its sign-up form. While it
+//   is "", a sign-up opens an email to the club instead (js/main.js).
+// - emailField: the name the service expects for the email box:
+//   "email" for Buttondown, "EMAIL" for Brevo, "fields[email]" for MailerLite.
+// TODO: paste the club's form address once the account exists, e.g.
+//   "https://buttondown.com/api/emails/embed-subscribe/USERNAME"
+const NEWSLETTER = {
+    action: "",
+    emailField: "email"
+};
+
 const LOGO_SRC = "assets/images/RYFC copy.png";
 const SPONSOR_LOGO_SRC = "assets/images/Opas.png";
 
@@ -258,8 +271,11 @@ function buildFooter(currentPage) {
                 </div>
             </div>
 
-            <!-- Newsletter. There is no mailing-list service yet, so js/main.js
-                 turns a sign-up into an email to the club (see section 4 there). -->
+            <!-- Newsletter. With a service set in NEWSLETTER (top of this file)
+                 the form posts the email to it; the service's "confirm your
+                 email" page opens in a new tab (target="_blank"), so the
+                 visitor stays on our site. Without one, js/main.js turns a
+                 sign-up into an email to the club (see section 3 there). -->
             <div class="newsletter">
               <div class="newsletter__inner container">
                 <div class="newsletter__text">
@@ -267,9 +283,9 @@ function buildFooter(currentPage) {
                     <p>Get the latest club news and match updates in your inbox.</p>
                 </div>
                 <div class="newsletter__signup">
-                    <form class="newsletter__form" novalidate>
+                    <form class="newsletter__form" novalidate${NEWSLETTER.action ? ` action="${NEWSLETTER.action}" method="post" target="_blank"` : ""}>
                         <label class="visually-hidden" for="newsletter-email">Email address</label>
-                        <input class="newsletter__input" id="newsletter-email" name="email" type="email"
+                        <input class="newsletter__input" id="newsletter-email" name="${NEWSLETTER.emailField}" type="email"
                                placeholder="Your email address" autocomplete="email" required
                                aria-describedby="newsletter-status">
                         <button class="btn btn--primary" type="submit">Subscribe</button>
