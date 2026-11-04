@@ -26,6 +26,8 @@ redesigned to look modern, animated and professional.
 8. **Accessibility basics always:** real `<button>`s for things that act like buttons, `alt` text on
    every image, visible focus styles, keyboard support for menus, the lightbox and modals,
    colour contrast of at least 4.5:1 for text.
+9. **Never declare a function directly inside an if/for/try block;** put the code in a named
+   top-level function instead (older iPhone Safari bug). For example `if (header) initHeader();`.
 
 ## How to explain your work to Isaac
 

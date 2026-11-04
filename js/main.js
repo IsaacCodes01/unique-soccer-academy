@@ -13,7 +13,12 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 const header = document.querySelector(".site-header");
 
-if (header) {
+// Each feature's code lives in a named function (initHeader, initHero)
+// that an if calls, never directly inside the if { }. Older iPhone
+// Safari (iOS 15/16) has a bug there: a function declared inside an
+// if { } can't see the block's const/let variables, so it crashed with
+// "Can't find variable: SCROLLED_AT".
+function initHeader() {
     const toggle = header.querySelector(".nav-toggle");
     const menu = header.querySelector(".nav");
     const overlay = header.querySelector(".nav-overlay");
@@ -171,6 +176,8 @@ if (header) {
     updateHeader(); // set the right state on load (e.g. after a refresh mid-page)
 }
 
+if (header) initHeader();
+
 /* ==========================================================================
    3. NEWSLETTER FORM (footer)
    With a newsletter service set in NEWSLETTER (js/layout.js), the form
@@ -255,7 +262,7 @@ if (newsletterForm) {
    ========================================================================== */
 const hero = document.querySelector(".hero");
 
-if (hero && !reducedMotion.matches) {
+function initHero() {
     const slidesBox = hero.querySelector(".hero__slides");
     const toggleBtn = hero.querySelector(".hero__toggle");
     const toggleIcon = toggleBtn.querySelector("i");
@@ -335,6 +342,8 @@ if (hero && !reducedMotion.matches) {
 
     play();
 }
+
+if (hero && !reducedMotion.matches) initHero();
 
 /* ==========================================================================
    5. STAT COUNTERS (home page)

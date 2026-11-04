@@ -73,7 +73,10 @@ document.addEventListener("click", async (event) => {
    ========================================================================== */
 const joinForm = document.getElementById("join-form");
 
-if (joinForm) {
+// The code is in a named function that the if calls, never directly
+// inside the if { }: older iPhone Safari can't find a block's const/let
+// variables from a function declared inside that block.
+function initJoinForm() {
     const CLUB_WHATSAPP = "233544400543"; // wa.me needs the number with 233 and no leading 0
     const status = document.getElementById("join-status");
 
@@ -222,6 +225,8 @@ if (joinForm) {
     });
 }
 
+if (joinForm) initJoinForm();
+
 /* ==========================================================================
    3. FAQ ACCORDION
    Each question is a <button> with aria-expanded="true/false", which
@@ -231,7 +236,7 @@ if (joinForm) {
    ========================================================================== */
 const faq = document.querySelector(".faq");
 
-if (faq) {
+function initFaq() {
     const faqButtons = [...faq.querySelectorAll(".faq__btn")];
 
     function setOpen(button, open) {
@@ -253,3 +258,5 @@ if (faq) {
         setOpen(button, !wasOpen); // a second click on an open question closes it
     });
 }
+
+if (faq) initFaq();
