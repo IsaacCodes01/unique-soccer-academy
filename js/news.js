@@ -17,7 +17,7 @@ const newsPage = document.querySelector(".news-page");
 // Newest date first. [...list] copies it, so the list in data.js is untouched.
 const newestFirst = (list) => [...list].sort((a, b) => b.date.localeCompare(a.date));
 
-// True if a team name is one of ours, e.g. "unique soccer academy " counts
+// True if a team name is one of ours, e.g. "royal unique fc " counts
 function isClub(name) {
     const clean = String(name).trim().toLowerCase();
     return CLUB_NAMES.some((ours) => ours.toLowerCase() === clean);

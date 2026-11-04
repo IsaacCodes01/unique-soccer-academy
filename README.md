@@ -1,12 +1,12 @@
 <div align="center">
 
-<img src="assets/images/usa_logo.png" alt="Unique Soccer Academy crest" width="120">
+<img src="assets/images/usa_logo.png" alt="Royal Unique FC crest" width="120">
 
-# Unique Soccer Academy
+# Royal Unique FC
 
 ### *Where Champions Are Made*
 
-The official website of **Unique Soccer Academy**, a third-division football club in
+The official website of **Royal Unique FC** (formerly Unique Soccer Academy), a third-division football club in
 **Kasoa-Apra, Gomoa East, Central Region, Ghana**.
 
 [**🌐 Live Site**](https://isaaccodes01.github.io/unique-soccer-academy/) ·
@@ -33,7 +33,7 @@ The official website of **Unique Soccer Academy**, a third-division football clu
 
 ## ⚽ About the Club
 
-Unique Soccer Academy was founded on **20th March 2020** by **Mr. Nii Perrygrino Otoo** in Anyaa,
+Royal Unique FC (then called Unique Soccer Academy) was founded on **20th March 2020** by **Mr. Nii Perrygrino Otoo** in Anyaa,
 Greater Accra, with just 12 players training at Anyaa M/A School. The academy later moved to
 Auntie-Aku's Kokompe Park, and on **11th February 2024** it moved to its current home in **Apra**.
 Mr. Otoo now leads the academy alongside **Mr. Emmanuel Opare Asamoah**, CEO of
@@ -246,6 +246,6 @@ The 2026 redesign was planned and built with the help of Claude Code.
 
 <div align="center">
 
-© Unique Soccer Academy · Kasoa-Apra, Ghana
+© Royal Unique FC · Kasoa-Apra, Ghana
 
 </div>

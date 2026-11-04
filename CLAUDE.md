@@ -1,10 +1,10 @@
-# CLAUDE.md — Unique Soccer Academy website
+# CLAUDE.md — Royal Unique FC website
 
 This file tells Claude Code how to work on this project. Read it before every task.
 
 ## What this project is
 
-The official website of **Unique Soccer Academy (USA)**, a third-division football club in
+The official website of **Royal Unique FC** (formerly Unique Soccer Academy), a third-division football club in
 Kasoa-Apra (Gomoa East, Central Region, Ghana). It was first built by Isaac Otabil in his first
 year at Ghana Communications Technology University as a mid-semester project, and it is now being
 redesigned to look modern, animated and professional.

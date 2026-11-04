@@ -194,7 +194,7 @@ if (newsletterForm) {
 
         // encodeURIComponent makes spaces, @ and line breaks safe inside a link
         const subject = encodeURIComponent("Newsletter subscription");
-        const body = encodeURIComponent(`Hello, please add ${email} to the Unique Soccer Academy newsletter.`);
+        const body = encodeURIComponent(`Hello, please add ${email} to the Royal Unique FC newsletter.`);
         window.location.href = `mailto:${CLUB_EMAIL}?subject=${subject}&body=${body}`;
 
         status.className = "newsletter__status is-success";

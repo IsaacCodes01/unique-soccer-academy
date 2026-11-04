@@ -51,7 +51,7 @@ if (isDemoOn()) {
             title: "Demo: training moves to the evening session",
             summary: "This is a sample announcement with no photo, so the club crest fills the picture space. It has no link, so it isn't clickable.",
             category: "Announcement",
-            author: "Unique Soccer Academy",
+            author: "Royal Unique FC",
             authorPhoto: "assets/images/RYFC copy.png"
         },
         {
@@ -65,16 +65,16 @@ if (isDemoOn()) {
     );
 
     FIXTURES.push(
-        { date: daysFromToday(5),  time: "15:00", home: "Unique Soccer Academy", away: "Demo City FC",
+        { date: daysFromToday(5),  time: "15:00", home: "Royal Unique FC", away: "Demo City FC",
           venue: "Demo Park", competition: "Demo League" },
-        { date: daysFromToday(12), time: "09:30", home: "Demo Rovers", away: "Unique Soccer Academy",
+        { date: daysFromToday(12), time: "09:30", home: "Demo Rovers", away: "Royal Unique FC",
           venue: "Demo Rovers Ground", competition: "Demo Cup" }
     );
 
     RESULTS.push(
-        { date: daysFromToday(-4),  home: "Unique Soccer Academy", away: "Demo United", homeScore: 2, awayScore: 1, competition: "Demo League" },
-        { date: daysFromToday(-11), home: "Demo Stars", away: "Unique Soccer Academy", homeScore: 1, awayScore: 1, competition: "Demo League" },
-        { date: daysFromToday(-18), home: "Demo Athletic", away: "Unique Soccer Academy", homeScore: 3, awayScore: 0, competition: "Demo Cup" }
+        { date: daysFromToday(-4),  home: "Royal Unique FC", away: "Demo United", homeScore: 2, awayScore: 1, competition: "Demo League" },
+        { date: daysFromToday(-11), home: "Demo Stars", away: "Royal Unique FC", homeScore: 1, awayScore: 1, competition: "Demo League" },
+        { date: daysFromToday(-18), home: "Demo Athletic", away: "Royal Unique FC", homeScore: 3, awayScore: 0, competition: "Demo Cup" }
     );
 
     // Made-up people with no photos: real photos would put fake names on

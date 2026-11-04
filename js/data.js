@@ -72,7 +72,7 @@ const NEWS = [];
        date: "2024-09-19",                  // year-month-day
        time: "14:30",                       // 24-hour Ghana time
        home: "Topsky FC Academy",           // the home team
-       away: "Unique Soccer Academy",       // the away team
+       away: "Royal Unique FC",             // the away team
        venue: "Opeikuma Topsky School Park",
        competition: "Pre-season friendly"
    },
@@ -88,7 +88,7 @@ const FIXTURES = [];
    Example:
    {
        date: "2024-10-05",
-       home: "Unique Soccer Academy",
+       home: "Royal Unique FC",
        away: "Example FC",                  // made-up example, not a real match
        homeScore: 2,                        // numbers, no quotes
        awayScore: 1,
@@ -100,7 +100,8 @@ const RESULTS = [];
 // The names our club may be written as in FIXTURES and RESULTS
 // (capital letters don't matter). Our side gets the club crest, the
 // other side a plain shield.
-const CLUB_NAMES = ["Unique Soccer Academy", "USA"];
+// The old names are kept so matches typed before the rename still match.
+const CLUB_NAMES = ["Royal Unique FC", "Unique Soccer Academy", "USA"];
 
 
 /* --------------------------------------------------------------------------

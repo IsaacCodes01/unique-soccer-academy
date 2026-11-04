@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Unique Soccer Academy — main stylesheet
+   Royal Unique FC — main stylesheet
    Sections:
      1 Tokens            5 Buttons          9  Page sections
      2 Reset & base      6 Header & nav     10 Animations
@@ -111,6 +111,14 @@ svg {
    there and every img rule in this file still works. */
 picture {
     display: contents;
+}
+
+/* <source> only names a file; it never shows anything. Chrome still
+   gives it an empty box, and with display: contents above that box would
+   become a grid/flex item next to the <img> (it once pushed the home hero
+   crest out of its column). display: none takes it out completely. */
+picture > source {
+    display: none;
 }
 
 /* Font Awesome icons load in the background (see the <head>), so they can

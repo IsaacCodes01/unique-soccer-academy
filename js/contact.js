@@ -148,7 +148,7 @@ if (joinForm) {
     // in WhatsApp.
     function buildMessage(data) {
         const lines = [
-            "Hello Unique Soccer Academy! I would like to join the academy.",
+            "Hello Royal Unique FC! I would like to join the academy.",
             "",
             `*Name:* ${data.name}`,
             `*Age:* ${data.age}`,

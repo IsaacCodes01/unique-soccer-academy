@@ -136,9 +136,9 @@ function buildHeader(currentPage) {
     return `
         <header class="site-header${overlayClass}">
             <div class="site-header__inner container">
-                <a class="brand" href="index.html" aria-label="Unique Soccer Academy home">
+                <a class="brand" href="index.html" aria-label="Royal Unique FC home">
                     ${pictureHTML(LOGO_SRC, 'class="brand__crest" alt="" width="804" height="933"')}
-                    <span class="brand__name">Unique Soccer <span class="text-gold">Academy</span></span>
+                    <span class="brand__name">Royal Unique <span class="text-gold">FC</span></span>
                 </a>
 
                 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
@@ -210,9 +210,9 @@ function buildFooter(currentPage) {
             <!-- Four columns: about, quick links, contact, follow us -->
             <div class="footer-main container">
                 <div class="footer-col footer-col--about">
-                    <a class="footer-brand" href="index.html" aria-label="Unique Soccer Academy home">
+                    <a class="footer-brand" href="index.html" aria-label="Royal Unique FC home">
                         ${pictureHTML(LOGO_SRC, 'class="footer-brand__crest" alt="" width="804" height="933" loading="lazy"')}
-                        <span class="footer-brand__name">Unique Soccer <span class="text-gold">Academy</span></span>
+                        <span class="footer-brand__name">Royal Unique <span class="text-gold">FC</span></span>
                     </a>
                     <p>A third-division football club in Kasoa-Apra, in the Central Region of Ghana.</p>
                     <p class="footer-motto">Where <span class="text-gold">Champions</span> Are Made</p>
@@ -282,7 +282,7 @@ function buildFooter(currentPage) {
             <!-- Bottom bar -->
             <div class="footer-bottom">
                 <div class="footer-bottom__inner container">
-                    <p>&copy; ${year} Unique Soccer Academy. All rights reserved.</p>
+                    <p>&copy; ${year} Royal Unique FC. All rights reserved.</p>
                     <p>Built by Isaac Otabil</p>
                     <a class="footer__link footer-bottom__top" href="#site-header">
                         Back to top <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
