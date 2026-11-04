@@ -18,6 +18,14 @@
     const root = document.documentElement; // the <html> element
     root.classList.add("js");
 
+    // Safety net: if any script crashes (e.g. an old phone that doesn't
+    // know some newer JavaScript), take the "js" class off again. Then the
+    // CSS stops hiding the data-reveal sections, so the visitor still sees
+    // every word and photo, just without the animations.
+    window.addEventListener("error", (event) => {
+        if (event.target === window) root.classList.remove("js");
+    });
+
     // 3. WebP safety net. A <picture> does NOT fall back to its <img> by
     // itself when the .webp is missing: the photo is just broken. So we
     // listen for every image error on the page. "error" events don't

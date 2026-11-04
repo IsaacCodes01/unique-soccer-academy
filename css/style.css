@@ -1807,6 +1807,33 @@ body.dialog-open {
     overflow: hidden; /* the page behind doesn't scroll */
 }
 
+/* Fallback for Safari before iOS 15.4, which doesn't know <dialog>
+   (gallery.js adds .dialog-fallback there). Hidden until "open", then
+   fixed on top of the page. top/left/right/bottom instead of "inset",
+   which those phones don't know either. The huge box-shadow darkens
+   the page behind, like ::backdrop does. */
+dialog:not([open]) {
+    display: none;
+}
+
+.dialog-fallback[open] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3000;
+}
+
+.video-modal.dialog-fallback[open] {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 100vmax rgba(11, 11, 13, 0.8);
+}
+
 .dialog-close {
     display: grid;
     place-items: center;

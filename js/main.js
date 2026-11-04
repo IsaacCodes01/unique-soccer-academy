@@ -90,7 +90,7 @@ if (header) {
     // there instead of sliding across the screen. Two animation frames
     // later the browser has drawn the new place, so the slide for
     // opening and closing the menu is switched back on.
-    mobileQuery.addEventListener("change", (event) => {
+    onMediaChange(mobileQuery, (event) => {
         menu.classList.add("no-transition");
         requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.remove("no-transition")));
 
@@ -326,7 +326,7 @@ if (hero && !reducedMotion.matches) {
     else window.addEventListener("load", loadOtherSlides, { once: true });
 
     // If reduced motion is switched on while the page is open, stop
-    reducedMotion.addEventListener("change", (event) => {
+    onMediaChange(reducedMotion, (event) => {
         if (event.matches) {
             pause();
             toggleBtn.hidden = true;
@@ -588,8 +588,10 @@ if ("IntersectionObserver" in window && !reducedMotion.matches) {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
             const el = entry.target;
-            // ?? means "use the right side when the left is missing"
-            const delay = el.dataset.delay ?? Math.min(inBatch * REVEAL_STAGGER, REVEAL_MAX_DELAY);
+            // Its own data-delay if it has one, otherwise its place in the batch
+            const delay = el.dataset.delay !== undefined
+                ? el.dataset.delay
+                : Math.min(inBatch * REVEAL_STAGGER, REVEAL_MAX_DELAY);
             inBatch++;
             el.style.setProperty("--reveal-delay", `${delay}ms`);
             el.classList.add("is-revealed");

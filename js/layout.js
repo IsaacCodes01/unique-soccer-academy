@@ -90,6 +90,14 @@ function setImageSrc(img, src) {
     img.src = webp;
 }
 
+// Runs "callback" whenever a media query (from matchMedia) starts or stops
+// matching. Safari before iOS 14 only knows the old addListener(), and
+// calling the newer addEventListener() there crashes the whole script.
+function onMediaChange(query, callback) {
+    if (query.addEventListener) query.addEventListener("change", callback);
+    else if (query.addListener) query.addListener(callback);
+}
+
 // Pages whose header starts transparent over a big hero image
 const HERO_PAGES = ["index.html"];
 

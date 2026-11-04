@@ -87,7 +87,7 @@ function initTicker() {
     });
 
     // Reduced motion switched on while the page is open: hide it
-    reducedMotion.addEventListener("change", (event) => {
+    onMediaChange(reducedMotion, (event) => {
         if (event.matches) ticker.hidden = true;
     });
 }

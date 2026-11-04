@@ -162,7 +162,28 @@ function openDialog(dialog, button) {
     document.body.classList.add("dialog-open");
 }
 
+// Safari before iOS 15.4 doesn't know <dialog>: it has no showModal() or
+// close(). There we add simple versions of both. They switch the "open"
+// attribute on and off (the CSS shows and places the dialog with it),
+// send the same "close" event the real one does, and close on Escape.
+function addDialogFallback(dialog) {
+    if (typeof dialog.showModal === "function") return; // the real thing works
+
+    dialog.classList.add("dialog-fallback");
+    dialog.showModal = () => dialog.setAttribute("open", "");
+    dialog.close = () => {
+        if (!dialog.hasAttribute("open")) return;
+        dialog.removeAttribute("open");
+        dialog.dispatchEvent(new Event("close"));
+    };
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") dialog.close();
+    });
+}
+
 function initDialog(dialog) {
+    addDialogFallback(dialog);
+
     // "close" fires however the dialog was closed: X, Escape or a click outside
     dialog.addEventListener("close", () => {
         document.body.classList.remove("dialog-open");
