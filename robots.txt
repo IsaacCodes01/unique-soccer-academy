@@ -1,0 +1,6 @@
+# Every search engine may visit every page
+User-agent: *
+Allow: /
+
+# The list of pages to index
+Sitemap: https://isaaccodes01.github.io/unique-soccer-academy/sitemap.xml

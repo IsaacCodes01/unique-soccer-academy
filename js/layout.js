@@ -40,6 +40,43 @@ const CONTACT = {
 const LOGO_SRC = "assets/images/RYFC copy.png";
 const SPONSOR_LOGO_SRC = "assets/images/Opas.png";
 
+/* --------------------------------------------------------------------------
+   Image helpers, used by every script (this file loads before the others).
+   Every .jpg/.png in assets/images has a smaller .webp copy next to it
+   (see "Optimising images" in README.md).
+   -------------------------------------------------------------------------- */
+
+// "assets/images/Unique_7.jpg" -> "assets/images/Unique_7.webp"
+function webpOf(src) {
+    return src.replace(/\.(jpe?g|png)$/i, ".webp");
+}
+
+// "assets/images/Unique_7.jpg" -> "assets/images/Unique_7-thumb.webp",
+// a 600px-wide copy for small grid tiles
+function thumbOf(src) {
+    return src.replace(/\.(jpe?g|png)$/i, "-thumb.webp");
+}
+
+// Builds <picture><source ...webp><img ...original></picture>.
+// The browser takes the first <source> it understands (the WebP) and
+// falls back to the <img> src. boot.js also falls back if the .webp file
+// is missing. "attrs" is everything else the <img> needs (alt, class...).
+// "webp" picks a different WebP file, e.g. thumbOf(src) for a thumbnail.
+// srcset uses spaces to separate a file from its size, so a space in a
+// file name ("RYFC copy") must be written as %20 there.
+function pictureHTML(src, attrs, webp = webpOf(src)) {
+    if (webp === src) return `<img src="${src}" ${attrs}>`; // not a jpg/png: no WebP copy
+    return `<picture><source srcset="${webp.replace(/ /g, "%20")}" type="image/webp"><img src="${src}" ${attrs}></picture>`;
+}
+
+// For an <img> whose src is set from JavaScript: load the WebP, and keep
+// the original in data-fallback for boot.js to use if the WebP fails
+function setImageSrc(img, src) {
+    const webp = webpOf(src);
+    if (webp !== src) img.dataset.fallback = src;
+    img.src = webp;
+}
+
 // Pages whose header starts transparent over a big hero image
 const HERO_PAGES = ["index.html"];
 
@@ -100,7 +137,7 @@ function buildHeader(currentPage) {
         <header class="site-header${overlayClass}">
             <div class="site-header__inner container">
                 <a class="brand" href="index.html" aria-label="Unique Soccer Academy home">
-                    <img class="brand__crest" src="${LOGO_SRC}" alt="">
+                    ${pictureHTML(LOGO_SRC, 'class="brand__crest" alt="" width="804" height="933"')}
                     <span class="brand__name">Unique Soccer <span class="text-gold">Academy</span></span>
                 </a>
 
@@ -174,7 +211,7 @@ function buildFooter(currentPage) {
             <div class="footer-main container">
                 <div class="footer-col footer-col--about">
                     <a class="footer-brand" href="index.html" aria-label="Unique Soccer Academy home">
-                        <img class="footer-brand__crest" src="${LOGO_SRC}" alt="">
+                        ${pictureHTML(LOGO_SRC, 'class="footer-brand__crest" alt="" width="804" height="933" loading="lazy"')}
                         <span class="footer-brand__name">Unique Soccer <span class="text-gold">Academy</span></span>
                     </a>
                     <p>A third-division football club in Kasoa-Apra, in the Central Region of Ghana.</p>
@@ -214,7 +251,7 @@ function buildFooter(currentPage) {
                         <p class="sponsor__label">Proudly sponsored by</p>
                         <!-- TODO: link to Opas Construction's real website or page once Isaac has it -->
                         <div class="sponsor__body">
-                            <img class="sponsor__logo" src="${SPONSOR_LOGO_SRC}" alt="Opas Construction logo" width="56" height="56">
+                            ${pictureHTML(SPONSOR_LOGO_SRC, 'class="sponsor__logo" alt="Opas Construction logo" width="506" height="507" loading="lazy"')}
                             <span class="sponsor__name">Opas Construction</span>
                         </div>
                     </div>
@@ -261,11 +298,9 @@ const footerSlot = document.getElementById("site-footer");
 
 const page = getCurrentPage();
 
-if (headerSlot) {
-    headerSlot.innerHTML = buildHeader(page);
-    // Lets the CSS pull the hero up underneath the transparent header
-    if (HERO_PAGES.includes(page)) document.body.classList.add("has-hero-header");
-}
+// (Hero pages also need class="has-hero-header" on their <body> in the HTML,
+// so the CSS pulls the hero up under the transparent header from the start.)
+if (headerSlot) headerSlot.innerHTML = buildHeader(page);
 if (footerSlot) footerSlot.innerHTML = buildFooter(page);
 
 // Floating back-to-top button, bottom right. It is a real <button> because

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- GitHub Pages shows this page for ANY missing address, even a deep one
+         like /unique-soccer-academy/old/page.html. From there, "css/style.css"
+         would point to the wrong folder. A <base> tag makes every relative
+         link start from the site's own folder. Only on GitHub Pages: on Live
+         Server the site is at the root, and relative links already work. -->
+    <script>
+        if (location.hostname.endsWith("github.io")) {
+            const base = document.createElement("base");
+            base.href = "/unique-soccer-academy/";
+            document.head.appendChild(base);
+        }
+    </script>
+    <title>Page Not Found | Unique Soccer Academy</title>
+    <meta name="description" content="This page doesn't exist. Head back to the Unique Soccer Academy home page.">
+    <!-- Search engines shouldn't list an error page -->
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#0B0B0D">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fonts and icons load in the background so they don't hold up the
+         first paint: media="print" means "not needed for the screen yet",
+         and onload switches them on as soon as they arrive. The <noscript>
+         copies are for visitors without JavaScript. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Runs before the page is drawn: no "defer" on purpose (see the file) -->
+    <script src="js/boot.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"></noscript>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+</head>
+<body>
+    <!--Start of Main Container-->
+    <div class="maincontainer">
+
+        <!-- Header + navigation: built by js/layout.js -->
+        <div id="site-header"></div>
+
+            <main>
+                <!--Start of Offside-->
+                <!-- The pitch markings are drawn by CSS (section 9, "404 page") -->
+                <section class="offside" aria-labelledby="offside-title">
+                    <div class="offside__inner container">
+                        <!-- The big 4 (ball) 4 is decoration: screen readers get
+                             "Error 404" from the eyebrow instead -->
+                        <p class="offside__code" aria-hidden="true">
+                            <span>4</span>
+                            <span class="offside__ball"><i class="fa-solid fa-futbol"></i></span>
+                            <span>4</span>
+                        </p>
+
+                        <p class="eyebrow">
+                            <i class="fa-solid fa-flag offside__flag" aria-hidden="true"></i> Error 404 &middot; The flag is up
+                        </p>
+                        <h1 class="offside__title" id="offside-title">
+                            Offside! <span class="text-gold">This page doesn't exist</span>
+                        </h1>
+                        <p class="offside__text">The page you were looking for has drifted past the last defender. It may have moved, or the address may have a typo.</p>
+
+                        <div class="btn-group offside__actions">
+                            <a class="btn btn--primary" href="index.html">
+                                <i class="fa-solid fa-house" aria-hidden="true"></i> Back to Home
+                            </a>
+                            <a class="btn btn--outline" href="contact.html#contact-cards">
+                                <i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact Us
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                <!--End of Offside-->
+            </main>
+
+        <!-- Footer: built by js/layout.js -->
+        <div id="site-footer"></div>
+
+    </div>
+    <!--End of Main Container-->
+
+    <script src="js/layout.js" defer></script>
+    <script src="js/main.js" defer></script>
+</body>
+</html>

@@ -7,6 +7,8 @@
       without JavaScript nothing is ever left invisible.
    2. Decides whether to show the preloader (the pulsing crest). Only on
       the first page of a visit, and never with reduced motion.
+   3. WebP safety net: if a .webp photo fails to load (the file is
+      missing, or a very old browser), shows the original .jpg/.png.
 
    The whole file is wrapped in (function () { ... })(), a function that
    runs straight away. Its variables stay inside it, so they can't clash
@@ -15,6 +17,31 @@
 (function () {
     const root = document.documentElement; // the <html> element
     root.classList.add("js");
+
+    // 3. WebP safety net. A <picture> does NOT fall back to its <img> by
+    // itself when the .webp is missing: the photo is just broken. So we
+    // listen for every image error on the page. "error" events don't
+    // bubble up, but the "true" at the end (capture phase) lets the
+    // document hear them on the way down. This sits at the top so it is
+    // listening before any photo starts loading.
+    document.addEventListener("error", (event) => {
+        const img = event.target;
+        if (img.tagName !== "IMG") return;
+
+        // Inside a <picture>: remove the <source> lines and the browser
+        // loads the <img>'s own src (the original) instead
+        const sources = img.parentElement.tagName === "PICTURE"
+            ? img.parentElement.querySelectorAll("source")
+            : [];
+        if (sources.length) {
+            sources.forEach((source) => source.remove());
+        } else if (img.dataset.fallback) {
+            // Photos whose src is set from JavaScript (hero slideshow,
+            // lightbox) keep their original in data-fallback
+            img.src = img.dataset.fallback;
+            delete img.dataset.fallback; // only once, so a missing original can't loop
+        }
+    }, true);
 
     const MIN_TIME = 400; // ms: long enough to see one pulse
     const MAX_TIME = 800; // ms: never keep anyone waiting longer than this

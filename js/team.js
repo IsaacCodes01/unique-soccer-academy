@@ -61,7 +61,7 @@ function emptyState(icon, title, text) {
 // The photo, or a silhouette until there is one
 function cardMedia(person) {
     const inside = person.photo
-        ? `<img class="profile-card__photo" src="${escapeHTML(person.photo)}" alt="Photo of ${escapeHTML(person.name)}" width="400" height="500" loading="lazy">`
+        ? pictureHTML(escapeHTML(person.photo), `class="profile-card__photo" alt="Photo of ${escapeHTML(person.name)}" width="400" height="500" loading="lazy"`)
         : `<div class="profile-card__placeholder" aria-hidden="true">
                <i class="fa-solid fa-user"></i><span>Photo coming soon</span>
            </div>`;

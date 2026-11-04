@@ -7,20 +7,84 @@
     <title>Home | Unique Soccer Academy</title>
     <meta name="description" content="Unique Soccer Academy is a third-division football club in Kasoa-Apra, Central Region, Ghana. Where Champions Are Made.">
     <meta name="theme-color" content="#0B0B0D">
+    <link rel="canonical" href="https://isaaccodes01.github.io/unique-soccer-academy/">
+    <link rel="manifest" href="site.webmanifest">
+
+    <!-- Link previews on WhatsApp, Facebook (Open Graph) and X/Twitter.
+         These need full addresses (https://...), not "assets/...". -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Unique Soccer Academy">
+    <meta property="og:title" content="Unique Soccer Academy | Where Champions Are Made">
+    <meta property="og:description" content="Unique Soccer Academy is a third-division football club in Kasoa-Apra, Central Region, Ghana. Where Champions Are Made.">
+    <meta property="og:url" content="https://isaaccodes01.github.io/unique-soccer-academy/">
+    <meta property="og:image" content="https://isaaccodes01.github.io/unique-soccer-academy/assets/images/share-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="The Unique Soccer Academy crest on the training pitch, with the motto Where Champions Are Made">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Unique Soccer Academy | Where Champions Are Made">
+    <meta name="twitter:description" content="Unique Soccer Academy is a third-division football club in Kasoa-Apra, Central Region, Ghana. Where Champions Are Made.">
+    <meta name="twitter:image" content="https://isaaccodes01.github.io/unique-soccer-academy/assets/images/share-image.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Fonts and icons load in the background so they don't hold up the
+         first paint: media="print" means "not needed for the screen yet",
+         and onload switches them on as soon as they arrive. The <noscript>
+         copies are for visitors without JavaScript. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="css/style.css">
     <!-- Runs before the page is drawn: no "defer" on purpose (see the file) -->
     <script src="js/boot.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"></noscript>
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
 
-
+    <!-- Structured data (JSON-LD): facts about the club in a format Google
+         reads, using the shared vocabulary from schema.org. It isn't shown
+         on the page. Only real facts from this site go here. -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SportsOrganization",
+        "name": "Unique Soccer Academy",
+        "alternateName": "USA",
+        "sport": "Soccer",
+        "slogan": "Where Champions Are Made",
+        "description": "A third-division football club in Kasoa-Apra, Central Region, Ghana, nurturing football talent and creating pathways to professional clubs, academies and scholarships.",
+        "url": "https://isaaccodes01.github.io/unique-soccer-academy/",
+        "logo": "https://isaaccodes01.github.io/unique-soccer-academy/assets/images/android-chrome-512x512.png",
+        "image": "https://isaaccodes01.github.io/unique-soccer-academy/assets/images/share-image.jpg",
+        "foundingDate": "2020-03-20",
+        "founder": {
+            "@type": "Person",
+            "name": "Nii Perrygrino Otoo"
+        },
+        "sponsor": {
+            "@type": "Organization",
+            "name": "Opas Construction"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kasoa-Apra",
+            "addressRegion": "Central Region",
+            "addressCountry": "GH"
+        },
+        "areaServed": "Gomoa East, Central Region, Ghana",
+        "email": "uniquesocceracademy1@gmail.com",
+        "telephone": ["+233533185607", "+233544400543"],
+        "sameAs": [
+            "https://facebook.com/profile.php?id=61565360907088"
+        ]
+    }
+    </script>
 </head>
-<body>
+<!-- has-hero-header: the hero slides up under the see-through header. It is
+     written here, not added by JavaScript, so the page doesn't jump up
+     64px when the scripts run after the first paint. -->
+<body class="has-hero-header">
     <!--Start of Main Container-->
     <div class="maincontainer">
 
@@ -34,7 +98,7 @@
                          loads first. js/main.js adds the rest (listed in js/data.js)
                          after the page has loaded. They are decoration, so alt="". -->
                     <div class="hero__slides" aria-hidden="true">
-                        <img class="hero__slide is-active" src="assets/images/Pitch.png" alt="" fetchpriority="high" width="1152" height="2048">
+                        <picture><source srcset="assets/images/Pitch.webp" type="image/webp"><img class="hero__slide is-active" src="assets/images/Pitch.png" alt="" fetchpriority="high" width="1152" height="2048"></picture>
                     </div>
 
                     <div class="hero__inner container">
@@ -60,7 +124,7 @@
                         </div>
 
                         <!-- Desktop only (hidden below 768px: the crest is already in the header) -->
-                        <img class="hero__crest" src="assets/images/RYFC copy.png" alt="" width="804" height="933">
+                        <picture><source srcset="assets/images/RYFC%20copy.webp" type="image/webp"><img class="hero__crest" src="assets/images/RYFC copy.png" alt="" width="804" height="933"></picture>
                     </div>
 
                     <!-- Pause/play for the moving background. Hidden until main.js
@@ -112,7 +176,7 @@
                 <section class="section section--light">
                     <div class="container split">
                         <figure class="framed-photo" data-reveal="left">
-                            <img src="assets/images/Unique_7.jpg" alt="Academy player in the yellow club kit standing over a ball on the training pitch" width="958" height="1280" loading="lazy">
+                            <picture><source srcset="assets/images/Unique_7.webp" type="image/webp"><img src="assets/images/Unique_7.jpg" alt="Academy player in the yellow club kit standing over a ball on the training pitch" width="958" height="1280" loading="lazy"></picture>
                         </figure>
                         <div class="split__text">
                             <p class="eyebrow">Who we are</p>
@@ -221,13 +285,17 @@
                                 View Gallery <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                             </a>
                         </div>
+                        <!-- Responsive images: srcset lists the 600px thumbnail and the full
+                             photo with their real widths ("600w"); sizes says how wide the
+                             tile is on screen (vw = % of the window width). The browser does
+                             the maths and downloads the smallest file that still looks sharp. -->
                         <ul class="photo-grid">
-                            <li data-reveal="zoom" data-delay="0"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_6.jpg" alt="Three academy players in yellow kits smiling on the pitch" width="960" height="1280" loading="lazy"></a></li>
-                            <li data-reveal="zoom" data-delay="80"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_3.jpg" alt="Player in the yellow kit stretching before training" width="960" height="1280" loading="lazy"></a></li>
-                            <li data-reveal="zoom" data-delay="160"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_8.jpg" alt="Player controlling the ball on the grass" width="810" height="1080" loading="lazy"></a></li>
-                            <li data-reveal="zoom" data-delay="240"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_4.jpg" alt="Two players, one in goalkeeper gloves and a training bib, posing on the pitch" width="810" height="1080" loading="lazy"></a></li>
-                            <li data-reveal="zoom" data-delay="320"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_5.jpg" alt="Player in the yellow kit and red boots on the training ground" width="960" height="1280" loading="lazy"></a></li>
-                            <li data-reveal="zoom" data-delay="400"><a class="photo-grid__item" href="gallery.html"><img src="assets/images/Unique_17.jpg" alt="Front and back of the black club shirt, number 31" width="1080" height="741" loading="lazy"></a></li>
+                            <li data-reveal="zoom" data-delay="0"><a class="photo-grid__item" href="gallery.html"><picture><source srcset="assets/images/Unique_6-thumb.webp 600w, assets/images/Unique_6.webp 810w" sizes="(min-width: 768px) 66vw, 100vw" type="image/webp"><img src="assets/images/Unique_6.jpg" alt="Three academy players in yellow kits smiling on the pitch" width="960" height="1280" loading="lazy"></picture></a></li>
+                            <li data-reveal="zoom" data-delay="80"><a class="photo-grid__item" href="gallery.html"><picture><source srcset="assets/images/Unique_3-thumb.webp 600w, assets/images/Unique_3.webp 810w" sizes="(min-width: 768px) 33vw, 50vw" type="image/webp"><img src="assets/images/Unique_3.jpg" alt="Player in the yellow kit stretching before training" width="960" height="1280" loading="lazy"></picture></a></li>
+                            <li data-reveal="zoom" data-delay="160"><a class="photo-grid__item" href="gallery.html"><picture><source srcset="assets/images/Unique_8-thumb.webp 600w, assets/images/Unique_8.webp 810w" sizes="(min-width: 768px) 33vw, 50vw" type="image/webp"><img src="assets/images/Unique_8.jpg" alt="Player controlling the ball on the grass" width="810" height="1080" loading="lazy"></picture></a></li>
+                            <li data-reveal="zoom" data-delay="240"><a class="photo-grid__item" href="gallery.html"><picture><source srcset="assets/images/Unique_4-thumb.webp 600w, assets/images/Unique_4.webp 810w" sizes="(min-width: 768px) 33vw, 50vw" type="image/webp"><img src="assets/images/Unique_4.jpg" alt="Two players, one in goalkeeper gloves and a training bib, posing on the pitch" width="810" height="1080" loading="lazy"></picture></a></li>
+                            <li data-reveal="zoom" data-delay="320"><a class="photo-grid__item" href="gallery.html"><picture><source srcset="assets/images/Unique_5-thumb.webp 600w, assets/images/Unique_5.webp 810w" sizes="(min-width: 768px) 33vw, 50vw" type="image/webp"><img src="assets/images/Unique_5.jpg" alt="Player in the yellow kit and red boots on the training ground" width="960" height="1280" loading="lazy"></picture></a></li>
+                            <li data-reveal="zoom" data-delay="400"><a class="photo-grid__item" href="gallery.html"><picture><source srcset="assets/images/Unique_17-thumb.webp 600w, assets/images/Unique_17.webp 1080w" sizes="(min-width: 768px) 33vw, 100vw" type="image/webp"><img src="assets/images/Unique_17.jpg" alt="Front and back of the black club shirt, number 31" width="1080" height="741" loading="lazy"></picture></a></li>
                         </ul>
                     </div>
                 </section>
@@ -242,7 +310,7 @@
                         <ul class="partners">
                             <!-- TODO: link to Opas Construction's real website or page once Isaac has it -->
                             <li class="partner" data-reveal="zoom">
-                                <img class="partner__logo" src="assets/images/Opas.png" alt="Opas Construction logo" width="506" height="507" loading="lazy">
+                                <picture><source srcset="assets/images/Opas.webp" type="image/webp"><img class="partner__logo" src="assets/images/Opas.png" alt="Opas Construction logo" width="506" height="507" loading="lazy"></picture>
                                 <span class="partner__name">Opas Construction</span>
                             </li>
                         </ul>

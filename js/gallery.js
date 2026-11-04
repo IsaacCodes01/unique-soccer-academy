@@ -75,6 +75,8 @@ function initTabs() {
    2. PHOTO GRID
    Each photo is a real <button>, so it works with Tab + Enter. The
    button's name for screen readers is the photo's alt text.
+   The tiles are small, so they load the 600px "-thumb.webp" copy; the
+   lightbox loads the full-size photo.
    data-index remembers which photo it is, for the lightbox.
    data-reveal="zoom": each photo grows in as it scrolls into view
    (main.js, section 9). Photos in the hidden Videos/Photos tab aren't
@@ -86,9 +88,9 @@ function buildPhotoGrid() {
     photoGrid.innerHTML = PHOTOS.map((photo, i) => `
         <li class="masonry__item" data-reveal="zoom">
             <button class="masonry__btn" type="button" data-index="${i}" aria-haspopup="dialog">
-                <img src="${escapeHTML(photo.src)}" alt="${escapeHTML(photo.alt)}"
+                ${pictureHTML(escapeHTML(photo.src), `alt="${escapeHTML(photo.alt)}"
                      width="${Number(photo.width) || ""}" height="${Number(photo.height) || ""}"
-                     loading="lazy" decoding="async">
+                     loading="lazy" decoding="async"`, thumbOf(escapeHTML(photo.src)))}
                 <span class="masonry__overlay" aria-hidden="true"><i class="fa-solid fa-expand"></i></span>
             </button>
         </li>`).join("");
@@ -185,9 +187,12 @@ function showPhoto(index) {
     // Hide the old photo, swap the file, and fade in once it has loaded
     // (the "load" listener is in initLightbox). The same photo again
     // wouldn't fire "load", so we only swap when it is a different one.
-    if (img.getAttribute("src") !== photo.src) {
+    // data-photo remembers which photo is showing: comparing src wouldn't
+    // work, because the src is the .webp (or the fallback after an error).
+    if (img.dataset.photo !== photo.src) {
         img.classList.remove("is-loaded");
-        img.src = photo.src;
+        img.dataset.photo = photo.src;
+        setImageSrc(img, photo.src); // the .webp, original as fallback (layout.js)
     }
     img.alt = photo.alt;
 
@@ -197,7 +202,7 @@ function showPhoto(index) {
 
     // Start downloading the photos on either side, so Next/Previous is instant
     [currentPhoto + 1, currentPhoto - 1].forEach((i) => {
-        new Image().src = PHOTOS[(i + PHOTOS.length) % PHOTOS.length].src;
+        new Image().src = webpOf(PHOTOS[(i + PHOTOS.length) % PHOTOS.length].src);
     });
 }
 

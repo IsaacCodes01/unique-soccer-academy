@@ -43,7 +43,7 @@ function emptyState(icon, title, text) {
 // A team's crest: the club crest for us, a plain shield for anyone else
 function crest(name, size = "") {
     return isClub(name)
-        ? `<img class="crest ${size}" src="${escapeHTML(LOGO_SRC)}" alt="" width="64" height="64">`
+        ? pictureHTML(escapeHTML(LOGO_SRC), `class="crest ${size}" alt="" width="804" height="933"`)
         : `<span class="crest crest--other ${size}" aria-hidden="true"><i class="fa-solid fa-shield"></i></span>`;
 }
 

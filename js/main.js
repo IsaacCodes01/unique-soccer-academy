@@ -268,7 +268,7 @@ if (hero && !reducedMotion.matches) {
                 const all = [...slidesBox.children];
                 ready.sort((a, b) => all.indexOf(a) - all.indexOf(b));
             });
-            img.src = src;
+            setImageSrc(img, src); // the .webp, with the original as fallback (layout.js)
             slidesBox.appendChild(img);
         });
     }
@@ -391,14 +391,14 @@ function newsCard(item, fallbackLink = NEWS_PAGE) {
 
     // No photo? The club crest on black keeps every card the same shape.
     const media = item.image
-        ? `<img class="news-card__img" src="${escapeHTML(item.image)}" alt="${escapeHTML(item.imageAlt || "")}" loading="lazy">`
-        : `<span class="news-card__placeholder"><img src="${escapeHTML(LOGO_SRC)}" alt="" loading="lazy"></span>`;
+        ? pictureHTML(escapeHTML(item.image), `class="news-card__img" alt="${escapeHTML(item.imageAlt || "")}" loading="lazy"`)
+        : `<span class="news-card__placeholder">${pictureHTML(escapeHTML(LOGO_SRC), 'alt="" width="804" height="933" loading="lazy"')}</span>`;
 
     // Who posted it: their photo if there is one, otherwise their initials
     let avatar = "";
     if (item.author) {
         avatar = item.authorPhoto
-            ? `<img class="avatar" src="${escapeHTML(item.authorPhoto)}" alt="" loading="lazy">`
+            ? pictureHTML(escapeHTML(item.authorPhoto), 'class="avatar" alt="" width="28" height="28" loading="lazy"')
             : `<span class="avatar" aria-hidden="true">${escapeHTML(initials(item.author))}</span>`;
     }
 

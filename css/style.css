@@ -98,12 +98,31 @@ body {
 }
 
 img,
-picture,
 video,
 iframe,
 svg {
     display: block;
     max-width: 100%;
+}
+
+/* <picture> only chooses which file the <img> inside it loads (WebP or
+   the original). display: contents removes its own box from the layout,
+   so the <img> is sized and positioned exactly as if <picture> wasn't
+   there and every img rule in this file still works. */
+picture {
+    display: contents;
+}
+
+/* Font Awesome icons load in the background (see the <head>), so they can
+   arrive after the page is drawn. Giving every icon a fixed-width box
+   from the start (the same 1.25em as Font Awesome's own "fa-fw") means
+   nothing moves sideways when the icons appear. */
+.fa-solid,
+.fa-regular,
+.fab {
+    display: inline-block;
+    width: 1.25em;
+    text-align: center;
 }
 
 img {
@@ -233,7 +252,8 @@ p {
 }
 
 .section--dark .eyebrow,
-.hero .eyebrow {
+.hero .eyebrow,
+.offside .eyebrow {
     color: var(--gold);
 }
 
@@ -3113,6 +3133,17 @@ body.dialog-open {
     gap: var(--space-4);
 }
 
+/* Until team.js has added the cards, an invisible box the size of one
+   card holds their place, so the squad below doesn't get pushed down
+   (a "layout shift"). aspect-ratio makes the photo part (4:5); with
+   content-box, padding-bottom adds the text part underneath it. */
+.js .profile-grid:empty::before {
+    content: "";
+    box-sizing: content-box;
+    aspect-ratio: 4 / 5;
+    padding-bottom: 155px;
+}
+
 /* Profile card: photo on top, name and badge below, and for players a
    big faded shirt number behind the text.
    The tilt: team.js sets --tilt-x and --tilt-y (in degrees) while the
@@ -3844,6 +3875,13 @@ body.dialog-open {
     column-gap: var(--space-3);
 }
 
+/* Until gallery.js has added the photos, keep the space they will fill,
+   so the footer doesn't show up here and then get pushed down (a
+   "layout shift"). :empty only matches while the list has nothing in it. */
+.js .masonry:empty {
+    min-height: 100vh;
+}
+
 .masonry__item {
     margin-bottom: var(--space-3);
     break-inside: avoid;
@@ -4038,6 +4076,88 @@ body.dialog-open {
     color: var(--grey);
 }
 
+/* ----- 404 page -----
+   A dark pitch, drawn with CSS only: background-image can stack several
+   layers, separated by commas, the first one on top.
+   1. the centre circle: a ring made with radial-gradient (see-through,
+      then a 2px white line, then see-through again)
+   2. the halfway line: a 2px stripe down the middle (linear-gradient)
+   3. mowing stripes: repeating-linear-gradient repeats light/dark bands
+   The lines are faint so the text on top stays easy to read. */
+.offside {
+    display: grid;
+    place-items: center;
+    min-height: calc(100vh - var(--header-h));
+    min-height: calc(100svh - var(--header-h));
+    padding-block: var(--space-8);
+    background-color: var(--black);
+    background-image:
+        radial-gradient(circle at 50% 50%,
+            transparent 0 179px,
+            rgba(255, 255, 255, 0.08) 180px 182px,
+            transparent 183px),
+        linear-gradient(90deg,
+            transparent calc(50% - 1px),
+            rgba(255, 255, 255, 0.08) calc(50% - 1px) calc(50% + 1px),
+            transparent calc(50% + 1px)),
+        repeating-linear-gradient(90deg,
+            rgba(21, 128, 61, 0.16) 0 80px,
+            rgba(21, 128, 61, 0.08) 80px 160px);
+    color: var(--white);
+    text-align: center;
+}
+
+.offside__inner {
+    max-width: 720px;
+}
+
+/* The big "4 (ball) 4". The ball is an icon, so font-size sizes it too. */
+.offside__code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+    font-family: var(--font-heading);
+    font-size: clamp(5rem, 22vw, 9rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--gold);
+}
+
+.offside__ball {
+    display: inline-block;
+    font-size: 0.8em;
+    color: var(--white);
+}
+
+.offside__flag {
+    display: inline-block;
+    margin-right: var(--space-1);
+    color: var(--red-light);
+    transform-origin: left bottom; /* waves from the bottom of the pole */
+}
+
+.offside__title {
+    margin-bottom: var(--space-4);
+    font-size: clamp(2rem, 6vw, 3.25rem);
+}
+
+/* Each part on its own line */
+.offside__title span {
+    display: block;
+}
+
+.offside__text {
+    max-width: 52ch;
+    margin: 0 auto var(--space-6);
+    color: var(--grey-light);
+}
+
+.offside__actions {
+    justify-content: center;
+}
+
 
 /* ==========================================================================
    10. ANIMATIONS
@@ -4130,6 +4250,29 @@ body.dialog-open {
 @keyframes reveal-right { from { opacity: 0; transform: translateX(40px); } }
 @keyframes reveal-zoom  { from { opacity: 0; transform: scale(0.92); } }
 
+/* ----- 404 page: rolling ball and waving flag -----
+   Only with motion allowed; with reduced motion they simply stand still. */
+@media (prefers-reduced-motion: no-preference) {
+    .offside__ball {
+        animation: ball-roll 3s var(--ease) infinite;
+    }
+
+    .offside__flag {
+        animation: flag-wave 1.2s ease-in-out infinite alternate;
+    }
+}
+
+/* Rolls in from the left, spinning, then rests for a moment */
+@keyframes ball-roll {
+    0%       { transform: translateX(-40px) rotate(-360deg); }
+    60%, 100% { transform: none; }
+}
+
+@keyframes flag-wave {
+    from { transform: rotate(-8deg); }
+    to   { transform: rotate(8deg); }
+}
+
 /* ----- Preloader (js/boot.js) -----
    No extra HTML needed: the black screen is body::before and the crest
    is body::after. They only exist when boot.js added .has-preloader,
@@ -4157,6 +4300,12 @@ body.dialog-open {
     height: 112px; /* the crest's own shape (804 x 933) */
     margin: -56px 0 0 -48px; /* half the size: centres it */
     background: url("../assets/images/RYFC copy.png") center / contain no-repeat;
+    /* image-set() is <picture> for CSS: the WebP (50KB instead of 514KB)
+       where the browser supports it. A browser that doesn't understand
+       this line ignores it and keeps the PNG from the line above. */
+    background-image: image-set(
+        url("../assets/images/RYFC copy.webp") type("image/webp"),
+        url("../assets/images/RYFC copy.png") type("image/png"));
     animation: crest-pulse 400ms ease-in-out infinite alternate;
 }
 

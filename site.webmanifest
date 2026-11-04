@@ -1,0 +1,22 @@
+{
+    "name": "Unique Soccer Academy",
+    "short_name": "USA Academy",
+    "description": "Third-division football club in Kasoa-Apra, Central Region, Ghana. Where Champions Are Made.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#0B0B0D",
+    "theme_color": "#0B0B0D",
+    "icons": [
+        {
+            "src": "assets/images/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

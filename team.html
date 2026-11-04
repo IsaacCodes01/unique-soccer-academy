@@ -7,13 +7,37 @@
     <title>Team | Unique Soccer Academy</title>
     <meta name="description" content="Meet the coaches and players of Unique Soccer Academy, a football club in Kasoa-Apra, Ghana.">
     <meta name="theme-color" content="#0B0B0D">
+    <link rel="canonical" href="https://isaaccodes01.github.io/unique-soccer-academy/team.html">
+    <link rel="manifest" href="site.webmanifest">
+
+    <!-- Link previews on WhatsApp, Facebook (Open Graph) and X/Twitter.
+         These need full addresses (https://...), not "assets/...". -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Unique Soccer Academy">
+    <meta property="og:title" content="Team | Unique Soccer Academy">
+    <meta property="og:description" content="Meet the coaches and players of Unique Soccer Academy, a football club in Kasoa-Apra, Ghana.">
+    <meta property="og:url" content="https://isaaccodes01.github.io/unique-soccer-academy/team.html">
+    <meta property="og:image" content="https://isaaccodes01.github.io/unique-soccer-academy/assets/images/share-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="The Unique Soccer Academy crest on the training pitch, with the motto Where Champions Are Made">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Team | Unique Soccer Academy">
+    <meta name="twitter:description" content="Meet the coaches and players of Unique Soccer Academy, a football club in Kasoa-Apra, Ghana.">
+    <meta name="twitter:image" content="https://isaaccodes01.github.io/unique-soccer-academy/assets/images/share-image.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Fonts and icons load in the background so they don't hold up the
+         first paint: media="print" means "not needed for the screen yet",
+         and onload switches them on as soon as they arrive. The <noscript>
+         copies are for visitors without JavaScript. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="css/style.css">
     <!-- Runs before the page is drawn: no "defer" on purpose (see the file) -->
     <script src="js/boot.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"></noscript>
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
@@ -28,7 +52,7 @@
             <main>
                 <!--Start of Page banner-->
                 <section class="page-banner">
-                    <img class="page-banner__bg" src="assets/images/Unique_6.jpg" alt="" width="960" height="1280" style="--banner-focus: 30%">
+                    <picture><source srcset="assets/images/Unique_6.webp" type="image/webp"><img class="page-banner__bg" src="assets/images/Unique_6.jpg" alt="" fetchpriority="high" width="960" height="1280" style="--banner-focus: 30%"></picture>
                     <div class="container">
                         <h1 class="page-banner__title">Our Team</h1>
                         <nav aria-label="Breadcrumb">

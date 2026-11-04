@@ -160,6 +160,48 @@ done
 saves one frame, and `-q:v 3` is the JPEG quality (2 = best, 31 = worst). Then set each video's
 poster in `js/data.js`, e.g. `poster: "assets/videos/posters/Unique_vids_1.jpg"`.
 
+### Optimising images
+
+Every `.jpg`/`.png` in `assets/images/` has a smaller `.webp` copy next to it, and each gallery
+photo also has a 600px-wide `-thumb.webp` for the grids. The pages load the WebP and keep the
+original as a fallback (`<picture>`). After adding or replacing a photo, run these three commands
+from the project folder (they work in PowerShell and Git Bash; `npx` downloads the tool for you,
+nothing is added to the project):
+
+```bash
+# 1. Photos: WebP, at most 1600 x 1080, quality 65
+npx sharp-cli@5 -i "assets/images/Unique_*.jpg" -o assets/images/ -f webp -q 65 --effort 6 resize 1600 1080 --fit inside --withoutEnlargement
+
+# 2. Small copies for the photo grids, 600px wide
+npx sharp-cli@5 -i "assets/images/Unique_*.jpg" -o "assets/images/{name}-thumb.webp" -f webp -q 65 --effort 6 resize 600 --withoutEnlargement
+
+# 3. Hero and logos: higher quality, at most 1600px wide
+npx sharp-cli@5 -i assets/images/Pitch.png assets/images/Opas.png "assets/images/RYFC copy.png" -o assets/images/ -f webp -q 80 --effort 6 resize 1600 --withoutEnlargement
+```
+
+- `-i` is the input (in quotes, `*` matches every photo), `-o` the output folder or file name
+  (`{name}` = the original name without `.jpg`), `-f webp` the format.
+- `-q` is the quality (1 to 100): lower is smaller but blurrier. `--effort 6` makes the smallest file.
+- `resize W H --fit inside` shrinks the image to fit in a W x H box without cropping or stretching;
+  `--withoutEnlargement` never makes a small image bigger.
+- A new photo with a different name (say `player-10.jpg`) needs the same commands with its own name
+  after `-i`. Forgot? No problem: the page shows the original instead (see `js/boot.js`).
+
+Targets: hero under 250KB, gallery photos under 150KB.
+
+### Share preview and SEO
+
+- `assets/images/share-image.jpg` (1200 x 630) is the picture WhatsApp and Facebook show when
+  someone shares a link. Each page's `<head>` has the Open Graph (`og:`) and Twitter tags for it.
+  Facebook keeps old previews for a while: paste a link into the
+  [Sharing Debugger](https://developers.facebook.com/tools/debug/) and click *Scrape Again*.
+- `sitemap.xml` lists every page. Add new pages to it, and send it to Google in
+  [Search Console](https://search.google.com/search-console).
+- `robots.txt` only counts at the root of a domain. On GitHub Pages the site lives in
+  `/unique-soccer-academy/`, so search engines read `isaaccodes01.github.io/robots.txt` instead.
+  The file is ready for when the club gets its own domain; until then, submit the sitemap in
+  Search Console.
+
 ---
 
 ## 🌍 Deployment
