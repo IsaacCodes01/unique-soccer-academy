@@ -185,6 +185,7 @@ if (newsletterForm) {
     const emailInput = newsletterForm.querySelector(".newsletter__input");
     const status = document.getElementById("newsletter-status");
     const CLUB_EMAIL = "uniquesocceracademy1@gmail.com";
+    let waitingForConnection = false; // a sign-up was stopped because we were offline
 
     newsletterForm.addEventListener("submit", (event) => {
         const email = emailInput.value.trim();
@@ -200,6 +201,17 @@ if (newsletterForm) {
         }
 
         emailInput.removeAttribute("aria-invalid");
+
+        // No network: don't send (the service's page couldn't load). The
+        // email stays in the box for the next try.
+        if (!navigator.onLine) {
+            event.preventDefault();
+            waitingForConnection = true;
+            status.className = "newsletter__status is-error";
+            status.textContent = "You're offline right now. Your email is still in the box: press Subscribe again once you're connected.";
+            return;
+        }
+        waitingForConnection = false;
 
         // A service is set up: let the browser send the form (no
         // preventDefault). The browser reads the fields only after this
@@ -222,6 +234,14 @@ if (newsletterForm) {
         status.className = "newsletter__status is-success";
         status.textContent = "Thanks! Your email app should open now. Press Send to finish subscribing.";
         newsletterForm.reset();
+    });
+
+    // The browser fires "online" when the connection comes back
+    window.addEventListener("online", () => {
+        if (!waitingForConnection) return;
+        waitingForConnection = false;
+        status.className = "newsletter__status is-success";
+        status.textContent = "You're back online. Press Subscribe to finish.";
     });
 }
 

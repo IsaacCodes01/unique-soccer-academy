@@ -162,6 +162,9 @@ if (joinForm) {
         return lines.join("\n");
     }
 
+    // True after a send was stopped because the visitor was offline
+    let waitingForConnection = false;
+
     joinForm.addEventListener("submit", (event) => {
         event.preventDefault(); // stop the browser reloading the page
 
@@ -179,6 +182,19 @@ if (joinForm) {
             return;
         }
 
+        // navigator.onLine is false when the device has no network at all.
+        // WhatsApp's link can't load then, so we don't open it. The form
+        // isn't cleared, so the details are still there for the next try.
+        if (!navigator.onLine) {
+            waitingForConnection = true;
+            status.className = "join-form__status is-error";
+            status.innerHTML = `<i class="fa-solid fa-wifi" aria-hidden="true"></i>
+                You're offline right now. Your details are still here: press
+                <strong>Send on WhatsApp</strong> again once you're connected.`;
+            return;
+        }
+        waitingForConnection = false;
+
         // FormData reads every field by its name="" into one object
         const data = Object.fromEntries(
             [...new FormData(joinForm)].map(([key, value]) => [key, value.trim()])
@@ -194,6 +210,15 @@ if (joinForm) {
         status.innerHTML = `<i class="fa-solid fa-circle-check" aria-hidden="true"></i>
             WhatsApp is opening with your message. Press <strong>Send</strong> there to finish.
             Nothing happened? <a href="${url}" target="_blank" rel="noopener">Open WhatsApp</a>`;
+    });
+
+    // The browser fires "online" when the connection comes back
+    window.addEventListener("online", () => {
+        if (!waitingForConnection) return;
+        waitingForConnection = false;
+        status.className = "join-form__status is-success";
+        status.innerHTML = `<i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            You're back online. Press <strong>Send on WhatsApp</strong> to finish.`;
     });
 }
 
