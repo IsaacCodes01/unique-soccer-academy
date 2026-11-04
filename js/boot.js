@@ -23,8 +23,32 @@
     // CSS stops hiding the data-reveal sections, so the visitor still sees
     // every word and photo, just without the animations.
     window.addEventListener("error", (event) => {
-        if (event.target === window) root.classList.remove("js");
+        if (event.target !== window) return;
+        root.classList.remove("js");
+
+        // Debug mode: add ?debug to the address (e.g. index.html?debug) and
+        // every error is written in a red box at the top of the screen, so
+        // it can be read on a phone that has no developer tools.
+        if (location.search.indexOf("debug") === -1) return;
+        const box = document.createElement("pre");
+        box.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:99999;margin:0;padding:8px;" +
+            "background:#D62828;color:#fff;font:12px/1.4 monospace;white-space:pre-wrap;";
+        const file = (event.filename || "").split("/").pop();
+        box.textContent = `${event.message}\n${file} line ${event.lineno}:${event.colno}`;
+        (document.body || root).appendChild(box);
     });
+
+    // In debug mode, also say so when there was no error at all
+    if (location.search.indexOf("debug") !== -1) {
+        window.addEventListener("load", () => {
+            if (!root.classList.contains("js")) return; // an error box is already showing
+            const box = document.createElement("pre");
+            box.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:99999;margin:0;padding:8px;" +
+                "background:#0B0B0D;color:#F5C518;font:12px/1.4 monospace;";
+            box.textContent = "No errors. Browser: " + navigator.userAgent;
+            document.body.appendChild(box);
+        });
+    }
 
     // 3. WebP safety net. A <picture> does NOT fall back to its <img> by
     // itself when the .webp is missing: the photo is just broken. So we
