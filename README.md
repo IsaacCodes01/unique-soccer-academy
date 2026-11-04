@@ -164,9 +164,16 @@ poster in `js/data.js`, e.g. `poster: "assets/videos/posters/Unique_vids_1.jpg"`
 
 Every `.jpg`/`.png` in `assets/images/` has a smaller `.webp` copy next to it, and each gallery
 photo also has a 600px-wide `-thumb.webp` for the grids. The pages load the WebP and keep the
-original as a fallback (`<picture>`). After adding or replacing a photo, run these three commands
-from the project folder (they work in PowerShell and Git Bash; `npx` downloads the tool for you,
-nothing is added to the project):
+original as a fallback (`<picture>`).
+
+**This happens automatically.** When you push a new or changed `.jpg`/`.png`, the GitHub Action
+in `.github/workflows/optimize-images.yml` makes the WebP copies, commits them and republishes
+the site (watch it in the repository's **Actions** tab). Afterwards run `git pull` so your
+computer has the new files too.
+
+To make them on your own computer instead (for example to preview before pushing), run these
+three commands from the project folder (they work in PowerShell and Git Bash; `npx` downloads the
+tool for you, nothing is added to the project):
 
 ```bash
 # 1. Photos: WebP, at most 1600 x 1080, quality 65

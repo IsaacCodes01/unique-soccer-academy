@@ -1,0 +1,82 @@
+# GitHub Actions: a small computer at GitHub that runs these steps for us.
+# When you push a new or changed .jpg/.png in assets/images, it makes the
+# .webp copies (see .github/scripts/optimize-images.js), commits them back
+# to the same branch and asks GitHub Pages to publish the site again.
+# Watch it run: your repository on github.com > "Actions" tab.
+
+name: Optimise images
+
+on:
+  push:
+    paths:
+      - "assets/images/**.jpg"
+      - "assets/images/**.jpeg"
+      - "assets/images/**.png"
+      - "assets/images/**.JPG"
+      - "assets/images/**.JPEG"
+      - "assets/images/**.PNG"
+  workflow_dispatch: # adds a "Run workflow" button in the Actions tab
+
+# The robot may push commits (the .webp files) and start a Pages build
+permissions:
+  contents: write
+  pages: write
+
+# If you push twice quickly, the runs take turns instead of clashing
+concurrency:
+  group: optimise-images-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  webp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the full history, to see which photos changed
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # The same sharp version that made the existing .webp files, so
+      # untouched photos come out byte-for-byte the same
+      - name: Install sharp (the image tool)
+        run: npm install --no-save --no-package-lock sharp@0.34.5
+
+      - name: Make the WebP copies
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          # The photos changed in this push (empty on a brand-new branch,
+          # then only photos without a .webp yet are converted)
+          if git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            export CHANGED="$(git diff --name-only "$BEFORE" HEAD -- assets/images)"
+          fi
+          node .github/scripts/optimize-images.js
+
+      - name: Commit the new files
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add assets/images
+          if git diff --cached --quiet; then
+            echo "No new WebP files."
+          else
+            git commit -m "Add WebP copies of new images"
+            git push
+            echo "pushed=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      # A push made by this robot may not start GitHub Pages by itself,
+      # so ask for a new Pages build. If that fails, the site still works:
+      # the original photos show until the next deploy.
+      - name: Publish the site again
+        if: steps.commit.outputs.pushed == 'yes'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${{ github.repository }}/pages/builds"

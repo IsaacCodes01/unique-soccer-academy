@@ -113,8 +113,8 @@ const CLUB_NAMES = ["Royal Unique FC", "Unique Soccer Academy", "USA"];
    - width / height: the photo's real size in pixels. The browser uses
                them to save the right amount of space before the photo
                has downloaded, so the grid doesn't jump around.
-   New photo? Also make its .webp and -thumb.webp copies: see
-   "Optimising images" in README.md.
+   New photo? Its .webp and -thumb.webp copies are made for you by
+   GitHub when you push (see "Optimising images" in README.md).
    -------------------------------------------------------------------------- */
 const PHOTOS = [
     { src: "assets/images/Unique_1.jpg",  width: 960,  height: 1280, category: "Players",  alt: "Player in the yellow kit holding a pair of boots on a grassy pitch under a cloudy sky" },

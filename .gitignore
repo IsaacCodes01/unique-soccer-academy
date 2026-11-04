@@ -1,0 +1,4 @@
+# Files git should never track or upload to GitHub.
+
+# Isaac's personal step-by-step guide: stays on this computer only
+UPDATING-THE-SITE.md
