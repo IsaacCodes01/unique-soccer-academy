@@ -753,6 +753,14 @@ body.menu-open {
     transition: transform 400ms var(--ease), visibility 0s;
 }
 
+/* While the window is crossing the 900px breakpoint (js/main.js adds this
+   class for a moment), the menu jumps straight to its new place instead
+   of visibly sliding out of the way */
+.nav.no-transition,
+.nav.no-transition .nav__item {
+    transition: none;
+}
+
 /* Links slide in one after another: each waits 60ms longer than the last */
 .menu-open .nav__item {
     opacity: 1;

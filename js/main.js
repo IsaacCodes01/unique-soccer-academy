@@ -84,8 +84,17 @@ if (header) {
         }
     });
 
-    // If the window is widened to desktop while the menu is open, close it
+    // Runs when the window crosses the 900px breakpoint (e.g. resizing, or
+    // opening DevTools' phone view). The menu moves between its desktop
+    // place and its hidden off-screen place; .no-transition makes it jump
+    // there instead of sliding across the screen. Two animation frames
+    // later the browser has drawn the new place, so the slide for
+    // opening and closing the menu is switched back on.
     mobileQuery.addEventListener("change", (event) => {
+        menu.classList.add("no-transition");
+        requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.remove("no-transition")));
+
+        // If the window is widened to desktop while the menu is open, close it
         if (!event.matches && isMenuOpen()) closeMenu(false);
         if (!event.matches) header.classList.remove("is-hidden");
     });
