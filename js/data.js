@@ -28,12 +28,11 @@
    The first photo is written straight into index.html so it loads first.
    These extra photos are downloaded only after the page has finished
    loading, then join the cross-fade one by one.
-   TODO: swap in Isaac's chosen landscape hero photos when they are ready.
    -------------------------------------------------------------------------- */
 const HERO_SLIDES = [
     "assets/images/Unique_13.jpg",
-    "assets/images/Unique_6.jpg",
-    "assets/images/Unique_2.jpg"
+    "assets/images/team_1.jpg",
+    "assets/images/team_2.jpg"
 ];
 
 /* --------------------------------------------------------------------------
@@ -48,7 +47,7 @@ const HERO_SLIDES = [
        title: "Headline of the story",
        summary: "One or two sentences about what happened.",
        category: "News",                    // "News" or "Announcement"
-       image: "assets/images/Unique_9.jpg", // optional; without it the card shows the club crest
+       image: "assets/images/Unique_10.jpg", // optional; without it the card shows the club crest
        imageAlt: "What the photo shows",    // needed if there is an image
        author: "Full Name",                 // optional, who posted it (their initials show in a circle)
        authorPhoto: "",                     // optional, a small square photo of them instead of initials
@@ -123,12 +122,9 @@ const PHOTOS = [
     { src: "assets/images/Unique_4.jpg",  width: 810,  height: 1080, category: "Training", alt: "Two players, one in goalkeeper gloves and a training bib, posing on the pitch" },
     { src: "assets/images/Unique_5.jpg",  width: 960,  height: 1280, category: "Players",  alt: "Player in the yellow kit and red boots on the training ground" },
     { src: "assets/images/Unique_8.jpg",  width: 810,  height: 1080, category: "Training", alt: "Player controlling the ball on the grass" },
-    { src: "assets/images/Unique_6.jpg",  width: 960,  height: 1280, category: "Players",  alt: "Three academy players in yellow kits smiling on the pitch" },
     { src: "assets/images/Unique_7.jpg",  width: 958,  height: 1280, category: "Training", alt: "Player in the yellow kit standing over a ball, with a goalpost behind" },
-    { src: "assets/images/Unique_9.jpg",  width: 1080, height: 1080, category: "Matchday", alt: "Poster for the pre-season match against Topsky FC on Thursday 19 September at 2:30pm, Opeikuma Topsky School Park" },
     { src: "assets/images/Unique_10.jpg", width: 940,  height: 788,  category: "Matchday", alt: "Pre-season friendly poster: Topsky FC Academy vs Unique Soccer Academy, 19 September 2024, 2:30pm, Opeikuma Topsky School Park" },
     { src: "assets/images/Unique_11.jpg", width: 720,  height: 960,  category: "Players",  alt: "Player in the yellow kit with a hand on the hip under a bright blue sky" },
-    { src: "assets/images/Unique_12.jpg", width: 720,  height: 960,  category: "Players",  alt: "Smiling player in the yellow kit and turquoise boots on a dry pitch, with a ball nearby" },
     { src: "assets/images/Unique_13.jpg", width: 1125, height: 1138, category: "Training", alt: "Two players in black training vests giving a thumbs-up on the training ground" },
     { src: "assets/images/Unique_14.jpg", width: 720,  height: 960,  category: "Players",  alt: "Player in a yellow, green and black shirt giving a thumbs-up on a grass pitch" },
     { src: "assets/images/Unique_16.jpg", width: 720,  height: 960,  category: "Players",  alt: "Player in the yellow kit giving two thumbs-up under a cloudy sky" },
@@ -154,6 +150,10 @@ const VIDEOS = [
    forwards, and by shirt number inside each group. While this list is
    empty, the page shows "Squad coming soon".
 
+   The 20 slots below are blank placeholders: each shows a silhouette and
+   "Name coming soon". Fill in one slot per player (name, number,
+   position, photo, age). Delete any slot you don't need.
+
    Example (copy into the list and fill in):
    {
        name: "Full Name",
@@ -164,9 +164,30 @@ const VIDEOS = [
                                             // Without it the card shows a silhouette.
        age: 17                              // optional, a number, no quotes
    },
-   TODO: add the real squad
+   TODO: fill in the 20 player slots
    -------------------------------------------------------------------------- */
-const PLAYERS = [];
+const PLAYERS = [
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+    { name: "", number: "", position: "", photo: "", age: "" },
+];
 
 
 /* --------------------------------------------------------------------------

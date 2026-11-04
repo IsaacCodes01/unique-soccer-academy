@@ -154,7 +154,7 @@ const NEWS = [
         title: "Headline of the story",
         summary: "One or two sentences about what happened.",
         category: "News",                    // or "Announcement"
-        image: "assets/images/Unique_9.jpg", // optional
+        image: "assets/images/Unique_10.jpg", // optional
         imageAlt: "What the photo shows"
     },
 ];

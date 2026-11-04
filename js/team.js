@@ -81,7 +81,7 @@ function playerCard(player) {
             ${hasNumber ? `<span class="profile-card__number" aria-hidden="true">${escapeHTML(player.number)}</span>` : ""}
             <div class="profile-card__body">
                 <span class="badge">${escapeHTML(player.position || "Player")}</span>
-                <h4 class="profile-card__name">${escapeHTML(player.name)}</h4>
+                <h4 class="profile-card__name">${escapeHTML(player.name || "Name coming soon")}</h4>
                 ${meta ? `<p class="profile-card__meta">${meta}</p>` : ""}
             </div>
         </article>`;
